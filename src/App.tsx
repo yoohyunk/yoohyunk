@@ -1,35 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import NavBar from "./components/NavBar";
+import { Element } from "react-scroll";
+import HeroSection from "./pages/HeroSection";
+import AboutSection from "./pages/AboutSection";
+import ProjectsSection from "./pages/ProjectsSection";
+import SkillsSection from "./pages/SkillsSection";
+import ContactSection from "./pages/ContactSection";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <NavBar />
+      <main className="pt-16">
+        <Element name="hero">
+          <HeroSection />
+        </Element>
+        <Element name="about">
+          <AboutSection />
+        </Element>
+        <Element name="projects">
+          <ProjectsSection />
+        </Element>
+        <Element name="skills">
+          <SkillsSection />
+        </Element>
+        <Element name="contact">
+          <ContactSection />
+        </Element>
+      </main>
     </>
-  )
+  );
 }
-
-export default App
