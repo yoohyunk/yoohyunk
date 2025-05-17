@@ -1,0 +1,83 @@
+{
+  "categories": [
+    {
+      "name": "Frontend",
+      "skills": [
+        {
+          "name": "React",
+          "icon": "react"
+        },
+        {
+          "name": "Next.js",
+          "icon": "nextjs"
+        },
+        {
+          "name": "TypeScript",
+          "icon": "typescript"
+        },
+        {
+          "name": "Tailwind CSS",
+          "icon": "tailwind"
+        },
+        {
+          "name": "React Native",
+          "icon": "reactnative"
+        },
+        {
+          "name": "Expo",
+          "icon": "expo"
+        }
+      ]
+    },
+    {
+      "name": "Backend",
+      "skills": [
+        {
+          "name": "Node.js",
+          "icon": "nodejs"
+        },
+        {
+          "name": "Django",
+          "icon": "django"
+        },
+        {
+          "name": "Flask",
+          "icon": "flask"
+        },
+        {
+          "name": "PostgreSQL",
+          "icon": "postgresql"
+        },
+        {
+          "name": "SQL",
+          "icon": "sql"
+        }
+      ]
+    },
+    {
+      "name": "DevOps & Tools",
+      "skills": [
+        {
+          "name": "Git",
+          "icon": "git"
+        },
+        {
+          "name": "Docker",
+          "icon": "docker"
+        },
+        {
+          "name": "AWS",
+          "icon": "aws"
+        },
+        {
+          "name": "Azure",
+          "icon": "azure"
+        },
+        {
+          "name": "Linux",
+          "icon": "linux"
+        }
+      ]
+    }
+  ]
+}
