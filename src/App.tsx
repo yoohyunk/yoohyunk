@@ -43,27 +43,27 @@ export default function App() {
         <NavBar activeSection={activeSection} />
         <main className="pt-20 space-y-24 pb-24">
           <div data-section="hero">
-            <AnimatedSection name="hero">
+            <AnimatedSection>
               <HeroSection />
             </AnimatedSection>
           </div>
           <div data-section="about">
-            <AnimatedSection name="about">
+            <AnimatedSection>
               <AboutSection />
             </AnimatedSection>
           </div>
           <div data-section="projects">
-            <AnimatedSection name="projects">
+            <AnimatedSection>
               <ProjectsSection />
             </AnimatedSection>
           </div>
           <div data-section="skills">
-            <AnimatedSection name="skills">
+            <AnimatedSection>
               <SkillsSection />
             </AnimatedSection>
           </div>
           <div data-section="contact">
-            <AnimatedSection name="contact">
+            <AnimatedSection>
               <ContactSection />
             </AnimatedSection>
           </div>
