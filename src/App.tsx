@@ -8,9 +8,9 @@ import ContactSection from "./pages/ContactSection";
 
 export default function App() {
   return (
-    <>
+    <div className="bg-gray-50 max-w-7xl mx-auto">
       <NavBar />
-      <main className="pt-16">
+      <main className="pt-16 ">
         <Element name="hero">
           <HeroSection />
         </Element>
@@ -27,6 +27,6 @@ export default function App() {
           <ContactSection />
         </Element>
       </main>
-    </>
+    </div>
   );
 }
