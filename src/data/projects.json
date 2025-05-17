@@ -1,0 +1,46 @@
+[
+  {
+    "title": "FairSplit",
+    "summary": "Scan receipts with OCR and split bills with friends in real time",
+    "description": "FairSplit is built with Django & Supabase, using OCR to scan receipts for accurate, real-time bill splitting among friends.",
+    "link": "https://github.com/yoohyunk/FairSplit",
+    "tech": ["Django", "Supabase", "Tailwind CSS", "OCR"]
+  },
+  {
+    "title": "Tic-Tac-Toe Multiplayer",
+    "summary": "Play Tic-Tac-Toe online with random, invite-only, or AI opponents",
+    "description": "This React Native & Firebase game supports random matches, invite-only rooms, and easy/hard AI modes, handling room setup, state syncing, and seamless transitions to results.",
+    "link": "https://github.com/yoohyunk/TicTacToeApp",
+    "tech": [
+      "React Native",
+      "Firebase Auth",
+      "Firestore",
+      "Expo",
+      "TypeScript",
+      "AI Logic"
+    ]
+  },
+  {
+    "title": "Todo List Full-Stack App",
+    "summary": "Manage tasks and collaborate with a Next.js frontend and Flask+SQLite backend",
+    "description": "A full-stack Todo List application featuring task and list management, collaborator invites, and real-time progress tracking, powered by Next.js, Flask, and SQLite.",
+    "link": "https://github.com/yoohyunk/todo-list-frontend",
+    "tech": ["Next.js", "React", "Flask", "SQLite", "REST API"]
+  },
+  {
+    "title": "Rollin in Dough eCommerce",
+    "summary": "Bakery eCommerce with smart carts, payments, and CI/CD workflows",
+    "description": "Rollin in Dough is a bakery-focused eCommerce platform featuring local & Firestore carts, automatic cart merging on login, Firebase Auth, Square payment integration, token-verified middleware, and full CI/CD workflows.",
+    "link": "https://github.com/yoohyunk/rollin-in-dough",
+    "tech": [
+      "React",
+      "Next.js",
+      "Tailwind CSS",
+      "Firebase Auth",
+      "Firestore",
+      "Square API",
+      "Node.js",
+      "Jest"
+    ]
+  }
+]
