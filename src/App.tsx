@@ -23,7 +23,7 @@ export default function App() {
 
   const centerSection = useCallback(
     (element: HTMLElement) => {
-      if (isNavClick) return; // Skip centering if navigation click
+      if (isNavClick) return;
 
       const windowHeight = window.innerHeight;
       const elementRect = element.getBoundingClientRect();
@@ -86,7 +86,6 @@ export default function App() {
     return () => observer.disconnect();
   }, [centerSection]);
 
-  // Reset isNavClick after a short delay
   useEffect(() => {
     if (isNavClick) {
       const timer = setTimeout(() => {
@@ -97,13 +96,15 @@ export default function App() {
   }, [isNavClick]);
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-gray-50 to-white scroll-smooth">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen w-full bg-[#0a0a0c] text-gray-100 scroll-smooth selection:bg-purple-500/20 selection:text-purple-200">
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent pointer-events-none" />
+      <div className="fixed inset-0 bg-[linear-gradient(to_right,_var(--tw-gradient-stops))] from-transparent via-purple-500/[0.02] to-transparent pointer-events-none" />
+      <div className="relative max-w-7xl mx-auto">
         <NavBar
           activeSection={activeSection}
           onNavClick={() => setIsNavClick(true)}
         />
-        <main className="pt-20 space-y-24 pb-24">
+        <main className="pt-14 space-y-24 pb-24">
           {SECTIONS.map(({ id, Component }) => (
             <div
               key={id}
