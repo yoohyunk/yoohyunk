@@ -19,48 +19,39 @@ export default function ScrollArrow({ activeSection }: ScrollArrowProps) {
   const handleClick = () => {
     const nextElement = document.getElementById(nextSection);
     if (nextElement) {
-      const windowHeight = window.innerHeight;
       const elementRect = nextElement.getBoundingClientRect();
       const absoluteElementTop = window.pageYOffset + elementRect.top;
-      const middle =
-        absoluteElementTop - (windowHeight - elementRect.height) / 2;
+      const targetPosition = absoluteElementTop - 80;
 
-      let start: number | null = null;
-      const duration = 500; // 500ms for smooth animation
+      const start = window.pageYOffset;
+      const distance = targetPosition - start;
+      const duration = 300;
+      const startTime = performance.now();
 
-      const animate = (currentTime: number) => {
-        if (start === null) start = currentTime;
-        const elapsed = currentTime - start;
+      const animation = (currentTime: number) => {
+        const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
 
-        // Easing function for smoother animation
-        const easeInOutCubic = (t: number) =>
-          t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        const easeOutQuint = (t: number) => 1 - Math.pow(1 - t, 5);
 
-        const currentPosition = window.pageYOffset;
-        const distance = middle - currentPosition;
-
-        window.scrollTo(
-          0,
-          currentPosition + distance * easeInOutCubic(progress)
-        );
+        window.scrollTo(0, start + distance * easeOutQuint(progress));
 
         if (progress < 1) {
-          requestAnimationFrame(animate);
+          requestAnimationFrame(animation);
         }
       };
 
-      requestAnimationFrame(animate);
+      requestAnimationFrame(animation);
     }
   };
 
   return (
-    <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-40">
+    <div className="fixed bottom-12 left-1/2 transform -translate-x-1/2 z-40">
       <button
         onClick={handleClick}
-        className="animate-bounce cursor-pointer transition-colors group"
+        className="animate-bounce cursor-pointer transition-all duration-300 group"
       >
-        <MdOutlineKeyboardArrowDown className="w-8 h-8 text-blue-500 hover:text-blue-600 transition-colors" />
+        <MdOutlineKeyboardArrowDown className="w-10 h-10 text-purple-400/50 group-hover:text-purple-300 group-hover:drop-shadow-[0_0_8px_rgba(168,85,247,0.5)] transition-all" />
       </button>
     </div>
   );

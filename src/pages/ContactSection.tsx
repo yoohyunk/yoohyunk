@@ -29,36 +29,36 @@ export default function ContactSection() {
   return (
     <section
       ref={sectionRef}
-      className={`w-full bg-white transition-all duration-1000 transform ${
+      className={`w-full transition-all duration-1000 transform ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
       <div className="max-w-3xl mx-auto">
         <h2
-          className={`text-4xl font-bold mb-8 text-gray-900 text-center transition-all duration-700 delay-300 transform ${
+          className={`text-4xl font-bold mb-8 text-purple-200 text-center transition-all duration-700 delay-300 transform ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
           Let's Connect
           <div
-            className={`h-1 w-20 bg-blue-500 mx-auto mt-2 rounded-full transition-all duration-700 delay-500 transform ${
+            className={`h-0.5 w-20 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mt-4 rounded-full transition-all duration-700 delay-500 transform ${
               isVisible ? "opacity-100 scale-100" : "opacity-0 scale-0"
             }`}
           />
         </h2>
         <div
-          className={`bg-white rounded-2xl shadow-xl p-8 transition-all duration-700 delay-700 transform ${
+          className={`bg-[#0a0a0c]/40 backdrop-blur-md border border-purple-900/10 rounded-2xl shadow-lg shadow-purple-600/10 p-8 transition-all duration-700 delay-700 transform ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
           <div className="grid gap-6 md:grid-cols-2">
             <a
               href="mailto:yoohyunk20@gmail.com"
-              className="flex items-center p-4 rounded-lg hover:bg-blue-50 transition-colors group"
+              className="flex items-center p-4 rounded-lg hover:bg-purple-900/20 transition-colors group"
             >
-              <div className="bg-blue-100 p-3 rounded-full group-hover:bg-blue-200 transition-colors">
+              <div className="bg-purple-900/30 p-3 rounded-full group-hover:bg-purple-800/40 transition-colors">
                 <svg
-                  className="w-6 h-6 text-blue-600"
+                  className="w-6 h-6 text-purple-300"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -72,8 +72,10 @@ export default function ContactSection() {
                 </svg>
               </div>
               <div className="ml-4">
-                <h3 className="font-semibold text-gray-900">Email</h3>
-                <p className="text-blue-600">yoohyunk20@gmail.com</p>
+                <h3 className="font-semibold text-purple-200">Email</h3>
+                <p className="text-gray-400 hover:text-purple-300 transition-colors">
+                  yoohyunk20@gmail.com
+                </p>
               </div>
             </a>
 
@@ -81,11 +83,11 @@ export default function ContactSection() {
               href="https://linkedin.com/in/yoohyunk"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center p-4 rounded-lg hover:bg-blue-50 transition-colors group"
+              className="flex items-center p-4 rounded-lg hover:bg-purple-900/20 transition-colors group"
             >
-              <div className="bg-blue-100 p-3 rounded-full group-hover:bg-blue-200 transition-colors">
+              <div className="bg-purple-900/30 p-3 rounded-full group-hover:bg-purple-800/40 transition-colors">
                 <svg
-                  className="w-6 h-6 text-blue-600"
+                  className="w-6 h-6 text-purple-300"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -93,8 +95,10 @@ export default function ContactSection() {
                 </svg>
               </div>
               <div className="ml-4">
-                <h3 className="font-semibold text-gray-900">LinkedIn</h3>
-                <p className="text-blue-600">linkedin.com/in/yoohyunk</p>
+                <h3 className="font-semibold text-purple-200">LinkedIn</h3>
+                <p className="text-gray-400 hover:text-purple-300 transition-colors">
+                  linkedin.com/in/yoohyunk
+                </p>
               </div>
             </a>
 
@@ -102,11 +106,11 @@ export default function ContactSection() {
               href="https://github.com/yoohyunk"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center p-4 rounded-lg hover:bg-blue-50 transition-colors group md:col-span-2"
+              className="flex items-center p-4 rounded-lg hover:bg-purple-900/20 transition-colors group md:col-span-2"
             >
-              <div className="bg-blue-100 p-3 rounded-full group-hover:bg-blue-200 transition-colors">
+              <div className="bg-purple-900/30 p-3 rounded-full group-hover:bg-purple-800/40 transition-colors">
                 <svg
-                  className="w-6 h-6 text-blue-600"
+                  className="w-6 h-6 text-purple-300"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -114,8 +118,10 @@ export default function ContactSection() {
                 </svg>
               </div>
               <div className="ml-4">
-                <h3 className="font-semibold text-gray-900">GitHub</h3>
-                <p className="text-blue-600">github.com/yoohyunk</p>
+                <h3 className="font-semibold text-purple-200">GitHub</h3>
+                <p className="text-gray-400 hover:text-purple-300 transition-colors">
+                  github.com/yoohyunk
+                </p>
               </div>
             </a>
           </div>

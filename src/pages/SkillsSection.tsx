@@ -33,29 +33,29 @@ export default function SkillsSection() {
   return (
     <section
       ref={sectionRef}
-      className={`w-full bg-white transition-all duration-1000 transform ${
+      className={`w-full transition-all duration-1000 transform ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
       <div className="h-screen flex flex-col justify-start max-w-4xl mx-auto py-6">
         <h2
-          className={`text-3xl font-bold mb-6 text-gray-900 text-center transition-all duration-700 delay-300 transform ${
+          className={`text-3xl font-bold mb-6 text-purple-200 text-center transition-all duration-700 delay-300 transform ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
           Skills & Technologies
           <div
-            className={`h-1 w-20 bg-blue-500 mx-auto mt-2 rounded-full transition-all duration-700 delay-500 transform ${
+            className={`h-0.5 w-20 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mt-4 rounded-full transition-all duration-700 delay-500 transform ${
               isVisible ? "opacity-100 scale-100" : "opacity-0 scale-0"
             }`}
           />
         </h2>
-        <div className="flex-1 overflow-y-auto hide-scrollbar">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full">
+        <div className="flex-1 overflow-y-auto hide-scrollbar px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 h-full">
             {categories.map((category, index) => (
               <div
                 key={category.name}
-                className={`space-y-3 transition-all duration-700 transform ${
+                className={`space-y-4 transition-all duration-700 transform ${
                   isVisible
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-10"
@@ -64,10 +64,10 @@ export default function SkillsSection() {
                   transitionDelay: isVisible ? `${700 + index * 200}ms` : "0ms",
                 }}
               >
-                <h3 className="text-lg font-semibold text-gray-800 text-center">
+                <h3 className="text-lg font-medium text-purple-300 text-center tracking-wide">
                   {category.name}
                 </h3>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {category.skills.map((skill, skillIndex) => (
                     <div
                       key={skill.name}
