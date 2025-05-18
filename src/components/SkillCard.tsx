@@ -48,14 +48,15 @@ export default function SkillCard({ skill }: SkillCardProps) {
   const IconComponent = iconComponents[skill.icon];
 
   return (
-    <div className="bg-white rounded-lg p-3 shadow-sm hover:shadow-md transition-all duration-300 hover:bg-blue-50 group">
-      <div className="flex items-center space-x-3">
-        <div className="w-8 h-8 flex items-center justify-center bg-white rounded-lg shadow-sm group-hover:shadow">
+    <div className="relative group">
+      <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg blur opacity-0 group-hover:opacity-20 transition duration-500" />
+      <div className="relative bg-[#0a0a0c] rounded-lg p-4 flex items-center space-x-4 border border-purple-900/10 hover:border-purple-500/20 transition duration-300">
+        <div className="w-10 h-10 flex items-center justify-center bg-purple-500/5 rounded-lg group-hover:bg-purple-500/10 transition duration-300">
           {IconComponent && (
-            <IconComponent className="w-5 h-5 text-blue-500 group-hover:text-blue-600" />
+            <IconComponent className="w-5 h-5 text-purple-300/70 group-hover:text-purple-200 transition-colors" />
           )}
         </div>
-        <h3 className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">
+        <h3 className="text-base font-light text-gray-300 group-hover:text-purple-200 tracking-wide transition-colors">
           {skill.name}
         </h3>
       </div>
