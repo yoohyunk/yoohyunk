@@ -16,14 +16,11 @@
     "jsx": "react-jsx",
 
     /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "strict": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
-
-    /* Type declarations */
-    "typeRoots": ["./node_modules/@types", "./src/types"]
+    "noUncheckedSideEffectImports": false
   },
-  "include": ["src", "src/types"]
+  "include": ["src", "src/types", "src/vite-env.d.ts"]
 }

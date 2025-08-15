@@ -9,6 +9,11 @@ declare global {
       primitive: any;
       color: any;
       pointLight: any;
+      mesh: any;
+      boxGeometry: any;
+      meshStandardMaterial: any;
     }
   }
 }
+
+export {};
