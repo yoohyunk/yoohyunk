@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import projects from "../data/projects.json";
 import ProjectCard from "../components/ProjectCard";
 import ProjectModal from "../components/ProjectModal";

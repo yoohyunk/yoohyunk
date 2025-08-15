@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import skillsData from "../data/skills.json";
 import SkillCard from "../components/SkillCard";
 import type { SkillsData } from "../types/skill";

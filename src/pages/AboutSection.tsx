@@ -1,6 +1,6 @@
 // src/pages/AboutSection.jsx
 
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function AboutSection() {
   const [isVisible, setIsVisible] = useState(false);

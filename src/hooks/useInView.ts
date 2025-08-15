@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, RefObject } from "react";
 
 export default function useInView(
   threshold = 0.1
-): [RefObject<HTMLDivElement>, boolean] {
+): [RefObject<HTMLDivElement | null>, boolean] {
   const [isIntersecting, setIntersecting] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 

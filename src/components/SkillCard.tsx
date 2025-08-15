@@ -1,4 +1,3 @@
-import React from "react";
 import { Skill } from "../types/skill";
 import {
   FaReact,

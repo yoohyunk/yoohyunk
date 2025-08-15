@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  Suspense,
-  useCallback,
-} from "react";
+import { useState, useEffect, useRef, Suspense, useCallback } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import Scene3D from "../components/Scene3D";
