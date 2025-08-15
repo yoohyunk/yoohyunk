@@ -56,7 +56,7 @@ export default function AboutSection() {
           <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg blur opacity-10 group-hover:opacity-20 transition duration-500" />
           <div className="relative bg-[#0a0a0c] rounded-lg p-8 space-y-6 text-gray-300 border border-purple-900/10">
             <p className="text-lg leading-relaxed">
-              I'm Yoohyun, a{" "}
+              I'm Erica, a{" "}
               <span className="text-purple-300 font-medium">
                 Full-Stack Developer
               </span>{" "}

@@ -25,7 +25,7 @@ export default function HeroSection() {
 
   const text1 = "Hello world!";
   const text2 =
-    "I'm Yoohyun Kim, a developer who loves to build things that matter.";
+    "I'm Erica Kim, a developer who loves to build things that matter.";
 
   // Check if device is mobile
   const checkMobile = useCallback(() => {
@@ -344,7 +344,7 @@ export default function HeroSection() {
                   : "text-3xl sm:text-4xl md:text-6xl font-bold mb-3 text-white"
               }
             >
-              Hello, it's <span className="text-purple-400">Yoohyun's</span>{" "}
+              Hello, it's <span className="text-purple-400">Erica's</span>{" "}
               Portfolio
             </h1>
             <p
