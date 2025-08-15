@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, Suspense } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  Suspense,
+  useCallback,
+} from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import Scene3D from "../components/Scene3D";
@@ -17,6 +23,8 @@ export default function HeroSection() {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [cursorClicked, setCursorClicked] = useState(false);
   const [showFinalText, setShowFinalText] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [showInteractionHint, setShowInteractionHint] = useState(true);
   const sectionRef = useRef<HTMLElement>(null);
   const popupRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLDivElement>(null);
@@ -24,6 +32,22 @@ export default function HeroSection() {
   const text1 = "Hello world!";
   const text2 =
     "I'm Yoohyun Kim, a developer who loves to build things that matter.";
+
+  // Check if device is mobile
+  const checkMobile = useCallback(() => {
+    setIsMobile(window.innerWidth <= 768);
+  }, []);
+
+  useEffect(() => {
+    // Check on mount
+    checkMobile();
+
+    // Add resize listener
+    window.addEventListener("resize", checkMobile);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", checkMobile);
+  }, [checkMobile]);
 
   // Check whether to show popup on page load
   useEffect(() => {
@@ -132,14 +156,22 @@ export default function HeroSection() {
       setTimeout(() => {
         if (closeButtonRef.current) {
           const buttonRect = closeButtonRef.current.getBoundingClientRect();
-          setCursorPosition({
-            x: buttonRect.left + buttonRect.width / 2 - 15, // Adjust arrow tip to center of button
-            y: buttonRect.top + buttonRect.height / 2 - 5,
-          });
+          const sectionRect = sectionRef.current?.getBoundingClientRect();
+
+          if (sectionRect) {
+            // Calculate position relative to the section
+            setCursorPosition({
+              x: buttonRect.left - sectionRect.left + buttonRect.width / 2,
+              y: buttonRect.top - sectionRect.top + buttonRect.height / 2,
+            });
+          }
 
           // Click effect after reaching the button
           setTimeout(() => {
             setCursorClicked(true);
+
+            // Show interaction hint right after cursor click
+            setShowInteractionHint(true);
 
             // Close popup after click effect
             setTimeout(() => {
@@ -162,12 +194,24 @@ export default function HeroSection() {
     }, 800);
   }, [isTyping2Done, showPopup]);
 
+  // Add effect to hide interaction hint after 5 seconds
+  useEffect(() => {
+    if (showInteractionHint) {
+      const timer = setTimeout(() => {
+        setShowInteractionHint(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [showInteractionHint]);
+
   // Manually close popup (for development)
   const handleCloseClick = () => {
     setShowPopup(false);
     setShowCursor(false);
     localStorage.setItem("hasSeenIntro", "true");
     setShowFinalText(true);
+    // Show interaction hint immediately after manual close
+    setShowInteractionHint(true);
   };
 
   return (
@@ -216,6 +260,12 @@ export default function HeroSection() {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
           }
+          @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(10px); }
+            10% { opacity: 1; transform: translateY(0); }
+            80% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); }
+          }
         `}
       </style>
 
@@ -223,27 +273,50 @@ export default function HeroSection() {
         ref={sectionRef}
         className={`h-screen w-full relative bg-[#0a0a0c] overflow-hidden transition-all duration-1000 transform ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
+        } ${isMobile ? "flex flex-col justify-center items-center" : ""}`}
       >
-        <div className="absolute inset-0">
+        {showInteractionHint && (
+          <div
+            className="absolute top-1/4 left-1/2 transform -translate-x-1/2 z-20 bg-black/50 text-white px-4 py-2 rounded-full text-sm"
+            style={{
+              animation: "fadeInOut 5s ease-in-out forwards",
+            }}
+          >
+            👆 Try dragging to rotate the laptop
+          </div>
+        )}
+
+        <div
+          className={`absolute inset-0 ${
+            isMobile ? "flex items-center justify-center" : ""
+          }`}
+        >
           <Canvas
-            camera={{ position: [0, 0, 3.2], fov: 32 }}
+            camera={{
+              position: isMobile ? [0, 0, 3.5] : [0, 0, 3.2],
+              fov: isMobile ? 45 : 32,
+            }}
             className="w-full h-full"
+            dpr={[1, Math.min(2, window.devicePixelRatio)]}
+            performance={{ min: 0.5 }}
           >
             <color attach="background" args={["#0a0a0c"]} />
-            <ambientLight intensity={1.3} />
-            <pointLight position={[5, 5, 5]} intensity={1.4} />
+            <ambientLight intensity={isMobile ? 1.6 : 1.3} />
+            <pointLight position={[5, 5, 5]} intensity={isMobile ? 1.2 : 1.4} />
             <pointLight position={[-5, -5, -5]} intensity={0.7} />
             <Suspense fallback={null}>
-              <Scene3D />
+              <Scene3D isMobile={isMobile} />
               <OrbitControls
                 enableZoom={false}
                 enablePan={false}
-                minPolarAngle={Math.PI / 4}
-                maxPolarAngle={Math.PI / 2.2}
-                minAzimuthAngle={-Math.PI / 6}
-                maxAzimuthAngle={Math.PI / 6}
-                rotateSpeed={0.3}
+                minPolarAngle={0}
+                maxPolarAngle={Math.PI}
+                minAzimuthAngle={-Infinity}
+                maxAzimuthAngle={Infinity}
+                rotateSpeed={isMobile ? 0.2 : 0.3}
+                enableDamping={true}
+                dampingFactor={0.05}
+                target={[0, 0, 0]}
               />
             </Suspense>
           </Canvas>
@@ -252,14 +325,38 @@ export default function HeroSection() {
         {/* 최종 텍스트 */}
         {showFinalText && (
           <div
-            className="absolute bottom-20 left-0 right-0 text-center z-10"
-            style={{ animation: "fadeInUp 1s ease-out" }}
+            className="absolute left-0 right-0 px-4 md:px-8 text-center z-10"
+            style={
+              isMobile
+                ? {
+                    animation: "fadeInUp 1s ease-out",
+                    position: "absolute",
+                    bottom: "35%",
+                  }
+                : {
+                    animation: "fadeInUp 1s ease-out",
+                    position: "absolute",
+                    bottom: "20%",
+                  }
+            }
           >
-            <h1 className="text-4xl md:text-6xl font-bold mb-3 text-white">
+            <h1
+              className={
+                isMobile
+                  ? "text-2xl font-bold mb-1 text-white"
+                  : "text-3xl sm:text-4xl md:text-6xl font-bold mb-3 text-white"
+              }
+            >
               Hello, it's <span className="text-purple-400">Yoohyun's</span>{" "}
               Portfolio
             </h1>
-            <p className="text-lg md:text-xl text-gray-300">
+            <p
+              className={
+                isMobile
+                  ? "text-sm text-gray-300 max-w-xl mx-auto"
+                  : "text-base sm:text-lg md:text-xl text-gray-300 max-w-xl mx-auto"
+              }
+            >
               Full-stack developer passionate about creating amazing experiences
             </p>
           </div>
@@ -269,7 +366,7 @@ export default function HeroSection() {
           <div className="popup-container">
             <div
               ref={popupRef}
-              className="bg-white text-black p-6 rounded-lg shadow-xl w-[500px] max-w-[90%]"
+              className="bg-white text-black p-4 sm:p-6 rounded-lg shadow-xl w-[90%] sm:w-[500px] max-w-[90%]"
               style={{
                 fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
                 animation:
@@ -284,7 +381,9 @@ export default function HeroSection() {
                   <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                   <div className="w-3 h-3 rounded-full bg-green-500"></div>
                 </div>
-                <div className="text-xs text-gray-500">portfolio.dev</div>
+                <div className="text-xs text-gray-500 hidden sm:block">
+                  portfolio.dev
+                </div>
                 <div
                   ref={closeButtonRef}
                   className={`w-6 h-6 flex items-center justify-center cursor-pointer hover:bg-gray-100 rounded ${
@@ -296,7 +395,7 @@ export default function HeroSection() {
                 </div>
               </div>
               <div className="min-h-[100px]">
-                <p className="text-lg font-medium mb-2">
+                <p className="text-base sm:text-lg font-medium mb-2">
                   {typedText1}
                   <span
                     className={`inline-block w-[2px] h-[14px] bg-black ml-[2px] ${
@@ -305,7 +404,7 @@ export default function HeroSection() {
                   ></span>
                 </p>
                 {isTyping1Done && (
-                  <p className="text-base text-gray-700">
+                  <p className="text-sm sm:text-base text-gray-700">
                     {typedText2}
                     <span
                       className={`inline-block w-[2px] h-[14px] bg-black ml-[2px] ${

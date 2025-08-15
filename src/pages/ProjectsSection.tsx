@@ -76,9 +76,6 @@ export default function ProjectsSection() {
                 }`}
                 style={{
                   transitionDelay: isVisible ? `${700 + index * 200}ms` : "0ms",
-                  height: "100%",
-                  minHeight: "160px",
-                  maxHeight: "220px",
                 }}
               >
                 <ProjectCard
@@ -94,6 +91,7 @@ export default function ProjectsSection() {
           <ProjectModal
             project={projects[selectedIndex]}
             onClose={() => setSelectedIndex(null)}
+            isOpen={selectedIndex !== null}
           />
         )}
       </section>

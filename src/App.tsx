@@ -20,6 +20,17 @@ const SECTIONS = [
 export default function App() {
   const [activeSection, setActiveSection] = useState<string>("hero");
   const [isNavClick, setIsNavClick] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize(); // 초기 로드 시 확인
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const centerSection = useCallback(
     (element: HTMLElement) => {
@@ -74,7 +85,7 @@ export default function App() {
         });
       },
       {
-        rootMargin: "-20% 0px",
+        rootMargin: "-30% 0px",
         threshold: [0.3],
       }
     );
@@ -95,22 +106,39 @@ export default function App() {
     }
   }, [isNavClick]);
 
+  const handleNavClick = () => {
+    setIsNavClick(true);
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <div className="min-h-screen w-full bg-[#0a0a0c] text-gray-100 scroll-smooth selection:bg-purple-500/20 selection:text-purple-200">
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent pointer-events-none" />
       <div className="fixed inset-0 bg-[linear-gradient(to_right,_var(--tw-gradient-stops))] from-transparent via-purple-500/[0.02] to-transparent pointer-events-none" />
-      <div className="relative max-w-7xl mx-auto">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <NavBar
           activeSection={activeSection}
-          onNavClick={() => setIsNavClick(true)}
+          onNavClick={handleNavClick}
+          isMobileMenuOpen={isMobileMenuOpen}
+          setIsMobileMenuOpen={setIsMobileMenuOpen}
         />
-        <main className="pt-14 space-y-24 pb-24">
+        <main
+          className={
+            isMobile ? "pt-14 space-y-12 pb-16" : "pt-14 space-y-24 pb-24"
+          }
+        >
           {SECTIONS.map(({ id, Component }) => (
             <div
               key={id}
               data-section={id}
               id={id}
-              className="relative min-h-screen flex items-center"
+              className={
+                id === "hero" && isMobile
+                  ? "relative min-h-[100vh] flex flex-col justify-center items-center"
+                  : id === "skills"
+                  ? "relative min-h-screen flex items-center justify-center"
+                  : "relative min-h-screen flex items-center"
+              }
             >
               <Component />
             </div>
