@@ -1,9 +1,13 @@
 import React, { useRef, useEffect } from "react";
-import { useGLTF } from "@react-three/drei";
+import { Environment, useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { Group } from "three";
 
-const Scene3D = () => {
+interface Scene3DProps {
+  isMobile?: boolean;
+}
+
+const Scene3D: React.FC<Scene3DProps> = ({ isMobile = false }) => {
   const groupRef = useRef<Group>(null);
 
   // Load GLB model
@@ -16,26 +20,57 @@ const Scene3D = () => {
 
   useFrame(({ clock }) => {
     if (groupRef.current) {
+      // Adjust animation speed for mobile
+      const speedMultiplier = isMobile ? 0.7 : 1;
+
       // Gentle floating animation
       groupRef.current.rotation.x =
-        Math.sin(clock.getElapsedTime() * 0.3) * 0.05 - 0.1;
+        Math.sin(clock.getElapsedTime() * 0.3 * speedMultiplier) * 0.05 - 0.1;
       groupRef.current.rotation.y =
-        Math.sin(clock.getElapsedTime() * 0.2) * 0.15;
-      // Add slight up and down movement
+        Math.sin(clock.getElapsedTime() * 0.2 * speedMultiplier) * 0.15;
+      // Add slight up and down movement - only adjust base position for mobile
       groupRef.current.position.y =
-        -0.3 + Math.sin(clock.getElapsedTime() * 0.5) * 0.05;
+        (isMobile ? 0 : -0.3) +
+        Math.sin(clock.getElapsedTime() * 0.5 * speedMultiplier) * 0.05;
     }
   });
 
+  // For mobile, adjust position to move model to the center
+  // Keep desktop/laptop version exactly the same as the original
+  const modelScale = isMobile
+    ? ([2.3, 2.3, 2.3] as const)
+    : ([2.8, 2.8, 2.8] as const);
+  const modelPosition = isMobile ? ([0, 0, 0] as const) : ([0, 0, 0] as const);
+
   return (
-    <group
-      ref={groupRef}
-      position={[0, -0.3, -0.2]}
-      scale={[2.8, 2.8, 2.8]}
-      rotation={[0, 0.3, 0]}
-    >
-      <primitive object={scene} />
-    </group>
+    <>
+      {/* 장면 전반에 은은한 기본광 */}
+      <ambientLight intensity={0.1} />
+
+      {/* 태양광 느낌의 방향성 광원 (그림자 지원하려면 Canvas shadows 활성화) */}
+      <directionalLight
+        position={[5, 5, 5]}
+        intensity={1}
+        castShadow
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+      />
+
+      {/* 뒤쪽에서 살짝 채워주는 보조광 */}
+      <directionalLight position={[-3, 2, -5]} intensity={0.5} />
+
+      {/* HDR 환경맵으로 반사광 추가 (drei Environment 사용) */}
+      <Environment preset="night" />
+
+      <group
+        ref={groupRef}
+        position={modelPosition}
+        scale={modelScale}
+        rotation={[0, 0, 0]}
+      >
+        <primitive object={scene} />
+      </group>
+    </>
   );
 };
 

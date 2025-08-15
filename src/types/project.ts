@@ -6,7 +6,7 @@ export interface Project {
   link: string;
 
   // New fields used in components
-  image: string;
+  image?: string;
   technologies: string[];
   features?: string[];
   liveUrl?: string;

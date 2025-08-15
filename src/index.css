@@ -29,6 +29,7 @@ body {
   min-width: 100vw;
   min-height: 100vh;
   width: 100%;
+  overflow-x: hidden;
 }
 
 #root {
@@ -38,6 +39,53 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+/* Mobile-first responsive rules */
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 2.4em;
+  }
+  
+  h2 {
+    font-size: 1.8em;
+  }
+  
+  h3 {
+    font-size: 1.4em;
+  }
+  
+  p {
+    font-size: 0.95em;
+  }
+}
+
+/* Larger screens */
+@media screen and (min-width: 769px) {
+  p {
+    font-size: 1em;
+  }
+}
+
+/* Prevent horizontal scroll */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+  a:hover, button:hover {
+    transition: none !important;
+  }
+}
+
+/* Media for different screen sizes */
+@media screen and (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
 /* button {

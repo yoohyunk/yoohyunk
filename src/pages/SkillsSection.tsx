@@ -37,9 +37,9 @@ export default function SkillsSection() {
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
-      <div className="h-screen flex flex-col justify-start max-w-4xl mx-auto py-6">
+      <div className="h-screen flex flex-col justify-center max-w-4xl mx-auto py-6">
         <h2
-          className={`text-3xl font-bold mb-6 text-purple-200 text-center transition-all duration-700 delay-300 transform ${
+          className={`text-3xl font-bold mb-12 text-purple-200 text-center transition-all duration-700 delay-300 transform mt-16 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
@@ -50,8 +50,8 @@ export default function SkillsSection() {
             }`}
           />
         </h2>
-        <div className="flex-1 overflow-y-auto hide-scrollbar px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 h-full">
+        <div className="flex-1 px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {categories.map((category, index) => (
               <div
                 key={category.name}
