@@ -44,10 +44,8 @@ const Scene3D: React.FC<Scene3DProps> = ({ isMobile = false }) => {
 
   return (
     <>
-      {/* @ts-ignore */}
       <ambientLight intensity={0.1} />
 
-      {/* @ts-ignore */}
       <directionalLight
         position={[5, 5, 5]}
         intensity={1}
@@ -56,20 +54,16 @@ const Scene3D: React.FC<Scene3DProps> = ({ isMobile = false }) => {
         shadow-mapSize-height={1024}
       />
 
-      {/* @ts-ignore */}
       <directionalLight position={[-3, 2, -5]} intensity={0.5} />
 
-      {/* @ts-ignore */}
       <Environment preset="night" />
 
-      {/* @ts-ignore */}
       <group
         ref={groupRef}
         position={modelPosition}
         scale={modelScale}
         rotation={[0, 0, 0]}
       >
-        {/* @ts-ignore */}
         <primitive object={scene} />
       </group>
     </>

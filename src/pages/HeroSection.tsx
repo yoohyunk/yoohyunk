@@ -294,13 +294,12 @@ export default function HeroSection() {
             dpr={[1, Math.min(2, window.devicePixelRatio)]}
             performance={{ min: 0.5 }}
           >
-            {/* @ts-expect-error */}
             <color attach="background" args={["#0a0a0c"]} />
-            {/* @ts-expect-error */}
+
             <ambientLight intensity={isMobile ? 1.6 : 1.3} />
-            {/* @ts-expect-error */}
+
             <pointLight position={[5, 5, 5]} intensity={isMobile ? 1.2 : 1.4} />
-            {/* @ts-expect-error */}
+
             <pointLight position={[-5, -5, -5]} intensity={0.7} />
             <Suspense fallback={null}>
               <Scene3D isMobile={isMobile} />
