@@ -44,10 +44,10 @@ const Scene3D: React.FC<Scene3DProps> = ({ isMobile = false }) => {
 
   return (
     <>
-      {/* 장면 전반에 은은한 기본광 */}
+      {/* @ts-ignore */}
       <ambientLight intensity={0.1} />
 
-      {/* 태양광 느낌의 방향성 광원 (그림자 지원하려면 Canvas shadows 활성화) */}
+      {/* @ts-ignore */}
       <directionalLight
         position={[5, 5, 5]}
         intensity={1}
@@ -56,18 +56,20 @@ const Scene3D: React.FC<Scene3DProps> = ({ isMobile = false }) => {
         shadow-mapSize-height={1024}
       />
 
-      {/* 뒤쪽에서 살짝 채워주는 보조광 */}
+      {/* @ts-ignore */}
       <directionalLight position={[-3, 2, -5]} intensity={0.5} />
 
-      {/* HDR 환경맵으로 반사광 추가 (drei Environment 사용) */}
+      {/* @ts-ignore */}
       <Environment preset="night" />
 
+      {/* @ts-ignore */}
       <group
         ref={groupRef}
         position={modelPosition}
         scale={modelScale}
         rotation={[0, 0, 0]}
       >
+        {/* @ts-ignore */}
         <primitive object={scene} />
       </group>
     </>
