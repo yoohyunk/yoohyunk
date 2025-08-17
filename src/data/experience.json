@@ -1,0 +1,39 @@
+[
+  {
+    "title": "Fullstack Developer",
+    "company": "YYCFoodTrucks (Practicum)",
+    "location": "Calgary, Canada",
+    "start": "2025-01",
+    "end": "Present",
+    "bullets": [
+      "Delivered a Next.js scheduling and employee management app for Calgary's largest food truck operator; served as team lead for 5 developers.",
+      "Developed API routes with role-based access control and schema-driven TypeScript types for I/O validation; implemented row-level security in PostgreSQL.",
+      "Designed and implemented constraint-based automated scheduling to replace manual workflows.",
+      "Configured GitHub Actions, Vercel, Jest, and ESLint to support automated deployments and local DX.",
+      "Contributed across product areas: UI implementation, tests, and sprint planning.",
+      "Authored training guides and led weekly demos to gather product feedback."
+    ]
+  },
+  {
+    "title": "Fullstack Developer",
+    "company": "Roll'in in Dough Vernon (Practicum)",
+    "location": "Calgary, Canada",
+    "start": "2025-03",
+    "end": "2025-06",
+    "bullets": [
+      "Delivered a Next.js storefront for a local cookie shop; led a team of 3 developers.",
+      "Built end-to-end auth, inventory management, and payments using Firebase and Square API.",
+      "Implemented a persistent cart using browser storage and Firestore to sync carts across devices and sessions."
+    ]
+  },
+  {
+    "title": "Pilates Studio Manager and Barista",
+    "company": "The On Pilates and Crown Resort",
+    "location": "Korea, Australia",
+    "start": "2021-01",
+    "end": "2022-12",
+    "bullets": [
+      "Worked in customer-facing roles while studying English and self-learning programming."
+    ]
+  }
+]

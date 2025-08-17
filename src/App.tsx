@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import NavBar from "./components/NavBar";
 import HeroSection from "./pages/HeroSection";
 import AboutSection from "./pages/AboutSection";
+import ExperienceSection from "./pages/ExperienceSection";
 import ProjectsSection from "./pages/ProjectsSection";
 import SkillsSection from "./pages/SkillsSection";
 import ContactSection from "./pages/ContactSection";
@@ -12,6 +13,7 @@ import ScrollArrow from "./components/ScrollArrow";
 const SECTIONS = [
   { id: "hero", Component: HeroSection },
   { id: "about", Component: AboutSection },
+  { id: "experience", Component: ExperienceSection },
   { id: "projects", Component: ProjectsSection },
   { id: "skills", Component: SkillsSection },
   { id: "contact", Component: ContactSection },

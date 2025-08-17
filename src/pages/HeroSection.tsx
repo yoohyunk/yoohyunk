@@ -363,7 +363,7 @@ export default function HeroSection() {
           <div className="popup-container">
             <div
               ref={popupRef}
-              className="bg-white text-black p-4 sm:p-6 rounded-lg shadow-xl w-[90%] sm:w-[500px] max-w-[90%]"
+              className="bg-purple-100 text-black p-4 sm:p-6 rounded-lg shadow-xl w-[90%] sm:w-[500px] max-w-[90%]"
               style={{
                 fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
                 animation:
