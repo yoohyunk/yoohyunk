@@ -62,7 +62,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             <img
               src={image}
               alt={project.title}
-              className="w-full h-48 object-cover object-top"
+              className="w-full h-48 object-cover object-center"
             />
             <button
               onClick={onClose}
@@ -83,7 +83,11 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             <p className="text-lg text-gray-300 mb-3 font-medium">
               {project.summary}
             </p>
-            <p className="text-sm text-gray-400 mb-4">{project.description}</p>
+            {project.description.map((desc, index) => (
+              <p key={index} className="text-sm text-gray-400 mb-4">
+                {desc}
+              </p>
+            ))}
 
             <div className="mb-4">
               <h3 className="text-md font-semibold mb-2 text-purple-300">

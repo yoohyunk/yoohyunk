@@ -69,7 +69,7 @@ export default function NavBar({
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 bg-[#0a0a0c]/80 backdrop-blur-md z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 bg-[#0a0a0c]/80 backdrop-blur-xs z-50 transition-all duration-300 ${
         isScrolled ? "border-b border-purple-900/20" : ""
       }`}
     >

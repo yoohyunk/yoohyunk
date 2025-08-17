@@ -1,17 +1,28 @@
 [
   {
     "title": "FairSplit",
-    "summary": "Scan receipts with OCR and split bills with friends in real time",
-    "description": "FairSplit is built with Django & Supabase, using OCR to scan receipts for accurate, real-time bill splitting among friends.",
+    "summary": "Group Expense Management App with Receipt Scanning",
+    "description": [
+      "• Developed a React Native app for logging and managing group expenses. It's like Splitwise but has a more intuitive UI for sharing expenses on an itemized receipt (e.g. sharing the expense for the same item).",
+      "• Developed a Django backend for auth, contacts, and expense API endpoints.",
+      "• Integrated an OCR model for scanning that extracts merchant, timestamp, totals, and itemized expenses from receipts into a PostgreSQL database. Created features to assign expense items to other contacts.",
+      "• Configured AWS S3 to store receipts after being parsed for data."
+    ],
     "link": "https://github.com/yoohyunk/FairSplit",
     "tech": ["Django", "Supabase", "Tailwind CSS", "OCR"],
     "technologies": ["Django", "Supabase", "Tailwind CSS", "OCR"],
-    "repoUrl": "https://github.com/yoohyunk/FairSplit"
+    "repoUrl": "https://github.com/yoohyunk/FairSplit",
+    "image": "public/fairsplit.png"
   },
   {
     "title": "Tic-Tac-Toe Multiplayer",
-    "summary": "Play Tic-Tac-Toe online with random, invite-only, or AI opponents",
-    "description": "This React Native & Firebase game supports random matches, invite-only rooms, and easy/hard AI modes, handling room setup, state syncing, and seamless transitions to results.",
+    "summary": "Mobile Multiplayer Game with a Configurable AI Bot",
+    "description": [
+      "•Developed a realtime React Native multiplayer tic-tac-toe game where users can play with other users and an AI.",
+      "•Developed a matchmaking algorithm which allows a user to play with random users, or in a preconfigured game lobby. Used Google Firestore to keep track of active game lobbies.",
+      "•Implemented the AI using a heuristic that supports adjustable difficulty across all board sizes without making the AI unbeatable, ensuring balanced gameplay.",
+      "•Designed a 3D-inspired UI with interactive sound effects to enhance gameplay appeal."
+    ],
     "link": "https://github.com/yoohyunk/TicTacToeApp",
     "tech": [
       "React Native",
@@ -29,21 +40,32 @@
       "TypeScript",
       "AI Logic"
     ],
-    "repoUrl": "https://github.com/yoohyunk/TicTacToeApp"
+    "repoUrl": "https://github.com/yoohyunk/tic-tac-toe-mobile",
+    "image": "public/tictactoe.png"
   },
   {
     "title": "Todo List Full-Stack App",
-    "summary": "Manage tasks and collaborate with a Next.js frontend and Flask+SQLite backend",
-    "description": "A full-stack Todo List application featuring task and list management, collaborator invites, and real-time progress tracking, powered by Next.js, Flask, and SQLite.",
+    "summary": "Full-stack Todo List application featuring task and list management, collaborator invites, and real-time progress tracking",
+    "description": [
+      "• A full-stack Todo List application featuring task and list management, collaborator invites, and real-time progress tracking, powered by Next.js, Flask, and SQLite.",
+      "• Developed a Next.js frontend with React, Flask backend, and SQLite database for task and list management.",
+      "• Implemented real-time progress tracking and collaborator invites using WebSocket and REST API.",
+      "• Designed a responsive UI with Tailwind CSS for a seamless user experience."
+    ],
     "link": "https://github.com/yoohyunk/todo-list-frontend",
     "tech": ["Next.js", "React", "Flask", "SQLite", "REST API"],
     "technologies": ["Next.js", "React", "Flask", "SQLite", "REST API"],
-    "repoUrl": "https://github.com/yoohyunk/todo-list-frontend"
+    "repoUrl": "https://github.com/yoohyunk/todo-list-frontend",
+    "image": "public/todolist.png"
   },
   {
     "title": "Rollin in Dough eCommerce",
     "summary": "Bakery eCommerce with smart carts, payments, and CI/CD workflows",
-    "description": "Rollin in Dough is a bakery-focused eCommerce platform featuring local & Firestore carts, automatic cart merging on login, Firebase Auth, Square payment integration, token-verified middleware, and full CI/CD workflows.",
+    "description": [
+      "• Developed a React frontend with Next.js, Firebase Auth, and Firestore for cart management and checkout.",
+      "• Integrated Square payment API for secure transactions and token-verified middleware for backend security.",
+      "• Implemented CI/CD workflows with GitHub Actions for automated testing and deployment."
+    ],
     "link": "https://github.com/yoohyunk/rollin-in-dough",
     "tech": [
       "React",
@@ -65,6 +87,7 @@
       "Node.js",
       "Jest"
     ],
-    "repoUrl": "https://github.com/yoohyunk/rollin-in-dough"
+    "repoUrl": "https://github.com/yoohyunk/rollin-in-dough",
+    "image": "public/rollinindough.png"
   }
 ]
