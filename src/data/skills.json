@@ -16,6 +16,10 @@
           "icon": "typescript"
         },
         {
+          "name": "JavaScript",
+          "icon": "javascript"
+        },
+        {
           "name": "Tailwind CSS",
           "icon": "tailwind"
         },
@@ -37,6 +41,10 @@
           "icon": "nodejs"
         },
         {
+          "name": "Python",
+          "icon": "python"
+        },
+        {
           "name": "Django",
           "icon": "django"
         },
@@ -55,28 +63,27 @@
       ]
     },
     {
-      "name": "DevOps & Tools",
+      "name": "Platforms",
       "skills": [
         {
-          "name": "Git",
-          "icon": "git"
+          "name": "Git and GitHub",
+          "icon": "github"
         },
         {
           "name": "Docker",
           "icon": "docker"
         },
+
         {
-          "name": "AWS",
-          "icon": "aws"
-        },
-        {
-          "name": "Azure",
+          "name": "Microsoft Azure",
           "icon": "azure"
         },
         {
           "name": "Linux",
           "icon": "linux"
-        }
+        },
+        { "name": "Google Firebase", "icon": "firebase" },
+        { "name": "Supabase", "icon": "supabase" }
       ]
     }
   ]

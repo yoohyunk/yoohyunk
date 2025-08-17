@@ -58,18 +58,18 @@ export default function AboutSection() {
             <p className="text-lg leading-relaxed">
               I'm Erica, a{" "}
               <span className="text-purple-300 font-medium">
-                Full-Stack Developer
+                Fullstack Developer
               </span>{" "}
-              based in Calgary, with equal strength in both front-end and
-              back-end technologies.
+              based in Calgary, with equal strength in both frontend and backend
+              technologies.
             </p>
             <div className="border-l-2 border-purple-500/30 pl-6 py-2 bg-purple-500/5 rounded-r-lg">
               <p className="text-lg">
                 On the{" "}
-                <span className="text-purple-200 font-medium">front end</span>,
-                I build responsive, accessible UIs using React, Next.js, and
+                <span className="text-purple-200 font-medium">frontend</span>, I
+                build responsive, accessible UIs using React, Next.js, and
                 Tailwind CSS. On the{" "}
-                <span className="text-purple-200 font-medium">back end</span>, I
+                <span className="text-purple-200 font-medium">backend</span>, I
                 design robust APIs and data models with Django, Node.js, and
                 PostgreSQL.
               </p>

@@ -16,6 +16,11 @@ import {
   SiFlask,
   SiExpo,
   SiMysql,
+  SiPython,
+  SiJavascript,
+  SiGithub,
+  SiFirebase,
+  SiSupabase,
 } from "react-icons/si";
 import { DiMsqlServer } from "react-icons/di";
 import { IconType } from "react-icons";
@@ -41,6 +46,11 @@ const iconComponents: { [key: string]: IconType } = {
   flask: SiFlask,
   azure: DiMsqlServer,
   sql: SiMysql,
+  python: SiPython,
+  javascript: SiJavascript,
+  github: SiGithub,
+  firebase: SiFirebase,
+  supabase: SiSupabase,
 };
 
 export default function SkillCard({ skill }: SkillCardProps) {

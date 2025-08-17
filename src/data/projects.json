@@ -12,7 +12,7 @@
     "tech": ["Django", "Supabase", "Tailwind CSS", "OCR"],
     "technologies": ["Django", "Supabase", "Tailwind CSS", "OCR"],
     "repoUrl": "https://github.com/yoohyunk/FairSplit",
-    "image": "public/fairsplit.png"
+    "image": "/FairSplit.png"
   },
   {
     "title": "Tic-Tac-Toe Multiplayer",
@@ -41,7 +41,7 @@
       "AI Logic"
     ],
     "repoUrl": "https://github.com/yoohyunk/tic-tac-toe-mobile",
-    "image": "public/tictactoe.png"
+    "image": "/TicTacToe.png"
   },
   {
     "title": "Todo List Full-Stack App",
@@ -56,7 +56,7 @@
     "tech": ["Next.js", "React", "Flask", "SQLite", "REST API"],
     "technologies": ["Next.js", "React", "Flask", "SQLite", "REST API"],
     "repoUrl": "https://github.com/yoohyunk/todo-list-frontend",
-    "image": "public/todolist.png"
+    "image": "/TodoList.png"
   },
   {
     "title": "Rollin in Dough eCommerce",
@@ -88,6 +88,6 @@
       "Jest"
     ],
     "repoUrl": "https://github.com/yoohyunk/rollin-in-dough",
-    "image": "public/rollinindough.png"
+    "image": "/RollinInDough.png"
   }
 ]
