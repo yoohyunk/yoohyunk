@@ -5,7 +5,7 @@ interface ScrollArrowProps {
   activeSection: string;
 }
 
-const SECTION_ORDER = ["hero", "about", "projects", "skills", "contact"];
+const SECTION_ORDER = ["hero", "about", "experience", "projects", "skills", "contact"];
 
 export default function ScrollArrow({ activeSection }: ScrollArrowProps) {
   const [isMobile, setIsMobile] = useState(false);

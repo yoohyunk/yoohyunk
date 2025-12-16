@@ -256,9 +256,13 @@ export default function HeroSection() {
 
       <section
         ref={sectionRef}
-        className={`h-screen w-full relative bg-[#0a0a0c] overflow-hidden transition-[opacity,transform] duration-1000 ${
+        className={`w-full relative bg-[#0a0a0c] overflow-hidden transition-[opacity,transform] duration-1000 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         } ${isMobile ? "flex flex-col justify-center items-center" : ""}`}
+        style={{
+          height: isMobile ? "calc(100dvh - 56px)" : "100vh",
+          minHeight: isMobile ? "calc(100dvh - 56px)" : "100vh",
+        }}
       >
         {showInteractionHint && (
           <div
@@ -362,13 +366,15 @@ export default function HeroSection() {
           <div className="popup-container">
             <div
               ref={popupRef}
-              className="bg-purple-100 text-black p-4 sm:p-6 rounded-lg shadow-xl w-[90%] sm:w-[500px] max-w-[90%]"
+              className="bg-purple-100 text-black p-4 sm:p-6 rounded-lg shadow-xl"
               style={{
                 fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
                 animation:
                   "bottomPullIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards",
                 boxShadow: "0 10px 20px rgba(0, 0, 0, 0.25)",
                 transformOrigin: "bottom center",
+                width: isMobile ? "calc(100vw - 48px)" : "500px",
+                maxWidth: "500px",
               }}
             >
               <div className="flex items-center justify-between border-b border-gray-200 pb-2 mb-4">
@@ -382,7 +388,7 @@ export default function HeroSection() {
                 </div>
                 <div
                   ref={closeButtonRef}
-                  className={`w-6 h-6 flex items-center justify-center cursor-pointer hover:bg-gray-100 rounded ${
+                  className={`w-8 h-8 flex items-center justify-center cursor-pointer hover:bg-gray-100 active:bg-gray-200 rounded ${
                     cursorClicked ? "bg-gray-200" : ""
                   }`}
                   onClick={handleCloseClick}
@@ -390,7 +396,14 @@ export default function HeroSection() {
                   ✕
                 </div>
               </div>
-              <div className="min-h-[100px]">
+              {/* 고정 높이로 타이핑 시 레이아웃 점프 방지 */}
+              <div 
+                className="overflow-hidden"
+                style={{ 
+                  height: isMobile ? "100px" : "110px",
+                  minHeight: isMobile ? "100px" : "110px",
+                }}
+              >
                 <p className="text-base sm:text-lg font-medium mb-2">
                   {typedText1}
                   <span

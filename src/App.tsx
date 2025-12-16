@@ -86,10 +86,15 @@ export default function App() {
               id={id}
               className={
                 id === "hero" && isMobile
-                  ? "relative min-h-[100vh] flex flex-col justify-center items-center"
+                  ? "relative min-h-[100dvh] flex flex-col justify-center items-center"
                   : id === "skills"
-                  ? "relative min-h-screen flex items-center justify-center"
-                  : "relative min-h-screen flex items-center"
+                  ? "relative min-h-[100dvh] md:min-h-screen flex items-center justify-center"
+                  : "relative min-h-[100dvh] md:min-h-screen flex items-center"
+              }
+              style={
+                isMobile
+                  ? { minHeight: "calc(100vh - 56px)" } // 모바일 주소창 고려
+                  : undefined
               }
             >
               <Component />

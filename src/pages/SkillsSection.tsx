@@ -6,7 +6,15 @@ import type { SkillsData } from "../types/skill";
 export default function SkillsSection() {
   const { categories } = skillsData as SkillsData;
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -37,7 +45,11 @@ export default function SkillsSection() {
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
-      <div className="h-screen flex flex-col justify-center max-w-4xl mx-auto py-6">
+      <div
+        className={`flex flex-col justify-center max-w-4xl mx-auto ${
+          isMobile ? "min-h-0 py-8" : "min-h-[100dvh] py-6"
+        }`}
+      >
         <h2
           className={`text-3xl font-bold mb-12 text-purple-200 text-center transition-[opacity,transform] duration-700 delay-300 mt-16 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
