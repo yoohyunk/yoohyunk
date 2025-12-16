@@ -91,7 +91,7 @@ export default function NavBar({
           <div className="md:hidden">
             <button
               onClick={toggleMobileMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-purple-300 hover:text-white hover:bg-purple-900/20 focus:outline-none"
+              className="inline-flex items-center justify-center w-11 h-11 rounded-lg text-purple-300 hover:text-white active:bg-purple-900/30 focus:outline-none transition-colors"
               aria-expanded={isMobileMenuOpen}
             >
               <span className="sr-only">Open main menu</span>
@@ -157,21 +157,35 @@ export default function NavBar({
         </div>
       </div>
 
-      {/* Mobile menu, show/hide based on menu state */}
-      <div className={`${isMobileMenuOpen ? "block" : "hidden"} md:hidden`}>
-        <div className="bg-[#0a0a0c]/95 backdrop-blur-md border-t border-purple-900/10 pb-3 pt-2">
-          <ul className="px-4 space-y-2">
-            {NAV_ITEMS.map(({ id, label }) => (
-              <li key={id}>
+      {/* Mobile menu with smooth animation */}
+      <div
+        className={`md:hidden overflow-hidden transition-all duration-300 ease-out ${
+          isMobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <div className="bg-[#0a0a0c]/95 backdrop-blur-md border-t border-purple-900/10 pb-4 pt-2">
+          <ul className="px-4 space-y-1">
+            {NAV_ITEMS.map(({ id, label }, index) => (
+              <li
+                key={id}
+                className="transform transition-all duration-300"
+                style={{
+                  transitionDelay: isMobileMenuOpen ? `${index * 50}ms` : "0ms",
+                  opacity: isMobileMenuOpen ? 1 : 0,
+                  transform: isMobileMenuOpen
+                    ? "translateX(0)"
+                    : "translateX(-10px)",
+                }}
+              >
                 <button
                   onClick={() => handleClick(id)}
                   className={`
-                    relative block w-full text-left px-3 py-2 rounded-md text-base font-medium
-                    transition-all duration-300 ease-out
+                    relative block w-full text-left px-4 py-3 rounded-lg text-base font-medium
+                    transition-all duration-200 ease-out min-h-[48px]
                     ${
                       activeSection === id
-                        ? "text-purple-300 bg-purple-900/20"
-                        : "text-gray-300 hover:bg-purple-900/10 hover:text-white"
+                        ? "text-purple-300 bg-purple-900/30"
+                        : "text-gray-300 active:bg-purple-900/20 active:text-white"
                     }
                     `}
                 >

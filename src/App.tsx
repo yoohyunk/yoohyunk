@@ -1,6 +1,6 @@
 // src/App.tsx
 "use client";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
 import HeroSection from "./pages/HeroSection";
 import AboutSection from "./pages/AboutSection";
@@ -21,7 +21,6 @@ const SECTIONS = [
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<string>("hero");
-  const [isNavClick, setIsNavClick] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -34,45 +33,7 @@ export default function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const centerSection = useCallback(
-    (element: HTMLElement) => {
-      if (isNavClick) return;
-
-      const windowHeight = window.innerHeight;
-      const elementRect = element.getBoundingClientRect();
-      const absoluteElementTop = window.pageYOffset + elementRect.top;
-      const middle =
-        absoluteElementTop - (windowHeight - elementRect.height) / 2;
-
-      let start: number | null = null;
-      const duration = 500;
-
-      const animate = (currentTime: number) => {
-        if (start === null) start = currentTime;
-        const elapsed = currentTime - start;
-        const progress = Math.min(elapsed / duration, 1);
-
-        const easeInOutCubic = (t: number) =>
-          t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-        const currentPosition = window.pageYOffset;
-        const distance = middle - currentPosition;
-
-        window.scrollTo(
-          0,
-          currentPosition + distance * easeInOutCubic(progress)
-        );
-
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        }
-      };
-
-      requestAnimationFrame(animate);
-    },
-    [isNavClick]
-  );
-
+  // 스크롤 시 활성 섹션만 감지 (자동 센터링 제거로 버벅거림 해결)
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -81,14 +42,13 @@ export default function App() {
             const sectionId = entry.target.getAttribute("data-section");
             if (sectionId) {
               setActiveSection(sectionId);
-              centerSection(entry.target as HTMLElement);
             }
           }
         });
       },
       {
-        rootMargin: "-30% 0px",
-        threshold: [0.3],
+        rootMargin: "-40% 0px -40% 0px",
+        threshold: 0,
       }
     );
 
@@ -97,19 +57,9 @@ export default function App() {
     });
 
     return () => observer.disconnect();
-  }, [centerSection]);
-
-  useEffect(() => {
-    if (isNavClick) {
-      const timer = setTimeout(() => {
-        setIsNavClick(false);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [isNavClick]);
+  }, []);
 
   const handleNavClick = () => {
-    setIsNavClick(true);
     setIsMobileMenuOpen(false);
   };
 

@@ -33,19 +33,19 @@ export default function SkillsSection() {
   return (
     <section
       ref={sectionRef}
-      className={`w-full transition-all duration-1000 transform ${
+      className={`w-full transition-[opacity,transform] duration-1000 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
       <div className="h-screen flex flex-col justify-center max-w-4xl mx-auto py-6">
         <h2
-          className={`text-3xl font-bold mb-12 text-purple-200 text-center transition-all duration-700 delay-300 transform mt-16 ${
+          className={`text-3xl font-bold mb-12 text-purple-200 text-center transition-[opacity,transform] duration-700 delay-300 mt-16 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
           Tools & Technologies
           <div
-            className={`h-0.5 w-20 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mt-4 rounded-full transition-all duration-700 delay-500 transform ${
+            className={`h-0.5 w-20 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mt-4 rounded-full transition-[opacity,transform] duration-700 delay-500 ${
               isVisible ? "opacity-100 scale-100" : "opacity-0 scale-0"
             }`}
           />
@@ -60,7 +60,7 @@ export default function SkillsSection() {
             {categories.map((category, index) => (
               <div
                 key={category.name}
-                className={`space-y-4 transition-all duration-700 transform ${
+                className={`space-y-4 transition-[opacity,transform] duration-700 ${
                   isVisible
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-10"
@@ -76,7 +76,7 @@ export default function SkillsSection() {
                   {category.skills.map((skill, skillIndex) => (
                     <div
                       key={skill.name}
-                      className={`transition-all duration-500 transform ${
+                      className={`transition-[opacity,transform] duration-500 ${
                         isVisible
                           ? "opacity-100 translate-y-0"
                           : "opacity-0 translate-y-10"

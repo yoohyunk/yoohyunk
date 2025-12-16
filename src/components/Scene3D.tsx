@@ -13,10 +13,6 @@ const Scene3D: React.FC<Scene3DProps> = ({ isMobile = false }) => {
   // Load GLB model
   const { scene } = useGLTF("/macbook_pro_2021.glb");
 
-  useEffect(() => {
-    // Check model structure (for debugging)
-    console.log("Model structure:", scene);
-  }, [scene]);
 
   useFrame(({ clock }) => {
     if (groupRef.current) {

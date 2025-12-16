@@ -61,14 +61,6 @@ export default function HeroSection() {
       setShowFinalText(true);
     }
 
-    console.log(
-      "localStorage hasSeenIntro:",
-      localStorage.getItem("hasSeenIntro")
-    );
-    console.log(
-      "showPopup:",
-      !localStorage.getItem("hasSeenIntro") || ALWAYS_SHOW_POPUP
-    );
   }, []);
 
   useEffect(() => {
@@ -173,7 +165,6 @@ export default function HeroSection() {
 
               // Save visit record
               localStorage.setItem("hasSeenIntro", "true");
-              console.log("Saving to localStorage, hasSeenIntro:", true);
 
               // Hide cursor after popup closes
               setTimeout(() => {
@@ -265,7 +256,7 @@ export default function HeroSection() {
 
       <section
         ref={sectionRef}
-        className={`h-screen w-full relative bg-[#0a0a0c] overflow-hidden transition-all duration-1000 transform ${
+        className={`h-screen w-full relative bg-[#0a0a0c] overflow-hidden transition-[opacity,transform] duration-1000 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         } ${isMobile ? "flex flex-col justify-center items-center" : ""}`}
       >
@@ -285,38 +276,46 @@ export default function HeroSection() {
             isMobile ? "flex items-center justify-center" : ""
           }`}
         >
-          <Canvas
-            camera={{
-              position: isMobile ? [0, 0, 3.5] : [0, 0, 3.2],
-              fov: isMobile ? 45 : 32,
-            }}
-            className="w-full h-full"
-            dpr={[1, Math.min(2, window.devicePixelRatio)]}
-            performance={{ min: 0.5 }}
-          >
-            <color attach="background" args={["#0a0a0c"]} />
+          {/* 화면에 보일 때만 Canvas 렌더링하여 성능 최적화 */}
+          {isVisible && (
+            <Canvas
+              camera={{
+                position: isMobile ? [0, 0, 3.5] : [0, 0, 3.2],
+                fov: isMobile ? 45 : 32,
+              }}
+              className="w-full h-full"
+              dpr={[1, Math.min(2, window.devicePixelRatio)]}
+              performance={{ min: 0.5 }}
+              frameloop="always"
+            >
+              <color attach="background" args={["#0a0a0c"]} />
 
-            <ambientLight intensity={isMobile ? 1.6 : 1.3} />
+              <ambientLight intensity={isMobile ? 1.6 : 1.3} />
 
-            <pointLight position={[5, 5, 5]} intensity={isMobile ? 1.2 : 1.4} />
+              <pointLight position={[5, 5, 5]} intensity={isMobile ? 1.2 : 1.4} />
 
-            <pointLight position={[-5, -5, -5]} intensity={0.7} />
-            <Suspense fallback={null}>
-              <Scene3D isMobile={isMobile} />
-              <OrbitControls
-                enableZoom={false}
-                enablePan={false}
-                minPolarAngle={0}
-                maxPolarAngle={Math.PI}
-                minAzimuthAngle={-Infinity}
-                maxAzimuthAngle={Infinity}
-                rotateSpeed={isMobile ? 0.2 : 0.3}
-                enableDamping={true}
-                dampingFactor={0.05}
-                target={[0, 0, 0]}
-              />
-            </Suspense>
-          </Canvas>
+              <pointLight position={[-5, -5, -5]} intensity={0.7} />
+              <Suspense fallback={null}>
+                <Scene3D isMobile={isMobile} />
+                <OrbitControls
+                  enableZoom={false}
+                  enablePan={false}
+                  minPolarAngle={0}
+                  maxPolarAngle={Math.PI}
+                  minAzimuthAngle={-Infinity}
+                  maxAzimuthAngle={Infinity}
+                  rotateSpeed={isMobile ? 0.2 : 0.3}
+                  enableDamping={true}
+                  dampingFactor={0.05}
+                  target={[0, 0, 0]}
+                />
+              </Suspense>
+            </Canvas>
+          )}
+          {/* Canvas가 없을 때 배경색 유지 */}
+          {!isVisible && (
+            <div className="w-full h-full bg-[#0a0a0c]" />
+          )}
         </div>
 
         {/* 최종 텍스트 */}

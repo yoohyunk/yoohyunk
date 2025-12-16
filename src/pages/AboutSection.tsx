@@ -31,25 +31,25 @@ export default function AboutSection() {
   return (
     <section
       ref={sectionRef}
-      className={`w-full transition-all duration-1000 transform ${
+      className={`w-full transition-[opacity,transform] duration-1000 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
       <div className="max-w-3xl mx-auto">
         <h2
-          className={`text-4xl font-bold mb-8 text-purple-200 text-center transition-all duration-700 delay-300 transform ${
+          className={`text-4xl font-bold mb-8 text-purple-200 text-center transition-[opacity,transform] duration-700 delay-300 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
           About Me
           <div
-            className={`h-0.5 w-20 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mt-4 rounded-full transition-all duration-700 delay-500 transform ${
+            className={`h-0.5 w-20 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mt-4 rounded-full transition-[opacity,transform] duration-700 delay-500 ${
               isVisible ? "opacity-100 scale-100" : "opacity-0 scale-0"
             }`}
           />
         </h2>
         <div
-          className={`relative group transition-all duration-700 delay-700 transform ${
+          className={`relative group transition-[opacity,transform] duration-700 delay-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >

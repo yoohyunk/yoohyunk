@@ -43,13 +43,13 @@ export default function ProjectsSection() {
 
       <section
         ref={sectionRef}
-        className={`w-full transition-all duration-1000 transform ${
+        className={`w-full transition-[opacity,transform] duration-1000 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
-        <div className="max-w-4xl mx-auto px-4 py-8 perspective-1000">
+        <div className="max-w-4xl mx-auto px-4 sm:px-4 py-6 sm:py-8 perspective-1000">
           <h2
-            className={`text-3xl font-bold mb-8 text-purple-200 text-center transition-all duration-700 delay-300 transform ${
+            className={`text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-purple-200 text-center transition-[opacity,transform] duration-700 delay-300 ${
               isVisible
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-10"
@@ -57,19 +57,19 @@ export default function ProjectsSection() {
           >
             Projects
             <div
-              className={`h-0.5 w-20 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mt-4 rounded-full transition-all duration-700 delay-500 transform ${
+              className={`h-0.5 w-16 sm:w-20 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mt-3 sm:mt-4 rounded-full transition-[opacity,transform] duration-700 delay-500 ${
                 isVisible ? "opacity-100 scale-100" : "opacity-0 scale-0"
               }`}
             />
           </h2>
           <div
-            className="grid gap-6 md:grid-cols-2 lg:gap-8"
+            className="grid gap-5 sm:gap-6 md:grid-cols-2 lg:gap-8"
             style={{ perspective: "1500px" }}
           >
             {projects.map((project, index) => (
               <div
                 key={project.title}
-                className={`transition-all duration-700 transform ${
+                className={`transition-[opacity,transform] duration-700 ${
                   isVisible
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-10"

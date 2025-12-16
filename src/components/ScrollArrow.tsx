@@ -65,18 +65,20 @@ export default function ScrollArrow({ activeSection }: ScrollArrowProps) {
   return (
     <div
       className={`fixed ${
-        isMobile ? "bottom-8" : "bottom-12"
+        isMobile ? "bottom-6" : "bottom-12"
       } left-1/2 transform -translate-x-1/2 z-40`}
     >
       <button
         onClick={handleClick}
-        className="animate-bounce cursor-pointer transition-all duration-300 group"
+        className={`animate-bounce cursor-pointer transition-all duration-300 group flex items-center justify-center rounded-full bg-purple-900/20 active:bg-purple-900/40 ${
+          isMobile ? "w-12 h-12" : "w-14 h-14 hover:bg-purple-900/30"
+        }`}
         aria-label="Scroll to next section"
       >
         <MdOutlineKeyboardArrowDown
           className={`${
-            isMobile ? "w-8 h-8" : "w-10 h-10"
-          } text-purple-400/50 group-hover:text-purple-300 group-hover:drop-shadow-[0_0_8px_rgba(168,85,247,0.5)] transition-all`}
+            isMobile ? "w-7 h-7" : "w-8 h-8"
+          } text-purple-400/70 group-hover:text-purple-300 group-active:text-purple-300 group-hover:drop-shadow-[0_0_8px_rgba(168,85,247,0.5)] transition-all`}
         />
       </button>
     </div>

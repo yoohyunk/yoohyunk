@@ -121,6 +121,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const tagContainerRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Determine how many tags to show based on available space
   useEffect(() => {
@@ -186,86 +195,135 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
 
       <div
         ref={cardRef}
-        className="relative bg-[#1A1C20] rounded-xl overflow-hidden border border-purple-900/10 group-hover:border-purple-500/20 transition duration-300 shadow-lg group-hover:shadow-purple-500/10"
+        className="relative bg-[#1A1C20] rounded-xl overflow-hidden border border-purple-900/10 group-hover:border-purple-500/20 transition duration-300 shadow-lg group-hover:shadow-purple-500/10 active:scale-[0.98]"
         style={{
-          ...calculate3DTransform(),
+          ...(isMobile ? {} : calculate3DTransform()),
           transformStyle: "preserve-3d",
-          height: "160px", // Fixed height
         }}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        onMouseMove={handleMouseMove}
+        onMouseEnter={() => !isMobile && setIsHovered(true)}
+        onMouseLeave={() => !isMobile && setIsHovered(false)}
+        onMouseMove={!isMobile ? handleMouseMove : undefined}
         onClick={handleClick}
       >
-        <div className="flex h-full">
-          {/* Image on the left */}
-          <div className="w-2/5 h-full relative overflow-hidden">
+        {/* Mobile: Vertical layout / Desktop: Horizontal layout */}
+        <div className={`${isMobile ? "flex flex-col" : "flex h-[160px]"}`}>
+          {/* Image */}
+          <div
+            className={`relative overflow-hidden ${
+              isMobile ? "w-full h-40" : "w-2/5 h-full"
+            }`}
+          >
             <img
               src={image}
               alt={project.title}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
+            {/* Mobile: Tap indicator overlay */}
+            {isMobile && (
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
+            )}
           </div>
 
-          {/* Content on the right */}
-          <div className="w-3/5 p-3 flex flex-col h-full">
-            <h3 className="text-md font-bold text-white mb-1 line-clamp-1 group-hover:text-purple-300 transition-colors">
+          {/* Content */}
+          <div
+            className={`flex flex-col ${
+              isMobile ? "p-4" : "w-3/5 p-3 h-full"
+            }`}
+          >
+            <h3
+              className={`font-bold text-white mb-1 line-clamp-1 group-hover:text-purple-300 transition-colors ${
+                isMobile ? "text-lg" : "text-md"
+              }`}
+            >
               {project.title}
             </h3>
 
-            <p className="text-xs text-gray-400 line-clamp-2 mb-2 group-hover:text-gray-300 transition-colors">
+            <p
+              className={`text-gray-400 mb-2 group-hover:text-gray-300 transition-colors ${
+                isMobile ? "text-sm line-clamp-3" : "text-xs line-clamp-2"
+              }`}
+            >
               {project.summary}
             </p>
 
             <div className="mt-auto">
               <div
-                className="flex flex-wrap gap-1.5 mb-2"
+                className={`flex flex-wrap gap-1.5 ${isMobile ? "gap-2" : "mb-2"}`}
                 ref={tagContainerRef}
               >
-                {technologies.slice(0, showCount).map((tech, index) => (
+                {technologies.slice(0, isMobile ? 6 : showCount).map((tech, index) => (
                   <div
                     key={index}
-                    className="text-sm hover:scale-110 transition-transform"
+                    className={`transition-transform ${
+                      isMobile ? "text-base" : "text-sm hover:scale-110"
+                    }`}
                     title={tech}
                   >
                     {getTechIcon(tech)}
                   </div>
                 ))}
-                {technologies.length > showCount && (
-                  <span className="text-xs flex items-center justify-center text-white bg-purple-500/50 rounded-full w-4 h-4">
-                    +{technologies.length - showCount}
+                {technologies.length > (isMobile ? 6 : showCount) && (
+                  <span
+                    className={`flex items-center justify-center text-white bg-purple-500/50 rounded-full ${
+                      isMobile ? "text-xs w-5 h-5" : "text-xs w-4 h-4"
+                    }`}
+                  >
+                    +{technologies.length - (isMobile ? 6 : showCount)}
                   </span>
                 )}
               </div>
+              
+              {/* Mobile: Tap to view hint */}
+              {isMobile && (
+                <div className="flex items-center justify-end mt-3 text-purple-400 text-sm">
+                  <span>Tap to view</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 ml-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Hover overlay with centered "View Project" text */}
-        <div
-          className={`absolute inset-0 bg-black/70 flex items-center justify-center transition-opacity duration-300 ${
-            isHovered ? "opacity-100" : "opacity-0"
-          }`}
-          style={{ pointerEvents: "none" }}
-        >
-          <div className="text-white font-medium flex items-center text-xl">
-            View Project
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 ml-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
+        {/* Desktop: Hover overlay with centered "View Project" text */}
+        {!isMobile && (
+          <div
+            className={`absolute inset-0 bg-black/70 flex items-center justify-center transition-opacity duration-300 ${
+              isHovered ? "opacity-100" : "opacity-0"
+            }`}
+            style={{ pointerEvents: "none" }}
+          >
+            <div className="text-white font-medium flex items-center text-xl">
+              View Project
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 ml-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
