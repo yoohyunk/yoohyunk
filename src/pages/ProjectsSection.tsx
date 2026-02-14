@@ -49,7 +49,7 @@ export default function ProjectsSection() {
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-4 py-6 sm:py-8 perspective-1000">
           <h2
-            className={`text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-purple-200 text-center transition-[opacity,transform] duration-700 delay-300 ${
+            className={`text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-[#1a1a2e] text-center transition-[opacity,transform] duration-700 delay-300 ${
               isVisible
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-10"
@@ -57,7 +57,7 @@ export default function ProjectsSection() {
           >
             Projects
             <div
-              className={`h-0.5 w-16 sm:w-20 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mt-3 sm:mt-4 rounded-full transition-[opacity,transform] duration-700 delay-500 ${
+              className={`h-0.5 w-16 sm:w-20 bg-violet-500 mx-auto mt-3 sm:mt-4 rounded-full transition-[opacity,transform] duration-700 delay-500 ${
                 isVisible ? "opacity-100 scale-100" : "opacity-0 scale-0"
               }`}
             />
