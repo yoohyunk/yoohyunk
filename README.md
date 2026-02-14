@@ -1,19 +1,17 @@
-<div align="center">
+# Hey, I'm Erica &#x1F44B;
 
-# Hey, I'm Erica &nbsp;&#x1F44B;
+**Software Engineer** interested in building reliable and practical systems.
 
-**Software Engineer** who builds things people actually use.
+I enjoy working across the stack — from backend logic to frontend interfaces — and turning ideas into usable products.
 
-Scheduling apps for food truck operators. Storefronts for cookie shops. Expense splitters that scan your receipts.
-I like solving real problems across the full stack — from database security to cart persistence to constraint-based algorithms.
+Always learning, always building.
+
 
 Based in Calgary, Canada.
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/ericakimyh)
 [![Portfolio](https://img.shields.io/badge/Portfolio-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://ericakim.dev)
 [![Email](https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:erica.kim.yh@gmail.com)
-
-</div>
 
 ---
 
@@ -64,13 +62,32 @@ Real-time multiplayer mobile game with matchmaking, game lobbies, and a configur
 
 <div align="center">
 
-<img src="https://github-readme-stats.vercel.app/api?username=yoohyunk&show_icons=true&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff" height="165" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=yoohyunk&theme=github_dark" />
+  <source media="(prefers-color-scheme: light)" srcset="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=yoohyunk&theme=default" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=yoohyunk&theme=default" height="165" />
+</picture>
 &nbsp;&nbsp;
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=yoohyunk&layout=compact&hide_border=true&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9" height="165" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=yoohyunk&theme=github_dark" />
+  <source media="(prefers-color-scheme: light)" srcset="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=yoohyunk&theme=default" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=yoohyunk&theme=default" height="165" />
+</picture>
 
 <br/><br/>
 
-<img src="https://github-readme-streak-stats.herokuapp.com/?user=yoohyunk&hide_border=true&background=0d1117&ring=58a6ff&fire=58a6ff&currStreakNum=c9d1d9&currStreakLabel=58a6ff&sideNums=c9d1d9&sideLabels=c9d1d9&dates=6e7681" />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com/?user=yoohyunk&hide_border=true&background=0d1117&ring=58a6ff&fire=58a6ff&currStreakNum=c9d1d9&currStreakLabel=58a6ff&sideNums=c9d1d9&sideLabels=c9d1d9&dates=6e7681" />
+  <source media="(prefers-color-scheme: light)" srcset="https://streak-stats.demolab.com/?user=yoohyunk&hide_border=true" />
+  <img src="https://streak-stats.demolab.com/?user=yoohyunk&hide_border=true" />
+</picture>
+
+<br/><br/>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=yoohyunk&theme=github_dark" />
+  <source media="(prefers-color-scheme: light)" srcset="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=yoohyunk&theme=default" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=yoohyunk&theme=default" width="660" />
+</picture>
 
 </div>
-
