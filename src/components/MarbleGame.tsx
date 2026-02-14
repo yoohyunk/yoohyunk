@@ -2,7 +2,6 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
 import type { RapierRigidBody } from "@react-three/rapier";
-import * as THREE from "three";
 
 // ─── Constants ───────────────────────────────────────────────────────────
 const PLATFORM_SIZE = 10;
@@ -22,6 +21,7 @@ interface Obstacle {
   velocity: [number, number, number];
   color: string;
   scale: [number, number, number];
+  spawnTime: number;
 }
 
 type GameState = "idle" | "playing" | "gameover";
@@ -49,9 +49,11 @@ function Platform() {
 function Marble({
   marbleRef,
   gameState,
+  onHit,
 }: {
   marbleRef: React.RefObject<RapierRigidBody | null>;
   gameState: GameState;
+  onHit: () => void;
 }) {
   // Metallic sphere with purple/pink emissive glow
   return (
@@ -64,6 +66,14 @@ function Marble({
       linearDamping={0.5}
       angularDamping={0.5}
       type={gameState === "playing" ? "dynamic" : "fixed"}
+      onCollisionEnter={(e) => {
+        // Trigger game over when marble hits an obstacle (kinematic body)
+        const other = e.other.rigidBody;
+        if (other && other.bodyType() === 2) {
+          // bodyType 2 = kinematicPosition in rapier
+          onHit();
+        }
+      }}
     >
       <mesh castShadow>
         <sphereGeometry args={[MARBLE_RADIUS, 32, 32]} />
@@ -340,14 +350,14 @@ function GameWorld({
         velocity,
         color,
         scale: [width, height, width],
+        spawnTime: gameTimeRef.current,
       };
 
       setObstacles((prev) => {
-        // Remove obstacles that have traveled far enough
-        const filtered = prev.filter((o) => {
-          const dist = Math.abs(o.position[0]) + Math.abs(o.position[2]);
-          return dist < PLATFORM_SIZE * 3;
-        });
+        // Remove obstacles that have been alive for more than 8 seconds
+        const filtered = prev.filter(
+          (o) => gameTimeRef.current - o.spawnTime < 8
+        );
         return [...filtered, newObstacle];
       });
     }
@@ -370,7 +380,7 @@ function GameWorld({
 
       <Physics gravity={[0, -9.81, 0]}>
         <Platform />
-        <Marble marbleRef={marbleRef} gameState={gameState} />
+        <Marble marbleRef={marbleRef} gameState={gameState} onHit={handleGameOver} />
         {obstacles.map((o) => (
           <ObstacleBlock key={o.id} obstacle={o} />
         ))}
