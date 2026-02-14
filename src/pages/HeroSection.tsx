@@ -1,7 +1,4 @@
-import { useState, useEffect, useRef, Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import Scene3D from "../components/Scene3D";
+import { useState, useEffect, useRef } from "react";
 
 export default function HeroSection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -18,7 +15,7 @@ export default function HeroSection() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setIsVisible(entry.isIntersecting),
-      { threshold: 0.1, rootMargin: "-100px" }
+      { threshold: 0.1 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => {
@@ -45,117 +42,59 @@ export default function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className={`w-full relative overflow-hidden transition-[opacity,transform] duration-1000 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
+      className="w-full relative overflow-hidden"
       style={{
         height: isMobile ? "calc(100dvh - 56px)" : "100vh",
         minHeight: isMobile ? "calc(100dvh - 56px)" : "100vh",
       }}
     >
-      {/* Decorative gradient blob */}
-      <div className="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-violet-200/40 to-pink-200/30 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-gradient-to-tr from-violet-100/30 to-transparent rounded-full blur-3xl pointer-events-none" />
+      {/* Animated gradient mesh background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] rounded-full bg-purple-300/30 blur-3xl animate-mesh-1" />
+        <div className="absolute top-[10%] right-[-15%] w-[60%] h-[60%] rounded-full bg-pink-300/25 blur-3xl animate-mesh-2" />
+        <div className="absolute bottom-[-10%] left-[20%] w-[50%] h-[50%] rounded-full bg-blue-300/20 blur-3xl animate-mesh-3" />
+      </div>
 
-      <div
-        className={`relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${
-          isMobile
-            ? "flex flex-col items-center justify-center gap-6"
-            : "flex items-center gap-8"
-        }`}
-      >
-        {/* Text side */}
-        <div
-          className={`${
-            isMobile ? "text-center z-10" : "w-1/2 z-10"
+      {/* Content */}
+      <div className="relative h-full flex flex-col items-center justify-center px-4 sm:px-6 text-center">
+        <p
+          className={`text-gray-500 font-medium mb-4 tracking-wide uppercase text-sm transition-all duration-700 delay-200 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
-          <p
-            className={`text-violet-600 font-medium mb-2 transition-[opacity,transform] duration-700 delay-200 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            } ${isMobile ? "text-sm" : "text-base"}`}
-          >
-            Hi, I'm
-          </p>
-          <h1
-            className={`font-bold text-[#1a1a2e] mb-3 transition-[opacity,transform] duration-700 delay-300 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            } ${isMobile ? "text-3xl" : "text-5xl lg:text-6xl"}`}
-          >
-            Erica Kim
-          </h1>
-          <h2
-            className={`text-gray-500 mb-4 transition-[opacity,transform] duration-700 delay-400 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            } ${isMobile ? "text-lg" : "text-xl lg:text-2xl"}`}
-          >
-            Full-Stack Developer
-          </h2>
-          <p
-            className={`text-gray-500 mb-6 leading-relaxed transition-[opacity,transform] duration-700 delay-500 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            } ${isMobile ? "text-sm max-w-xs mx-auto" : "text-base max-w-md"}`}
-          >
-            Passionate about creating amazing experiences from database to browser.
-          </p>
-          <div
-            className={`flex gap-3 transition-[opacity,transform] duration-700 delay-[600ms] ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            } ${isMobile ? "justify-center" : ""}`}
-          >
-            <button
-              onClick={handleScrollToProjects}
-              className="px-5 py-2.5 bg-violet-600 text-white rounded-lg hover:bg-violet-700 active:bg-violet-800 transition-colors text-sm font-medium cursor-pointer"
-            >
-              View Projects
-            </button>
-            <button
-              onClick={handleScrollToContact}
-              className="px-5 py-2.5 border border-violet-300 text-violet-600 rounded-lg hover:bg-violet-50 active:bg-violet-100 transition-colors text-sm font-medium cursor-pointer"
-            >
-              Contact Me
-            </button>
-          </div>
-        </div>
-
-        {/* 3D side */}
+          Full-Stack Developer
+        </p>
+        <h1
+          className={`font-bold bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 bg-clip-text text-transparent leading-tight mb-6 transition-all duration-700 delay-300 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          } ${isMobile ? "text-5xl" : "text-7xl lg:text-8xl"}`}
+        >
+          Erica Kim
+        </h1>
+        <p
+          className={`text-gray-500 max-w-lg leading-relaxed mb-8 transition-all duration-700 delay-500 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          } ${isMobile ? "text-base px-4" : "text-lg"}`}
+        >
+          Passionate about building end-to-end experiences — from database schema to polished interfaces.
+        </p>
         <div
-          className={`${
-            isMobile ? "w-full h-[40vh]" : "w-1/2 h-full"
+          className={`flex gap-4 transition-all duration-700 delay-[600ms] ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
-          {isVisible && (
-            <Canvas
-              camera={{
-                position: isMobile ? [0, 0, 3.5] : [0, 0, 3.2],
-                fov: isMobile ? 45 : 32,
-              }}
-              className="w-full h-full"
-              dpr={[1, Math.min(2, window.devicePixelRatio)]}
-              performance={{ min: 0.5 }}
-              frameloop="always"
-            >
-              <color attach="background" args={["#ffffff"]} />
-              <ambientLight intensity={isMobile ? 2.0 : 1.8} />
-              <pointLight position={[5, 5, 5]} intensity={isMobile ? 1.5 : 1.6} />
-              <pointLight position={[-5, -5, -5]} intensity={0.8} />
-              <Suspense fallback={null}>
-                <Scene3D isMobile={isMobile} />
-                <OrbitControls
-                  enableZoom={false}
-                  enablePan={false}
-                  minPolarAngle={0}
-                  maxPolarAngle={Math.PI}
-                  minAzimuthAngle={-Infinity}
-                  maxAzimuthAngle={Infinity}
-                  rotateSpeed={isMobile ? 0.2 : 0.3}
-                  enableDamping={true}
-                  dampingFactor={0.05}
-                  target={[0, 0, 0]}
-                />
-              </Suspense>
-            </Canvas>
-          )}
+          <button
+            onClick={handleScrollToProjects}
+            className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-full hover:shadow-lg hover:shadow-purple-500/25 active:scale-95 transition-all text-sm font-medium cursor-pointer"
+          >
+            View Projects
+          </button>
+          <button
+            onClick={handleScrollToContact}
+            className="px-6 py-3 border border-gray-300 text-gray-700 rounded-full hover:border-purple-400 hover:text-purple-600 active:scale-95 transition-all text-sm font-medium cursor-pointer"
+          >
+            Contact Me
+          </button>
         </div>
       </div>
     </section>
