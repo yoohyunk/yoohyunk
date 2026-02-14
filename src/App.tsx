@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
 import HeroSection from "./pages/HeroSection";
+import ShowcaseSection from "./pages/ShowcaseSection";
 import AboutSection from "./pages/AboutSection";
 import ExperienceSection from "./pages/ExperienceSection";
 import ProjectsSection from "./pages/ProjectsSection";
@@ -12,6 +13,7 @@ import ScrollArrow from "./components/ScrollArrow";
 
 const SECTIONS = [
   { id: "hero", Component: HeroSection },
+  { id: "showcase", Component: ShowcaseSection },
   { id: "about", Component: AboutSection },
   { id: "experience", Component: ExperienceSection },
   { id: "projects", Component: ProjectsSection },
@@ -65,37 +67,30 @@ export default function App() {
 
   return (
     <div className="min-h-screen w-full bg-white text-[#1a1a2e] scroll-smooth selection:bg-violet-100 selection:text-violet-900">
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative">
         <NavBar
           activeSection={activeSection}
           onNavClick={handleNavClick}
           isMobileMenuOpen={isMobileMenuOpen}
           setIsMobileMenuOpen={setIsMobileMenuOpen}
         />
-        <main
-          className={
-            isMobile ? "pt-14 space-y-12 pb-16" : "pt-14 space-y-24 pb-24"
-          }
-        >
+        <main className="pt-14 pb-24">
           {SECTIONS.map(({ id, Component }) => (
-            <div
-              key={id}
-              data-section={id}
-              id={id}
-              className={
-                id === "hero"
-                  ? "relative min-h-[100dvh] flex items-center"
-                  : "relative py-20 md:py-28"
-              }
-              style={
-                id === "hero" && isMobile
-                  ? { minHeight: "calc(100vh - 56px)" }
-                  : undefined
-              }
-            >
-              <Component />
-            </div>
-          ))}
+              <div
+                key={id}
+                data-section={id}
+                id={id}
+                className={
+                  id === "hero"
+                    ? "relative"
+                    : id === "showcase"
+                    ? "relative"
+                    : "relative py-24 md:py-32"
+                }
+              >
+                <Component />
+              </div>
+            ))}
         </main>
         <ScrollArrow activeSection={activeSection} />
       </div>
