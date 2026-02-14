@@ -105,7 +105,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
           >
             <h2
               id="modal-title"
-              className={`font-bold mb-2 text-violet-600 ${
+              className={`font-bold mb-2 bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent ${
                 isMobile ? "text-2xl" : "text-xl"
               }`}
             >
