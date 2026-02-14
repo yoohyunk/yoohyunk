@@ -245,14 +245,10 @@ function Marble({
       angularDamping={1}
       type={gameState === "playing" ? "dynamic" : "fixed"}
       onCollisionEnter={(e) => {
+        // bodyType 2 = kinematicPosition — only obstacles use this type
         const other = e.other.rigidBody;
-        // bodyType 0 = fixed (obstacles are fixed), but track is also fixed
-        // Use position check — obstacles are above the track surface
-        if (other) {
-          const otherPos = other.translation();
-          if (otherPos.y > 0) {
-            onHit();
-          }
+        if (other && other.bodyType() === 2) {
+          onHit();
         }
       }}
     >
@@ -277,7 +273,7 @@ function Marble({
 // ─── Course Obstacle (fixed) ────────────────────────────────────────────
 function ObstacleBlock({ obstacle }: { obstacle: CourseObstacle }) {
   return (
-    <RigidBody type="fixed" position={obstacle.position}>
+    <RigidBody type="kinematicPosition" position={obstacle.position}>
       <CuboidCollider
         args={[obstacle.scale[0] / 2, obstacle.scale[1] / 2, obstacle.scale[2] / 2]}
       />
