@@ -6,13 +6,15 @@ import type { RapierRigidBody } from "@react-three/rapier";
 // ─── Constants ───────────────────────────────────────────────────────────
 const PLATFORM_SIZE = 10;
 const MARBLE_RADIUS = 0.3;
-const FORCE_STRENGTH = 5;
-const INITIAL_SPAWN_INTERVAL = 2000; // ms
-const MIN_SPAWN_INTERVAL = 400; // ms
-const SPAWN_INTERVAL_DECREASE = 50; // ms decrease per spawn
-const INITIAL_OBSTACLE_SPEED = 3;
-const SPEED_INCREASE_RATE = 0.1; // per second
+const FORCE_STRENGTH = 0.8;
+const MAX_VELOCITY = 4;
+const INITIAL_SPAWN_INTERVAL = 3000; // ms
+const MIN_SPAWN_INTERVAL = 600; // ms
+const SPAWN_INTERVAL_DECREASE = 30; // ms decrease per spawn
+const INITIAL_OBSTACLE_SPEED = 2;
+const SPEED_INCREASE_RATE = 0.05; // per second
 const FALL_THRESHOLD = -5;
+const GRACE_PERIOD = 2; // seconds before first obstacle spawns
 
 // ─── Types ───────────────────────────────────────────────────────────────
 interface Obstacle {
@@ -61,10 +63,10 @@ function Marble({
       ref={marbleRef}
       position={[0, 1, 0]}
       colliders="ball"
-      restitution={0.3}
-      friction={0.8}
-      linearDamping={0.5}
-      angularDamping={0.5}
+      restitution={0.2}
+      friction={1}
+      linearDamping={3}
+      angularDamping={2}
       type={gameState === "playing" ? "dynamic" : "fixed"}
       onCollisionEnter={(e) => {
         // Trigger game over when marble hits an obstacle (kinematic body)
@@ -301,7 +303,21 @@ function GameWorld({
       if (force.x !== 0 || force.z !== 0) {
         marbleRef.current.applyImpulse(force, true);
       }
+
+      // Cap velocity so marble doesn't fly off
+      const vel = marbleRef.current.linvel();
+      const speed2d = Math.sqrt(vel.x * vel.x + vel.z * vel.z);
+      if (speed2d > MAX_VELOCITY) {
+        const scale = MAX_VELOCITY / speed2d;
+        marbleRef.current.setLinvel(
+          { x: vel.x * scale, y: vel.y, z: vel.z * scale },
+          true
+        );
+      }
     }
+
+    // Grace period — no obstacles for the first few seconds
+    if (gameTimeRef.current < GRACE_PERIOD) return;
 
     // Spawn obstacles
     const now = gameTimeRef.current * 1000;
@@ -436,11 +452,14 @@ export default function MarbleGame({ isMobile }: { isMobile: boolean }) {
       {/* Idle / Start screen */}
       {gameState === "idle" && (
         <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
-          <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent mb-4">
+          <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent mb-3">
             Marble Survival
           </h3>
-          <p className="text-gray-400 text-sm mb-6">
-            {isMobile ? "Touch & drag to move" : "WASD or Arrow Keys to move"}
+          <p className="text-gray-400 text-sm mb-1">
+            Dodge the obstacles. Survive as long as you can.
+          </p>
+          <p className="text-gray-500 text-xs mb-6">
+            {isMobile ? "Touch & drag to roll the marble" : "Use WASD or Arrow Keys to roll the marble"}
           </p>
           <button
             onClick={startGame}
