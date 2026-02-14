@@ -35,13 +35,13 @@ export default function ContactSection() {
     >
       <div className="max-w-3xl mx-auto">
         <h2
-          className={`text-4xl font-bold mb-8 text-purple-200 text-center transition-[opacity,transform] duration-700 delay-300 ${
+          className={`text-4xl font-bold mb-8 text-[#1a1a2e] text-center transition-[opacity,transform] duration-700 delay-300 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
           Let's Connect
           <div
-            className={`h-0.5 w-20 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mt-4 rounded-full transition-[opacity,transform] duration-700 delay-500 ${
+            className={`h-0.5 w-20 bg-violet-500 mx-auto mt-4 rounded-full transition-[opacity,transform] duration-700 delay-500 ${
               isVisible ? "opacity-100 scale-100" : "opacity-0 scale-0"
             }`}
           />
@@ -49,11 +49,11 @@ export default function ContactSection() {
         <div className="grid gap-4 md:grid-cols-2">
           <a
             href="mailto:yoohyunk20@gmail.com"
-            className="flex items-center p-4 sm:p-5 rounded-xl hover:bg-purple-900/20 active:bg-purple-900/30 transition-colors group min-h-[72px]"
+            className="flex items-center p-4 sm:p-5 rounded-xl hover:bg-violet-50 active:bg-violet-100 transition-colors group min-h-[72px]"
           >
-            <div className="bg-purple-900/30 p-3 sm:p-3.5 rounded-full group-hover:bg-purple-800/40 group-active:bg-purple-800/50 transition-colors flex-shrink-0">
+            <div className="bg-violet-100 p-3 sm:p-3.5 rounded-full group-hover:bg-violet-200 group-active:bg-violet-200 transition-colors flex-shrink-0">
               <svg
-                className="w-5 h-5 sm:w-6 sm:h-6 text-purple-300"
+                className="w-5 h-5 sm:w-6 sm:h-6 text-violet-500"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -67,8 +67,8 @@ export default function ContactSection() {
               </svg>
             </div>
             <div className="ml-3 sm:ml-4 min-w-0">
-              <h3 className="font-semibold text-purple-200 text-sm sm:text-base">Email</h3>
-              <p className="text-gray-400 group-hover:text-purple-300 group-active:text-purple-300 transition-colors text-sm sm:text-base truncate">
+              <h3 className="font-semibold text-[#1a1a2e] text-sm sm:text-base">Email</h3>
+              <p className="text-gray-500 group-hover:text-violet-600 group-active:text-violet-600 transition-colors text-sm sm:text-base truncate">
                 yoohyunk20@gmail.com
               </p>
             </div>
@@ -78,11 +78,11 @@ export default function ContactSection() {
             href="https://linkedin.com/in/yoohyunk"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center p-4 sm:p-5 rounded-xl hover:bg-purple-900/20 active:bg-purple-900/30 transition-colors group min-h-[72px]"
+            className="flex items-center p-4 sm:p-5 rounded-xl hover:bg-violet-50 active:bg-violet-100 transition-colors group min-h-[72px]"
           >
-            <div className="bg-purple-900/30 p-3 sm:p-3.5 rounded-full group-hover:bg-purple-800/40 group-active:bg-purple-800/50 transition-colors flex-shrink-0">
+            <div className="bg-violet-100 p-3 sm:p-3.5 rounded-full group-hover:bg-violet-200 group-active:bg-violet-200 transition-colors flex-shrink-0">
               <svg
-                className="w-5 h-5 sm:w-6 sm:h-6 text-purple-300"
+                className="w-5 h-5 sm:w-6 sm:h-6 text-violet-500"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -90,8 +90,8 @@ export default function ContactSection() {
               </svg>
             </div>
             <div className="ml-3 sm:ml-4 min-w-0">
-              <h3 className="font-semibold text-purple-200 text-sm sm:text-base">LinkedIn</h3>
-              <p className="text-gray-400 group-hover:text-purple-300 group-active:text-purple-300 transition-colors text-sm sm:text-base truncate">
+              <h3 className="font-semibold text-[#1a1a2e] text-sm sm:text-base">LinkedIn</h3>
+              <p className="text-gray-500 group-hover:text-violet-600 group-active:text-violet-600 transition-colors text-sm sm:text-base truncate">
                 linkedin.com/in/yoohyunk
               </p>
             </div>
@@ -101,11 +101,11 @@ export default function ContactSection() {
             href="https://github.com/yoohyunk"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center p-4 sm:p-5 rounded-xl hover:bg-purple-900/20 active:bg-purple-900/30 transition-colors group md:col-span-2 min-h-[72px]"
+            className="flex items-center p-4 sm:p-5 rounded-xl hover:bg-violet-50 active:bg-violet-100 transition-colors group md:col-span-2 min-h-[72px]"
           >
-            <div className="bg-purple-900/30 p-3 sm:p-3.5 rounded-full group-hover:bg-purple-800/40 group-active:bg-purple-800/50 transition-colors flex-shrink-0">
+            <div className="bg-violet-100 p-3 sm:p-3.5 rounded-full group-hover:bg-violet-200 group-active:bg-violet-200 transition-colors flex-shrink-0">
               <svg
-                className="w-5 h-5 sm:w-6 sm:h-6 text-purple-300"
+                className="w-5 h-5 sm:w-6 sm:h-6 text-violet-500"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -113,8 +113,8 @@ export default function ContactSection() {
               </svg>
             </div>
             <div className="ml-3 sm:ml-4 min-w-0">
-              <h3 className="font-semibold text-purple-200 text-sm sm:text-base">GitHub</h3>
-              <p className="text-gray-400 group-hover:text-purple-300 group-active:text-purple-300 transition-colors text-sm sm:text-base truncate">
+              <h3 className="font-semibold text-[#1a1a2e] text-sm sm:text-base">GitHub</h3>
+              <p className="text-gray-500 group-hover:text-violet-600 group-active:text-violet-600 transition-colors text-sm sm:text-base truncate">
                 github.com/yoohyunk
               </p>
             </div>
