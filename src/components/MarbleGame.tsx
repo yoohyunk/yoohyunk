@@ -481,10 +481,12 @@ function GameWorld({
       FORWARD_SPEED + gameTimeRef.current * SPEED_RAMP
     );
 
-    // Set forward velocity, keep existing x velocity
+    // Set forward velocity — slow down while airborne so jumps don't skip too far
     const vel = marbleRef.current.linvel();
+    const isGrounded = pos.y < GROUND_THRESHOLD;
+    const effectiveSpeed = isGrounded ? currentSpeed : currentSpeed * 0.4;
     marbleRef.current.setLinvel(
-      { x: vel.x, y: vel.y, z: -currentSpeed },
+      { x: vel.x, y: vel.y, z: -effectiveSpeed },
       true
     );
 
