@@ -64,9 +64,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#0a0a0c] text-gray-100 scroll-smooth selection:bg-purple-500/20 selection:text-purple-200">
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent pointer-events-none" />
-      <div className="fixed inset-0 bg-[linear-gradient(to_right,_var(--tw-gradient-stops))] from-transparent via-purple-500/[0.02] to-transparent pointer-events-none" />
+    <div className="min-h-screen w-full bg-white text-[#1a1a2e] scroll-smooth selection:bg-violet-100 selection:text-violet-900">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <NavBar
           activeSection={activeSection}
@@ -85,15 +83,13 @@ export default function App() {
               data-section={id}
               id={id}
               className={
-                id === "hero" && isMobile
-                  ? "relative min-h-[100dvh] flex flex-col justify-center items-center"
-                  : id === "skills"
-                  ? "relative min-h-[100dvh] md:min-h-screen flex items-center justify-center"
-                  : "relative min-h-[100dvh] md:min-h-screen flex items-center"
+                id === "hero"
+                  ? "relative min-h-[100dvh] flex items-center"
+                  : "relative py-20 md:py-28"
               }
               style={
-                isMobile
-                  ? { minHeight: "calc(100vh - 56px)" } // 모바일 주소창 고려
+                id === "hero" && isMobile
+                  ? { minHeight: "calc(100vh - 56px)" }
                   : undefined
               }
             >
