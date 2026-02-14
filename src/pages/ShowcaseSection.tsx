@@ -1,7 +1,5 @@
-import { useState, useEffect, useRef, Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import Scene3D from "../components/Scene3D";
+import { useState, useEffect, useRef } from "react";
+import MarbleGame from "../components/MarbleGame";
 
 export default function ShowcaseSection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -43,42 +41,13 @@ export default function ShowcaseSection() {
             isMobile ? "text-xl" : "text-2xl"
           }`}
         >
-          Built with passion
+          Take a break, play a game
         </p>
       </div>
 
-      {/* 3D Canvas */}
+      {/* Marble Game */}
       <div className="w-full h-full">
-        {isVisible && (
-          <Canvas
-            camera={{
-              position: isMobile ? [0, 0, 3.5] : [0, 0, 3.2],
-              fov: isMobile ? 45 : 32,
-            }}
-            className="w-full h-full"
-            dpr={[1, Math.min(2, window.devicePixelRatio)]}
-            performance={{ min: 0.5 }}
-            frameloop="always"
-          >
-            <color attach="background" args={["#0a0a0c"]} />
-            <ambientLight intensity={isMobile ? 1.5 : 1.2} />
-            <pointLight position={[5, 5, 5]} intensity={1.6} />
-            <pointLight position={[-5, -5, -5]} intensity={0.8} />
-            <Suspense fallback={null}>
-              <Scene3D isMobile={isMobile} />
-              <OrbitControls
-                enableZoom={false}
-                enablePan={false}
-                minPolarAngle={0}
-                maxPolarAngle={Math.PI}
-                rotateSpeed={isMobile ? 0.2 : 0.3}
-                enableDamping={true}
-                dampingFactor={0.05}
-                target={[0, 0, 0]}
-              />
-            </Suspense>
-          </Canvas>
-        )}
+        {isVisible && <MarbleGame isMobile={isMobile} />}
       </div>
     </section>
   );
