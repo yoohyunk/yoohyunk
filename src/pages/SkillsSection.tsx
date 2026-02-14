@@ -51,18 +51,18 @@ export default function SkillsSection() {
         }`}
       >
         <h2
-          className={`text-3xl font-bold mb-12 text-purple-200 text-center transition-[opacity,transform] duration-700 delay-300 mt-16 ${
+          className={`text-3xl font-bold mb-12 text-[#1a1a2e] text-center transition-[opacity,transform] duration-700 delay-300 mt-16 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
           Tools & Technologies
           <div
-            className={`h-0.5 w-20 bg-gradient-to-r from-purple-500 to-pink-500 mx-auto mt-4 rounded-full transition-[opacity,transform] duration-700 delay-500 ${
+            className={`h-0.5 w-20 bg-violet-500 mx-auto mt-4 rounded-full transition-[opacity,transform] duration-700 delay-500 ${
               isVisible ? "opacity-100 scale-100" : "opacity-0 scale-0"
             }`}
           />
         </h2>
-        <p className="text-gray-400 text-center text-sm mb-6">
+        <p className="text-gray-500 text-center text-sm mb-6">
           I mostly write tested code in the JavaScript and Python ecosystems,
           but I am happy to adapt to whatever you use. I also have experience
           with CI/CD setups.
@@ -81,7 +81,7 @@ export default function SkillsSection() {
                   transitionDelay: isVisible ? `${700 + index * 200}ms` : "0ms",
                 }}
               >
-                <h3 className="text-lg font-medium text-purple-300 text-center tracking-wide">
+                <h3 className="text-lg font-medium text-violet-600 text-center tracking-wide">
                   {category.name}
                 </h3>
                 <div className="space-y-3">
