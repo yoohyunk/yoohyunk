@@ -7,16 +7,17 @@ import type { RapierRigidBody } from "@react-three/rapier";
 const TRACK_WIDTH = 6;
 const TRACK_LENGTH = 200;
 const MARBLE_RADIUS = 0.3;
-const FORWARD_SPEED = 8;
-const MAX_FORWARD_SPEED = 14;
-const SPEED_RAMP = 0.3; // speed increase per second
+const FORWARD_SPEED = 6;
+const MAX_FORWARD_SPEED = 10;
+const SPEED_RAMP = 0.15; // speed increase per second
 const STRAFE_FORCE = 2;
 const MAX_STRAFE_SPEED = 5;
-const JUMP_IMPULSE = 3;
+const JUMP_IMPULSE = 2;
 const GROUND_THRESHOLD = 0.5; // marble y below this = grounded
 const FALL_THRESHOLD = -3;
 const OBSTACLE_HEIGHT = 1;
 const LOW_BARRIER_HEIGHT = 0.4;
+const COLLIDER_SHRINK = 0.8; // obstacle colliders are 80% of visual size for forgiving hits
 
 // ─── Types ───────────────────────────────────────────────────────────────
 interface CourseObstacle {
@@ -41,7 +42,7 @@ function generateCourse(seed: number): CourseObstacle[] {
   };
 
   // Generate obstacle rows along the track
-  for (let z = 15; z < TRACK_LENGTH - 10; z += 4 + rand() * 3) {
+  for (let z = 15; z < TRACK_LENGTH - 10; z += 5 + rand() * 4) {
     const pattern = Math.floor(rand() * 6);
     const color = colors[Math.floor(rand() * colors.length)];
     const difficulty = Math.min(1, z / TRACK_LENGTH); // 0 to 1
@@ -49,7 +50,7 @@ function generateCourse(seed: number): CourseObstacle[] {
     switch (pattern) {
       case 0: {
         // Wall with gap — gap gets narrower as difficulty increases
-        const gapWidth = 2.2 - difficulty * 0.8;
+        const gapWidth = 2.8 - difficulty * 0.6;
         const gapCenter = (rand() - 0.5) * (TRACK_WIDTH - gapWidth - 0.5);
         const gapLeft = gapCenter - gapWidth / 2;
         const gapRight = gapCenter + gapWidth / 2;
@@ -276,7 +277,11 @@ function ObstacleBlock({ obstacle }: { obstacle: CourseObstacle }) {
   return (
     <RigidBody type="kinematicPosition" position={obstacle.position}>
       <CuboidCollider
-        args={[obstacle.scale[0] / 2, obstacle.scale[1] / 2, obstacle.scale[2] / 2]}
+        args={[
+          (obstacle.scale[0] / 2) * COLLIDER_SHRINK,
+          (obstacle.scale[1] / 2) * COLLIDER_SHRINK,
+          (obstacle.scale[2] / 2) * COLLIDER_SHRINK,
+        ]}
       />
       <mesh castShadow>
         <boxGeometry args={obstacle.scale} />
