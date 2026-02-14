@@ -52,7 +52,7 @@ const Scene3D: React.FC<Scene3DProps> = ({ isMobile = false }) => {
 
       <directionalLight position={[-3, 2, -5]} intensity={0.5} />
 
-      <Environment preset="night" />
+      <Environment preset="apartment" />
 
       <group
         ref={groupRef}
