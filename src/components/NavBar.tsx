@@ -148,7 +148,7 @@ export default function NavBar({
                 >
                   {label}
                   {activeSection === id && (
-                    <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-violet-500 rounded-full" />
+                    <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 rounded-full" />
                   )}
                 </button>
               </li>
