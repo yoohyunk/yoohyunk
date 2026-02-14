@@ -116,3 +116,29 @@ html, body {
     padding-right: 1rem;
   }
 }
+
+/* Gradient mesh animation for hero */
+@keyframes gradient-mesh-1 {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  25% { transform: translate(10%, -15%) scale(1.1); }
+  50% { transform: translate(-5%, 10%) scale(0.95); }
+  75% { transform: translate(-15%, -5%) scale(1.05); }
+}
+
+@keyframes gradient-mesh-2 {
+  0%, 100% { transform: translate(0%, 0%) scale(1); }
+  25% { transform: translate(-15%, 10%) scale(1.05); }
+  50% { transform: translate(10%, -10%) scale(1.1); }
+  75% { transform: translate(5%, 15%) scale(0.95); }
+}
+
+@keyframes gradient-mesh-3 {
+  0%, 100% { transform: translate(0%, 0%) scale(1.05); }
+  25% { transform: translate(15%, 5%) scale(0.95); }
+  50% { transform: translate(-10%, -15%) scale(1.1); }
+  75% { transform: translate(-5%, 10%) scale(1); }
+}
+
+.animate-mesh-1 { animation: gradient-mesh-1 20s ease-in-out infinite; }
+.animate-mesh-2 { animation: gradient-mesh-2 25s ease-in-out infinite; }
+.animate-mesh-3 { animation: gradient-mesh-3 30s ease-in-out infinite; }
