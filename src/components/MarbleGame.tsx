@@ -12,7 +12,7 @@ const MAX_FORWARD_SPEED = 14;
 const SPEED_RAMP = 0.3; // speed increase per second
 const STRAFE_FORCE = 2;
 const MAX_STRAFE_SPEED = 5;
-const JUMP_IMPULSE = 4;
+const JUMP_IMPULSE = 3;
 const GROUND_THRESHOLD = 0.5; // marble y below this = grounded
 const FALL_THRESHOLD = -3;
 const OBSTACLE_HEIGHT = 1;
@@ -540,7 +540,7 @@ function GameWorld({
       <color attach="background" args={["#0a0a0c"]} />
       <fog attach="fog" args={["#0a0a0c", 20, 50]} />
 
-      <Physics gravity={[0, -15, 0]}>
+      <Physics gravity={[0, -30, 0]}>
         <Track />
         <SideRails />
         <Marble marbleRef={marbleRef} gameState={gameState} onHit={handleGameOver} />
