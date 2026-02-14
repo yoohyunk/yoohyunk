@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import projects from "../data/projects.json";
-import ProjectCard from "../components/ProjectCard";
 import ProjectModal from "../components/ProjectModal";
 
 export default function ProjectsSection() {
@@ -10,91 +9,121 @@ export default function ProjectsSection() {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        // Update visibility based on intersection status
-        setIsVisible(entry.isIntersecting);
-      },
-      {
-        threshold: 0.1, // 10% of the section is visible
-        rootMargin: "-100px", // Add some margin to trigger earlier
-      }
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.1, rootMargin: "-100px" }
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
+      if (sectionRef.current) observer.unobserve(sectionRef.current);
     };
   }, []);
 
   return (
-    <>
-      <style>
-        {`
-          .perspective-1000 {
-            perspective: 1000px;
-          }
-        `}
-      </style>
+    <section
+      ref={sectionRef}
+      className={`w-full transition-all duration-1000 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      }`}
+    >
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <h2
+          className={`font-bold text-center mb-16 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 bg-clip-text text-transparent transition-all duration-700 delay-200 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          } text-4xl md:text-6xl`}
+        >
+          Projects
+        </h2>
 
-      <section
-        ref={sectionRef}
-        className={`w-full transition-[opacity,transform] duration-1000 ${
-          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
-      >
-        <div className="max-w-4xl mx-auto px-4 sm:px-4 py-6 sm:py-8 perspective-1000">
-          <h2
-            className={`text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-[#1a1a2e] text-center transition-[opacity,transform] duration-700 delay-300 ${
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-10"
-            }`}
-          >
-            Projects
-            <div
-              className={`h-0.5 w-16 sm:w-20 bg-violet-500 mx-auto mt-3 sm:mt-4 rounded-full transition-[opacity,transform] duration-700 delay-500 ${
-                isVisible ? "opacity-100 scale-100" : "opacity-0 scale-0"
-              }`}
-            />
-          </h2>
-          <div
-            className="grid gap-5 sm:gap-6 md:grid-cols-2 lg:gap-8"
-            style={{ perspective: "1500px" }}
-          >
-            {projects.map((project, index) => (
+        {/* Bento grid: first project spans 2 cols on desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {projects.map((project, index) => {
+            const isFeature = index === 0;
+            const image =
+              project.image || "https://placehold.co/600x400?text=Project";
+            const technologies =
+              project.technologies || project.tech || [];
+
+            return (
               <div
                 key={project.title}
-                className={`transition-[opacity,transform] duration-700 ${
+                className={`group cursor-pointer transition-all duration-700 ${
                   isVisible
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-10"
-                }`}
+                } ${isFeature ? "md:col-span-2" : ""}`}
                 style={{
-                  transitionDelay: isVisible ? `${700 + index * 200}ms` : "0ms",
+                  transitionDelay: isVisible
+                    ? `${400 + index * 150}ms`
+                    : "0ms",
                 }}
+                onClick={() => setSelectedIndex(index)}
               >
-                <ProjectCard
-                  project={project}
-                  onClick={() => setSelectedIndex(index)}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
+                <div
+                  className={`relative bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ${
+                    isFeature ? "md:flex md:h-[320px]" : "h-full"
+                  }`}
+                >
+                  {/* Image */}
+                  <div
+                    className={`relative overflow-hidden ${
+                      isFeature
+                        ? "h-48 md:h-full md:w-1/2"
+                        : "h-48"
+                    }`}
+                  >
+                    <img
+                      src={image}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
 
-        {selectedIndex !== null && (
-          <ProjectModal
-            project={projects[selectedIndex]}
-            onClose={() => setSelectedIndex(null)}
-            isOpen={selectedIndex !== null}
-          />
-        )}
-      </section>
-    </>
+                  {/* Content */}
+                  <div
+                    className={`p-6 flex flex-col justify-center ${
+                      isFeature ? "md:w-1/2" : ""
+                    }`}
+                  >
+                    <h3
+                      className={`font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent mb-2 ${
+                        isFeature ? "text-2xl" : "text-xl"
+                      }`}
+                    >
+                      {project.title}
+                    </h3>
+                    <p className="text-gray-500 text-sm mb-4 leading-relaxed line-clamp-3">
+                      {project.summary}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {technologies.slice(0, 5).map((tech, i) => (
+                        <span
+                          key={i}
+                          className="px-2.5 py-1 text-xs font-medium bg-gray-100 text-gray-600 rounded-full"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {technologies.length > 5 && (
+                        <span className="px-2.5 py-1 text-xs font-medium bg-purple-100 text-purple-600 rounded-full">
+                          +{technologies.length - 5}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {selectedIndex !== null && (
+        <ProjectModal
+          project={projects[selectedIndex]}
+          onClose={() => setSelectedIndex(null)}
+          isOpen={selectedIndex !== null}
+        />
+      )}
+    </section>
   );
 }
