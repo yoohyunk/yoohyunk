@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import experience from "../data/experience.json";
 
 type ExperienceItem = {
   title: string;
   company: string;
   location?: string;
-  start: string; // YYYY-MM or text
-  end: string; // YYYY-MM or "Present"
+  start: string;
+  end: string;
   bullets?: string[];
 };
 
@@ -23,28 +23,17 @@ function parseDateForSort(value: string): number {
 export default function ExperienceSection() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
-  const itemRefs = useRef<Array<HTMLLIElement | null>>([]);
+  const itemRefs = useRef<Array<HTMLDivElement | null>>([]);
   const [revealed, setRevealed] = useState<boolean[]>([]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      {
-        threshold: 0.2,
-        rootMargin: "-100px",
-      }
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.1, rootMargin: "-100px" }
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
+      if (sectionRef.current) observer.unobserve(sectionRef.current);
     };
   }, []);
 
@@ -53,7 +42,6 @@ export default function ExperienceSection() {
       parseDateForSort(b.end || b.start) - parseDateForSort(a.end || a.start)
   );
 
-  // prepare revealed flags per item length
   useEffect(() => {
     setRevealed((prev) => {
       if (prev.length === items.length) return prev;
@@ -61,7 +49,6 @@ export default function ExperienceSection() {
     });
   }, [items.length]);
 
-  // toggle each card visibility when it enters/leaves the viewport
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
     itemRefs.current.forEach((el, idx) => {
@@ -77,7 +64,7 @@ export default function ExperienceSection() {
             return next;
           });
         },
-        { threshold: 0.2, rootMargin: "0px 0px -20% 0px" }
+        { threshold: 0.2, rootMargin: "0px 0px -10% 0px" }
       );
       obs.observe(el);
       observers.push(obs);
@@ -88,101 +75,76 @@ export default function ExperienceSection() {
   return (
     <section
       ref={sectionRef}
-      className={`w-full transition-[opacity,transform] duration-1000 ${
+      className={`w-full transition-all duration-1000 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
-      <div className="max-w-5xl mx-auto px-2 sm:px-4">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <h2
-          className={`text-4xl font-bold mb-12 text-[#1a1a2e] text-center transition-[opacity,transform] duration-700 delay-200 ${
+          className={`font-bold text-center mb-16 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 bg-clip-text text-transparent transition-all duration-700 delay-200 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
+          } text-4xl md:text-6xl`}
         >
           Experience
-          <div
-            className={`h-0.5 w-28 bg-violet-500 mx-auto mt-4 rounded-full transition-[opacity,transform] duration-700 delay-300 ${
-              isVisible ? "opacity-100 scale-100" : "opacity-0 scale-0"
-            }`}
-          />
         </h2>
 
-        <div className="relative">
-          <div
-            className={`absolute left-1/2 -translate-x-1/2 w-0.5 bg-violet-200 rounded-full transition-[height,opacity] duration-1000 ${
-              isVisible ? "opacity-100" : "opacity-0"
-            }`}
-            style={{ height: isVisible ? "100%" : "0%" }}
-          />
+        <div className="relative space-y-16">
+          {/* Decorative center line */}
+          <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-purple-300 via-pink-300 to-transparent hidden md:block" />
 
-          <ul className="space-y-10">
-            {items.map((item, index) => {
-              const isLeft = index % 2 === 0;
-              return (
-                <li
-                  key={`${item.title}-${item.company}-${index}`}
-                  className="relative grid grid-cols-1 md:grid-cols-2 gap-6"
-                  ref={(el) => {
-                    itemRefs.current[index] = el;
-                  }}
-                >
-                  <div
-                    className={`hidden md:block ${
-                      isLeft ? "md:order-5" : "md:order-2"
-                    }`}
-                  />
+          {items.map((item, index) => {
+            const isLeft = index % 2 === 0;
+            return (
+              <div
+                key={`${item.title}-${item.company}-${index}`}
+                ref={(el) => {
+                  itemRefs.current[index] = el;
+                }}
+                className={`flex flex-col md:flex-row items-center gap-8 transition-all duration-700 ${
+                  revealed[index]
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8"
+                }`}
+              >
+                {/* Spacer for alternating layout */}
+                {!isLeft && <div className="hidden md:block md:w-1/2" />}
 
-                  <div
-                    className={`${
-                      isLeft ? "md:order-1 md:pr-10" : "md:order-2 md:pl-10"
-                    }`}
-                  >
-                    <div
-                      className={`relative group transition-[opacity,transform] duration-700 ${
-                        revealed[index]
-                          ? "opacity-100 translate-x-0"
-                          : isLeft
-                          ? "opacity-0 -translate-x-6"
-                          : "opacity-0 translate-x-6"
-                      }`}
-                      style={{ willChange: "transform, opacity" }}
-                    >
-                      <span
-                        className={`absolute top-3 ${
-                          isLeft ? "-right-[64px]" : "-left-[64px]"
-                        } block w-4 h-4 rounded-full bg-violet-500 border-2 border-white`}
-                      />
-
-                      <div className="relative bg-white rounded-lg p-5 text-gray-600 border border-gray-200 shadow-sm hover:shadow-md transition-all">
-                        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 mb-2">
-                          <h3 className="text-lg sm:text-xl font-semibold text-[#1a1a2e]">
-                            {item.title}
-                          </h3>
-                          <span className="text-gray-400">
-                            @ {item.company}
-                          </span>
-                        </div>
-                        <div className="text-sm text-gray-400 mb-3">
-                          <span>
-                            {item.start} — {item.end}
-                          </span>
-                          {item.location ? (
-                            <span> • {item.location}</span>
-                          ) : null}
-                        </div>
-                        {item.bullets && item.bullets.length > 0 && (
-                          <ul className="list-disc pl-5 space-y-1 text-sm">
-                            {item.bullets.map((b, bi) => (
-                              <li key={bi}>{b}</li>
-                            ))}
-                          </ul>
-                        )}
-                      </div>
+                {/* Card */}
+                <div className={`w-full md:w-1/2 ${isLeft ? "md:pr-12" : "md:pl-12"}`}>
+                  <div className="bg-white rounded-2xl p-6 md:p-8 border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                    <div className="flex items-center gap-3 mb-3 flex-wrap">
+                      <h3 className="text-xl font-bold text-gray-900">
+                        {item.title}
+                      </h3>
+                      <span className="px-3 py-1 text-xs font-medium bg-purple-100 text-purple-700 rounded-full whitespace-nowrap">
+                        {item.start} — {item.end}
+                      </span>
                     </div>
+                    <p className="text-gray-500 text-sm mb-4">
+                      {item.company}
+                      {item.location ? ` • ${item.location}` : ""}
+                    </p>
+                    {item.bullets && item.bullets.length > 0 && (
+                      <ul className="space-y-2">
+                        {item.bullets.map((b, bi) => (
+                          <li
+                            key={bi}
+                            className="text-gray-600 text-sm leading-relaxed flex gap-2"
+                          >
+                            <span className="text-purple-400 mt-1.5 flex-shrink-0">•</span>
+                            <span>{b}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
-                </li>
-              );
-            })}
-          </ul>
+                </div>
+
+                {/* Spacer for alternating layout */}
+                {isLeft && <div className="hidden md:block md:w-1/2" />}
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
