@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useCallback, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
+import { Physics, RigidBody, CuboidCollider, BallCollider } from "@react-three/rapier";
 import type { RapierRigidBody } from "@react-three/rapier";
 
 // ─── Constants ───────────────────────────────────────────────────────────
@@ -238,7 +238,7 @@ function Marble({
     <RigidBody
       ref={marbleRef}
       position={[0, 1, 0]}
-      colliders="ball"
+      colliders={false}
       restitution={0.1}
       friction={1}
       linearDamping={1.5}
@@ -252,6 +252,7 @@ function Marble({
         }
       }}
     >
+      <BallCollider args={[MARBLE_RADIUS]} />
       <mesh castShadow>
         <sphereGeometry args={[MARBLE_RADIUS, 32, 32]} />
         <meshStandardMaterial
