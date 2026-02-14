@@ -10,8 +10,8 @@ const MARBLE_RADIUS = 0.3;
 const FORWARD_SPEED = 6;
 const MAX_FORWARD_SPEED = 10;
 const SPEED_RAMP = 0.15; // speed increase per second
-const STRAFE_FORCE = 2;
-const MAX_STRAFE_SPEED = 5;
+const STRAFE_FORCE = 1;
+const MAX_STRAFE_SPEED = 3;
 const JUMP_IMPULSE = 2;
 const GROUND_THRESHOLD = 0.5; // marble y below this = grounded
 const FALL_THRESHOLD = -3;
@@ -181,23 +181,32 @@ function Track() {
   );
 }
 
-// ─── Side Rails (visual guide, no physics) ──────────────────────────────
+// ─── Side Rails (visible + invisible walls to keep marble on track) ─────
 function SideRails() {
   const railHeight = 0.3;
   const railWidth = 0.1;
+  const wallHeight = 2;
 
   return (
     <>
-      {/* Left rail */}
+      {/* Left visual rail */}
       <mesh position={[-TRACK_WIDTH / 2 - railWidth / 2, railHeight / 2, -TRACK_LENGTH / 2]}>
         <boxGeometry args={[railWidth, railHeight, TRACK_LENGTH]} />
         <meshStandardMaterial color="#7c3aed" emissive="#7c3aed" emissiveIntensity={0.4} />
       </mesh>
-      {/* Right rail */}
+      {/* Right visual rail */}
       <mesh position={[TRACK_WIDTH / 2 + railWidth / 2, railHeight / 2, -TRACK_LENGTH / 2]}>
         <boxGeometry args={[railWidth, railHeight, TRACK_LENGTH]} />
         <meshStandardMaterial color="#7c3aed" emissive="#7c3aed" emissiveIntensity={0.4} />
       </mesh>
+      {/* Invisible left wall */}
+      <RigidBody type="fixed" position={[-TRACK_WIDTH / 2 - 0.1, wallHeight / 2, -TRACK_LENGTH / 2]}>
+        <CuboidCollider args={[0.1, wallHeight / 2, TRACK_LENGTH / 2]} />
+      </RigidBody>
+      {/* Invisible right wall */}
+      <RigidBody type="fixed" position={[TRACK_WIDTH / 2 + 0.1, wallHeight / 2, -TRACK_LENGTH / 2]}>
+        <CuboidCollider args={[0.1, wallHeight / 2, TRACK_LENGTH / 2]} />
+      </RigidBody>
     </>
   );
 }
