@@ -45,7 +45,7 @@ const getTechIcon = (techName: string) => {
   const normalizedTech = techName.toLowerCase().trim();
 
   // Unified color that matches the project's theme (purple accent)
-  const iconColor = "text-purple-400";
+  const iconColor = "text-violet-500";
 
   // Map of tech names to their icon components
   const techIcons: Record<string, React.ReactElement> = {
@@ -190,16 +190,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
 
   return (
     <div className="relative group">
-      {/* Gradient background glow effect - always visible but enhanced on hover */}
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl blur opacity-10 group-hover:opacity-20 transition duration-500" />
-
       <div
         ref={cardRef}
-        className="relative bg-[#1A1C20] rounded-xl overflow-hidden border border-purple-900/10 group-hover:border-purple-500/20 transition duration-300 shadow-lg group-hover:shadow-purple-500/10 active:scale-[0.98]"
-        style={{
-          ...(isMobile ? {} : calculate3DTransform()),
-          transformStyle: "preserve-3d",
-        }}
+        className="relative bg-white rounded-xl overflow-hidden border border-gray-200 hover:-translate-y-1 hover:shadow-md transition-all duration-300 active:scale-[0.98]"
+        style={{}}
         onMouseEnter={() => !isMobile && setIsHovered(true)}
         onMouseLeave={() => !isMobile && setIsHovered(false)}
         onMouseMove={!isMobile ? handleMouseMove : undefined}
@@ -231,7 +225,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
             }`}
           >
             <h3
-              className={`font-bold text-white mb-1 line-clamp-1 group-hover:text-purple-300 transition-colors ${
+              className={`font-bold text-[#1a1a2e] mb-1 line-clamp-1 group-hover:text-violet-600 transition-colors ${
                 isMobile ? "text-lg" : "text-md"
               }`}
             >
@@ -239,7 +233,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
             </h3>
 
             <p
-              className={`text-gray-400 mb-2 group-hover:text-gray-300 transition-colors ${
+              className={`text-gray-500 mb-2 group-hover:text-gray-300 transition-colors ${
                 isMobile ? "text-sm line-clamp-3" : "text-xs line-clamp-2"
               }`}
             >
@@ -264,7 +258,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
                 ))}
                 {technologies.length > (isMobile ? 6 : showCount) && (
                   <span
-                    className={`flex items-center justify-center text-white bg-purple-500/50 rounded-full ${
+                    className={`flex items-center justify-center text-white bg-violet-500 rounded-full ${
                       isMobile ? "text-xs w-5 h-5" : "text-xs w-4 h-4"
                     }`}
                   >
@@ -275,7 +269,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
               
               {/* Mobile: Tap to view hint */}
               {isMobile && (
-                <div className="flex items-center justify-end mt-3 text-purple-400 text-sm">
+                <div className="flex items-center justify-end mt-3 text-violet-500 text-sm">
                   <span>Tap to view</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -300,7 +294,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
         {/* Desktop: Hover overlay with centered "View Project" text */}
         {!isMobile && (
           <div
-            className={`absolute inset-0 bg-black/70 flex items-center justify-center transition-opacity duration-300 ${
+            className={`absolute inset-0 bg-violet-600/80 flex items-center justify-center transition-opacity duration-300 ${
               isHovered ? "opacity-100" : "opacity-0"
             }`}
             style={{ pointerEvents: "none" }}
