@@ -12,8 +12,11 @@ const MAX_FORWARD_SPEED = 14;
 const SPEED_RAMP = 0.3; // speed increase per second
 const STRAFE_FORCE = 2;
 const MAX_STRAFE_SPEED = 5;
+const JUMP_IMPULSE = 8;
+const GROUND_THRESHOLD = 0.5; // marble y below this = grounded
 const FALL_THRESHOLD = -3;
 const OBSTACLE_HEIGHT = 1;
+const LOW_BARRIER_HEIGHT = 0.4;
 
 // ─── Types ───────────────────────────────────────────────────────────────
 interface CourseObstacle {
@@ -39,7 +42,7 @@ function generateCourse(seed: number): CourseObstacle[] {
 
   // Generate obstacle rows along the track
   for (let z = 15; z < TRACK_LENGTH - 10; z += 4 + rand() * 3) {
-    const pattern = Math.floor(rand() * 5);
+    const pattern = Math.floor(rand() * 6);
     const color = colors[Math.floor(rand() * colors.length)];
     const difficulty = Math.min(1, z / TRACK_LENGTH); // 0 to 1
 
@@ -129,6 +132,16 @@ function generateCourse(seed: number): CourseObstacle[] {
           position: [0, OBSTACLE_HEIGHT / 2, -z],
           scale: [w, OBSTACLE_HEIGHT, 0.6],
           color,
+        });
+        break;
+      }
+      case 5: {
+        // Full-width low barrier — must jump over
+        obstacles.push({
+          id: id++,
+          position: [0, LOW_BARRIER_HEIGHT / 2, -z],
+          scale: [TRACK_WIDTH, LOW_BARRIER_HEIGHT, 0.5],
+          color: "#f59e0b",
         });
         break;
       }
@@ -320,6 +333,7 @@ function useKeyboardControls() {
 // ─── Touch Controls ─────────────────────────────────────────────────────
 function useTouchControls(canvasRef: React.RefObject<HTMLDivElement | null>) {
   const touchForce = useRef(0); // -1 to 1 for left/right
+  const jumpRequested = useRef(false);
 
   useEffect(() => {
     const el = canvasRef.current;
@@ -329,8 +343,15 @@ function useTouchControls(canvasRef: React.RefObject<HTMLDivElement | null>) {
       const touch = e.touches[0];
       const rect = el.getBoundingClientRect();
       const x = (touch.clientX - rect.left) / rect.width;
-      // Left half = go left, right half = go right
-      touchForce.current = (x - 0.5) * 2;
+      const y = (touch.clientY - rect.top) / rect.height;
+
+      // Top 30% of screen = jump
+      if (y < 0.3) {
+        jumpRequested.current = true;
+      } else {
+        // Bottom 70% = steer left/right
+        touchForce.current = (x - 0.5) * 2;
+      }
     };
 
     const onTouchMove = (e: TouchEvent) => {
@@ -356,7 +377,7 @@ function useTouchControls(canvasRef: React.RefObject<HTMLDivElement | null>) {
     };
   }, [canvasRef]);
 
-  return touchForce;
+  return { touchForce, jumpRequested };
 }
 
 // ─── Camera Follow ──────────────────────────────────────────────────────
@@ -412,7 +433,7 @@ function GameWorld({
 }) {
   const marbleRef = useRef<RapierRigidBody>(null);
   const keys = useKeyboardControls();
-  const touchForce = useTouchControls(canvasRef);
+  const { touchForce, jumpRequested } = useTouchControls(canvasRef);
   const gameTimeRef = useRef(0);
 
   const obstacles = useMemo(() => generateCourse(courseSeed), [courseSeed]);
@@ -496,6 +517,17 @@ function GameWorld({
         true
       );
     }
+
+    // Jump — only when grounded
+    const isGrounded = pos.y < GROUND_THRESHOLD;
+    const wantsJump =
+      k.has(" ") || k.has("arrowup") || k.has("w") || jumpRequested.current;
+
+    if (wantsJump && isGrounded) {
+      marbleRef.current.applyImpulse({ x: 0, y: JUMP_IMPULSE, z: 0 }, true);
+    }
+    // Consume mobile jump request
+    jumpRequested.current = false;
   });
 
   return (
@@ -574,10 +606,12 @@ export default function MarbleGame({ isMobile }: { isMobile: boolean }) {
             Marble Run
           </h3>
           <p className="text-gray-400 text-sm mb-1">
-            Reach the end of the course. Dodge the obstacles.
+            Reach the end of the course. Dodge or jump over obstacles.
           </p>
           <p className="text-gray-500 text-xs mb-6">
-            {isMobile ? "Tap left/right side to steer" : "A/D or Left/Right Arrow to steer"}
+            {isMobile
+              ? "Steer: tap left/right · Jump: tap top of screen"
+              : "Steer: A/D or Arrow Keys · Jump: Space or W"}
           </p>
           <button
             onClick={startGame}
