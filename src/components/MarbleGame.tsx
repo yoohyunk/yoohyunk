@@ -12,7 +12,7 @@ const MAX_FORWARD_SPEED = 14;
 const SPEED_RAMP = 0.3; // speed increase per second
 const STRAFE_FORCE = 2;
 const MAX_STRAFE_SPEED = 5;
-const JUMP_IMPULSE = 8;
+const JUMP_IMPULSE = 4;
 const GROUND_THRESHOLD = 0.5; // marble y below this = grounded
 const FALL_THRESHOLD = -3;
 const OBSTACLE_HEIGHT = 1;
