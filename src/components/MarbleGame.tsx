@@ -6,15 +6,15 @@ import type { RapierRigidBody } from "@react-three/rapier";
 // ─── Constants ───────────────────────────────────────────────────────────
 const PLATFORM_SIZE = 10;
 const MARBLE_RADIUS = 0.3;
-const FORCE_STRENGTH = 0.8;
-const MAX_VELOCITY = 4;
-const INITIAL_SPAWN_INTERVAL = 3000; // ms
-const MIN_SPAWN_INTERVAL = 600; // ms
-const SPAWN_INTERVAL_DECREASE = 30; // ms decrease per spawn
-const INITIAL_OBSTACLE_SPEED = 2;
-const SPEED_INCREASE_RATE = 0.05; // per second
+const FORCE_STRENGTH = 1.2;
+const MAX_VELOCITY = 5;
+const INITIAL_SPAWN_INTERVAL = 2500; // ms
+const MIN_SPAWN_INTERVAL = 500; // ms
+const SPAWN_INTERVAL_DECREASE = 40; // ms decrease per spawn
+const INITIAL_OBSTACLE_SPEED = 2.5;
+const SPEED_INCREASE_RATE = 0.08; // per second
 const FALL_THRESHOLD = -5;
-const GRACE_PERIOD = 2; // seconds before first obstacle spawns
+const GRACE_PERIOD = 1; // seconds before first obstacle spawns
 
 // ─── Types ───────────────────────────────────────────────────────────────
 interface Obstacle {
@@ -65,8 +65,8 @@ function Marble({
       colliders="ball"
       restitution={0.2}
       friction={1}
-      linearDamping={3}
-      angularDamping={2}
+      linearDamping={2}
+      angularDamping={1.5}
       type={gameState === "playing" ? "dynamic" : "fixed"}
       onCollisionEnter={(e) => {
         // Trigger game over when marble hits an obstacle (kinematic body)
