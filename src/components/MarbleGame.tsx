@@ -9,15 +9,14 @@ const TRACK_LENGTH = 200;
 const MARBLE_RADIUS = 0.3;
 const FORWARD_SPEED = 6;
 const MAX_FORWARD_SPEED = 10;
-const SPEED_RAMP = 0.15; // speed increase per second
+const SPEED_RAMP = 0.15;
 const STRAFE_FORCE = 1;
 const MAX_STRAFE_SPEED = 3;
 const JUMP_IMPULSE = 2;
-const GROUND_THRESHOLD = 0.5; // marble y below this = grounded
+const GROUND_THRESHOLD = 0.5;
 const FALL_THRESHOLD = -3;
 const OBSTACLE_HEIGHT = 1;
-const LOW_BARRIER_HEIGHT = 0.4;
-const COLLIDER_SHRINK = 0.8; // obstacle colliders are 80% of visual size for forgiving hits
+const INVINCIBILITY_TIME = 1; // seconds of invincibility after game start
 
 // ─── Types ───────────────────────────────────────────────────────────────
 interface CourseObstacle {
@@ -34,29 +33,27 @@ function generateCourse(seed: number): CourseObstacle[] {
   const obstacles: CourseObstacle[] = [];
   let id = 0;
   const colors = ["#ec4899", "#3b82f6", "#8b5cf6", "#06b6d4"];
-  // Simple seeded random
   let s = seed;
   const rand = () => {
     s = (s * 16807 + 0) % 2147483647;
     return (s - 1) / 2147483646;
   };
 
-  // Generate obstacle rows along the track
+  // Only 5 patterns — no full-width barriers (those caused invisible deaths)
   for (let z = 15; z < TRACK_LENGTH - 10; z += 5 + rand() * 4) {
-    const pattern = Math.floor(rand() * 6);
+    const pattern = Math.floor(rand() * 5);
     const color = colors[Math.floor(rand() * colors.length)];
-    const difficulty = Math.min(1, z / TRACK_LENGTH); // 0 to 1
+    const difficulty = Math.min(1, z / TRACK_LENGTH);
 
     switch (pattern) {
       case 0: {
-        // Wall with gap — gap gets narrower as difficulty increases
+        // Wall with gap
         const gapWidth = 2.8 - difficulty * 0.6;
         const gapCenter = (rand() - 0.5) * (TRACK_WIDTH - gapWidth - 0.5);
         const gapLeft = gapCenter - gapWidth / 2;
         const gapRight = gapCenter + gapWidth / 2;
         const leftEdge = -TRACK_WIDTH / 2;
         const rightEdge = TRACK_WIDTH / 2;
-        // Left wall
         if (gapLeft - leftEdge > 0.3) {
           const w = gapLeft - leftEdge;
           obstacles.push({
@@ -66,7 +63,6 @@ function generateCourse(seed: number): CourseObstacle[] {
             color,
           });
         }
-        // Right wall
         if (rightEdge - gapRight > 0.3) {
           const w = rightEdge - gapRight;
           obstacles.push({
@@ -79,7 +75,7 @@ function generateCourse(seed: number): CourseObstacle[] {
         break;
       }
       case 1: {
-        // Two blocks on sides, dodge through middle
+        // Two blocks on sides
         const blockW = 1 + rand() * (1 + difficulty);
         obstacles.push({
           id: id++,
@@ -96,7 +92,7 @@ function generateCourse(seed: number): CourseObstacle[] {
         break;
       }
       case 2: {
-        // Single block offset to one side
+        // Single block offset
         const side = rand() > 0.5 ? 1 : -1;
         const w = 1.5 + rand() * (1 + difficulty);
         obstacles.push({
@@ -108,7 +104,7 @@ function generateCourse(seed: number): CourseObstacle[] {
         break;
       }
       case 3: {
-        // Zigzag — two blocks staggered
+        // Zigzag
         const w = 1.2 + difficulty * 0.8;
         obstacles.push({
           id: id++,
@@ -126,23 +122,13 @@ function generateCourse(seed: number): CourseObstacle[] {
         break;
       }
       case 4: {
-        // Center block — dodge to either side
+        // Center block
         const w = 1.5 + rand() * difficulty * 1.5;
         obstacles.push({
           id: id++,
           position: [0, OBSTACLE_HEIGHT / 2, -z],
           scale: [w, OBSTACLE_HEIGHT, 0.6],
           color,
-        });
-        break;
-      }
-      case 5: {
-        // Full-width low barrier — must jump over
-        obstacles.push({
-          id: id++,
-          position: [0, LOW_BARRIER_HEIGHT / 2, -z],
-          scale: [TRACK_WIDTH, LOW_BARRIER_HEIGHT, 0.5],
-          color: "#f59e0b",
         });
         break;
       }
@@ -181,7 +167,7 @@ function Track() {
   );
 }
 
-// ─── Side Rails (visible + invisible walls to keep marble on track) ─────
+// ─── Side Rails (visible + invisible walls) ─────────────────────────────
 function SideRails() {
   const railHeight = 0.3;
   const railWidth = 0.1;
@@ -189,21 +175,17 @@ function SideRails() {
 
   return (
     <>
-      {/* Left visual rail */}
       <mesh position={[-TRACK_WIDTH / 2 - railWidth / 2, railHeight / 2, -TRACK_LENGTH / 2]}>
         <boxGeometry args={[railWidth, railHeight, TRACK_LENGTH]} />
         <meshStandardMaterial color="#7c3aed" emissive="#7c3aed" emissiveIntensity={0.4} />
       </mesh>
-      {/* Right visual rail */}
       <mesh position={[TRACK_WIDTH / 2 + railWidth / 2, railHeight / 2, -TRACK_LENGTH / 2]}>
         <boxGeometry args={[railWidth, railHeight, TRACK_LENGTH]} />
         <meshStandardMaterial color="#7c3aed" emissive="#7c3aed" emissiveIntensity={0.4} />
       </mesh>
-      {/* Invisible left wall */}
       <RigidBody type="fixed" position={[-TRACK_WIDTH / 2 - 0.1, wallHeight / 2, -TRACK_LENGTH / 2]}>
         <CuboidCollider args={[0.1, wallHeight / 2, TRACK_LENGTH / 2]} />
       </RigidBody>
-      {/* Invisible right wall */}
       <RigidBody type="fixed" position={[TRACK_WIDTH / 2 + 0.1, wallHeight / 2, -TRACK_LENGTH / 2]}>
         <CuboidCollider args={[0.1, wallHeight / 2, TRACK_LENGTH / 2]} />
       </RigidBody>
@@ -219,7 +201,6 @@ function FinishLine({ onCross }: { onCross: () => void }) {
         args={[TRACK_WIDTH / 2, 1, 0.5]}
         onIntersectionEnter={() => onCross()}
       />
-      {/* Visual finish gate */}
       <mesh>
         <boxGeometry args={[TRACK_WIDTH, 2, 0.2]} />
         <meshStandardMaterial
@@ -239,10 +220,12 @@ function Marble({
   marbleRef,
   gameState,
   onHit,
+  invincible,
 }: {
   marbleRef: React.RefObject<RapierRigidBody | null>;
   gameState: GameState;
   onHit: () => void;
+  invincible: boolean;
 }) {
   return (
     <RigidBody
@@ -255,14 +238,27 @@ function Marble({
       angularDamping={1}
       type={gameState === "playing" ? "dynamic" : "fixed"}
       onCollisionEnter={(e) => {
-        // bodyType 2 = kinematicPosition — only obstacles use this type
+        if (invincible) return;
         const other = e.other.rigidBody;
         if (other && other.bodyType() === 2) {
-          onHit();
+          // Double-check with actual distance — only trigger if marble center
+          // is actually close to the obstacle center (prevents physics glitches)
+          if (marbleRef.current) {
+            const marblePos = marbleRef.current.translation();
+            const obstaclePos = other.translation();
+            const dx = marblePos.x - obstaclePos.x;
+            const dz = marblePos.z - obstaclePos.z;
+            const dist = Math.sqrt(dx * dx + dz * dz);
+            // Only count as hit if marble is within 3 units of obstacle center
+            if (dist < 3) {
+              onHit();
+            }
+          }
         }
       }}
     >
-      <BallCollider args={[MARBLE_RADIUS]} />
+      {/* Collider is 70% of visual — forgiving hitbox */}
+      <BallCollider args={[MARBLE_RADIUS * 0.7]} />
       <mesh castShadow>
         <sphereGeometry args={[MARBLE_RADIUS, 32, 32]} />
         <meshStandardMaterial
@@ -281,15 +277,16 @@ function Marble({
   );
 }
 
-// ─── Course Obstacle (fixed) ────────────────────────────────────────────
+// ─── Course Obstacle ────────────────────────────────────────────────────
 function ObstacleBlock({ obstacle }: { obstacle: CourseObstacle }) {
   return (
     <RigidBody type="kinematicPosition" position={obstacle.position}>
+      {/* Collider is 60% of visual — very forgiving */}
       <CuboidCollider
         args={[
-          (obstacle.scale[0] / 2) * COLLIDER_SHRINK,
-          (obstacle.scale[1] / 2) * COLLIDER_SHRINK,
-          (obstacle.scale[2] / 2) * COLLIDER_SHRINK,
+          (obstacle.scale[0] / 2) * 0.6,
+          (obstacle.scale[1] / 2) * 0.6,
+          (obstacle.scale[2] / 2) * 0.6,
         ]}
       />
       <mesh castShadow>
@@ -343,7 +340,7 @@ function useKeyboardControls() {
 
 // ─── Touch Controls ─────────────────────────────────────────────────────
 function useTouchControls(canvasRef: React.RefObject<HTMLDivElement | null>) {
-  const touchForce = useRef(0); // -1 to 1 for left/right
+  const touchForce = useRef(0);
   const jumpRequested = useRef(false);
 
   useEffect(() => {
@@ -356,11 +353,9 @@ function useTouchControls(canvasRef: React.RefObject<HTMLDivElement | null>) {
       const x = (touch.clientX - rect.left) / rect.width;
       const y = (touch.clientY - rect.top) / rect.height;
 
-      // Top 30% of screen = jump
       if (y < 0.3) {
         jumpRequested.current = true;
       } else {
-        // Bottom 70% = steer left/right
         touchForce.current = (x - 0.5) * 2;
       }
     };
@@ -409,7 +404,6 @@ function CameraFollow({
     if (!marbleRef.current) return;
     if (gameState !== "playing") return;
     const pos = marbleRef.current.translation();
-    // Smooth follow
     camera.position.x += (pos.x - camera.position.x) * 0.1;
     camera.position.y += (pos.y + offsetY - camera.position.y) * 0.1;
     camera.position.z += (pos.z + offsetZ - camera.position.z) * 0.1;
@@ -446,15 +440,17 @@ function GameWorld({
   const keys = useKeyboardControls();
   const { touchForce, jumpRequested } = useTouchControls(canvasRef);
   const gameTimeRef = useRef(0);
+  const [invincible, setInvincible] = useState(false);
 
   const obstacles = useMemo(() => generateCourse(courseSeed), [courseSeed]);
 
-  // Reset marble on game start
+  // Reset marble on game start + invincibility window
   useEffect(() => {
     if (gameState === "playing") {
       gameTimeRef.current = 0;
       setTime(0);
       setProgress(0);
+      setInvincible(true);
       if (marbleRef.current) {
         marbleRef.current.setTranslation({ x: 0, y: 1, z: 0 }, true);
         marbleRef.current.setLinvel({ x: 0, y: 0, z: 0 }, true);
@@ -462,6 +458,14 @@ function GameWorld({
       }
     }
   }, [gameState, setTime, setProgress]);
+
+  // Turn off invincibility after delay
+  useEffect(() => {
+    if (invincible) {
+      const timer = setTimeout(() => setInvincible(false), INVINCIBILITY_TIME * 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [invincible]);
 
   const handleGameOver = useCallback(() => {
     if (gameState === "playing") setGameState("gameover");
@@ -489,28 +493,24 @@ function GameWorld({
     const prog = Math.min(1, Math.abs(pos.z) / TRACK_LENGTH);
     setProgress(prog);
 
-    // Auto-forward speed (increases over time)
-    const currentSpeed = Math.min(
+    // Forward movement via proportional impulse (NOT setLinvel — that causes physics glitches)
+    const targetSpeed = Math.min(
       MAX_FORWARD_SPEED,
       FORWARD_SPEED + gameTimeRef.current * SPEED_RAMP
     );
-
-    // Set forward velocity — slow down while airborne so jumps don't skip too far
     const vel = marbleRef.current.linvel();
     const isGrounded = pos.y < GROUND_THRESHOLD;
-    const effectiveSpeed = isGrounded ? currentSpeed : currentSpeed * 0.4;
-    marbleRef.current.setLinvel(
-      { x: vel.x, y: vel.y, z: -effectiveSpeed },
-      true
-    );
+    const effectiveTarget = isGrounded ? targetSpeed : targetSpeed * 0.4;
+    // Apply proportional impulse scaled by delta to smoothly reach target speed
+    const zError = -effectiveTarget - vel.z;
+    marbleRef.current.applyImpulse({ x: 0, y: 0, z: zError * delta * 10 }, true);
 
-    // Strafe controls (left/right only)
+    // Strafe controls
     const k = keys.current;
     let strafeForce = 0;
     if (k.has("arrowleft") || k.has("a")) strafeForce = -STRAFE_FORCE;
     if (k.has("arrowright") || k.has("d")) strafeForce = STRAFE_FORCE;
 
-    // Touch controls
     if (isMobile && touchForce.current !== 0) {
       strafeForce = touchForce.current * STRAFE_FORCE;
     }
@@ -521,24 +521,24 @@ function GameWorld({
 
     // Cap strafe velocity
     if (Math.abs(vel.x) > MAX_STRAFE_SPEED) {
+      const cappedVel = marbleRef.current.linvel();
       marbleRef.current.setLinvel(
         {
-          x: Math.sign(vel.x) * MAX_STRAFE_SPEED,
-          y: vel.y,
-          z: vel.z,
+          x: Math.sign(cappedVel.x) * MAX_STRAFE_SPEED,
+          y: cappedVel.y,
+          z: cappedVel.z,
         },
         true
       );
     }
 
-    // Jump — only when grounded (reuse isGrounded from above)
+    // Jump
     const wantsJump =
       k.has(" ") || k.has("arrowup") || k.has("w") || jumpRequested.current;
 
     if (wantsJump && isGrounded) {
       marbleRef.current.applyImpulse({ x: 0, y: JUMP_IMPULSE, z: 0 }, true);
     }
-    // Consume mobile jump request
     jumpRequested.current = false;
   });
 
@@ -546,7 +546,6 @@ function GameWorld({
     <>
       <CameraFollow marbleRef={marbleRef} isMobile={isMobile} gameState={gameState} />
 
-      {/* Lighting — follows marble loosely */}
       <ambientLight intensity={0.3} />
       <pointLight position={[0, 10, 0]} intensity={1} color="#a855f7" />
       <pointLight position={[5, 8, -20]} intensity={0.5} color="#ec4899" />
@@ -558,7 +557,12 @@ function GameWorld({
       <Physics gravity={[0, -30, 0]}>
         <Track />
         <SideRails />
-        <Marble marbleRef={marbleRef} gameState={gameState} onHit={handleGameOver} />
+        <Marble
+          marbleRef={marbleRef}
+          gameState={gameState}
+          onHit={handleGameOver}
+          invincible={invincible}
+        />
         {obstacles.map((o) => (
           <ObstacleBlock key={o.id} obstacle={o} />
         ))}
@@ -596,7 +600,6 @@ export default function MarbleGame({ isMobile }: { isMobile: boolean }) {
         />
       </Canvas>
 
-      {/* HUD — progress bar + time */}
       {gameState === "playing" && (
         <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
           <span className="text-xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
@@ -611,14 +614,13 @@ export default function MarbleGame({ isMobile }: { isMobile: boolean }) {
         </div>
       )}
 
-      {/* Idle / Start screen */}
       {gameState === "idle" && (
         <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
           <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent mb-3">
             Marble Run
           </h3>
           <p className="text-gray-400 text-sm mb-1">
-            Reach the end of the course. Dodge or jump over obstacles.
+            Reach the end of the course. Dodge the obstacles.
           </p>
           <p className="text-gray-500 text-xs mb-6">
             {isMobile
@@ -634,7 +636,6 @@ export default function MarbleGame({ isMobile }: { isMobile: boolean }) {
         </div>
       )}
 
-      {/* Game Over */}
       {gameState === "gameover" && (
         <div className="absolute inset-0 flex flex-col items-center justify-center z-10 bg-black/60 backdrop-blur-sm">
           <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">Game Over</h3>
@@ -653,7 +654,6 @@ export default function MarbleGame({ isMobile }: { isMobile: boolean }) {
         </div>
       )}
 
-      {/* Win! */}
       {gameState === "win" && (
         <div className="absolute inset-0 flex flex-col items-center justify-center z-10 bg-black/60 backdrop-blur-sm">
           <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent mb-2">
