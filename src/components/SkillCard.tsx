@@ -57,17 +57,15 @@ export default function SkillCard({ skill }: SkillCardProps) {
   const IconComponent = iconComponents[skill.icon];
 
   return (
-    <div className="relative group">
-      <div className="relative bg-white rounded-lg p-3 sm:p-4 flex items-center space-x-3 sm:space-x-4 border border-gray-200 hover:border-violet-300 hover:shadow-sm active:border-violet-300 transition duration-300 min-h-[52px]">
-        <div className="w-9 h-9 sm:w-10 sm:h-10 flex-shrink-0 flex items-center justify-center bg-violet-50 rounded-lg group-hover:bg-violet-100 group-active:bg-violet-100 transition duration-300">
-          {IconComponent && (
-            <IconComponent className="w-4 h-4 sm:w-5 sm:h-5 text-violet-500 group-hover:text-violet-600 group-active:text-violet-600 transition-colors" />
-          )}
-        </div>
-        <h3 className="text-sm sm:text-base font-light text-gray-700 group-hover:text-violet-600 group-active:text-violet-600 tracking-wide transition-colors">
-          {skill.name}
-        </h3>
+    <div className="group flex flex-col items-center p-4 bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md hover:scale-105 hover:border-purple-200 active:scale-100 transition-all duration-300 cursor-default">
+      <div className="w-10 h-10 flex items-center justify-center mb-2">
+        {IconComponent && (
+          <IconComponent className="w-6 h-6 text-gray-600 group-hover:text-purple-500 transition-colors duration-300" />
+        )}
       </div>
+      <span className="text-xs font-medium text-gray-600 group-hover:text-purple-600 transition-colors text-center">
+        {skill.name}
+      </span>
     </div>
   );
 }
