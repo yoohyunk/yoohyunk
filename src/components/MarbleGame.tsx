@@ -517,8 +517,7 @@ function GameWorld({
       );
     }
 
-    // Jump — only when grounded
-    const isGrounded = pos.y < GROUND_THRESHOLD;
+    // Jump — only when grounded (reuse isGrounded from above)
     const wantsJump =
       k.has(" ") || k.has("arrowup") || k.has("w") || jumpRequested.current;
 
