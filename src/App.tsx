@@ -22,16 +22,6 @@ const SECTIONS = [
 export default function App() {
   const [activeSection, setActiveSection] = useState<string>("hero");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    handleResize(); // 초기 로드 시 확인
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   // 스크롤 시 활성 섹션만 감지 (자동 센터링 제거로 버벅거림 해결)
   useEffect(() => {
