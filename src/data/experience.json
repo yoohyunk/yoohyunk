@@ -44,15 +44,5 @@
       "Built end-to-end auth, inventory management, and payments using Firebase and Square API.",
       "Implemented a persistent cart using browser storage and Firestore to sync carts across devices and sessions."
     ]
-  },
-  {
-    "title": "Pilates Studio Manager and Barista",
-    "company": "The On Pilates and Crown Resort",
-    "location": "Korea, Australia",
-    "start": "2021-01",
-    "end": "2022-12",
-    "bullets": [
-      "Worked in customer-facing roles while studying English and self-learning programming."
-    ]
   }
 ]
