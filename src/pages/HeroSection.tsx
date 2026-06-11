@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { FaGithub, FaEnvelope, FaLinkedinIn, FaArrowDown } from "react-icons/fa";
 
 export default function HeroSection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -31,14 +32,6 @@ export default function HeroSection() {
     }
   };
 
-  const handleScrollToContact = () => {
-    const el = document.getElementById("contact");
-    if (el) {
-      const top = window.pageYOffset + el.getBoundingClientRect().top - 80;
-      window.scrollTo({ top, behavior: "smooth" });
-    }
-  };
-
   return (
     <section
       ref={sectionRef}
@@ -48,7 +41,7 @@ export default function HeroSection() {
         minHeight: isMobile ? "calc(100dvh - 56px)" : "100vh",
       }}
     >
-      {/* Animated gradient mesh background */}
+      {/* Animated gradient mesh background (CSS only) */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] rounded-full bg-purple-300/30 blur-3xl animate-mesh-1" />
         <div className="absolute top-[10%] right-[-15%] w-[60%] h-[60%] rounded-full bg-pink-300/25 blur-3xl animate-mesh-2" />
@@ -62,7 +55,7 @@ export default function HeroSection() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
-          Full-Stack Developer
+          AI Builder · Full-stack
         </p>
         <h1
           className={`font-bold bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 bg-clip-text text-transparent leading-tight mb-6 transition-all duration-700 delay-300 ${
@@ -72,14 +65,17 @@ export default function HeroSection() {
           Erica Kim
         </h1>
         <p
-          className={`text-gray-500 max-w-lg leading-relaxed mb-8 transition-all duration-700 delay-500 ${
+          className={`text-gray-600 max-w-xl leading-relaxed mb-8 transition-all duration-700 delay-500 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           } ${isMobile ? "text-base px-4" : "text-lg"}`}
         >
-          Passionate about building end-to-end experiences — from database schema to polished interfaces.
+          I design agentic AI systems: tool-use extraction, LLM pipelines, and
+          human-in-the-loop approval. I build the full stack around them.
         </p>
+
+        {/* Primary actions */}
         <div
-          className={`flex gap-4 transition-all duration-700 delay-[600ms] ${
+          className={`flex flex-wrap items-center justify-center gap-4 transition-all duration-700 delay-[600ms] ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
@@ -89,12 +85,48 @@ export default function HeroSection() {
           >
             View Projects
           </button>
-          <button
-            onClick={handleScrollToContact}
-            className="px-6 py-3 border border-gray-300 text-gray-700 rounded-full hover:border-purple-400 hover:text-purple-600 active:scale-95 transition-all text-sm font-medium cursor-pointer"
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-6 py-3 border border-gray-300 text-gray-700 rounded-full hover:border-purple-400 hover:text-purple-600 active:scale-95 transition-all text-sm font-medium flex items-center gap-2"
           >
-            Contact Me
-          </button>
+            <FaArrowDown className="w-3.5 h-3.5" aria-hidden="true" />
+            Résumé
+          </a>
+        </div>
+
+        {/* Recruiter shortcuts */}
+        <div
+          className={`flex items-center justify-center gap-5 mt-8 transition-all duration-700 delay-[750ms] ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}
+        >
+          <a
+            href="https://github.com/yoohyunk"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            className="text-gray-500 hover:text-purple-600 active:scale-95 transition-colors"
+          >
+            <FaGithub className="w-6 h-6" />
+          </a>
+          <a
+            href="mailto:yoohyunk20@gmail.com"
+            aria-label="Email"
+            className="text-gray-500 hover:text-purple-600 active:scale-95 transition-colors"
+          >
+            <FaEnvelope className="w-6 h-6" />
+          </a>
+          <a
+            href="https://linkedin.com/in/yoohyunk"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            className="text-gray-500 hover:text-purple-600 active:scale-95 transition-colors"
+          >
+            <FaLinkedinIn className="w-6 h-6" />
+          </a>
         </div>
       </div>
     </section>
