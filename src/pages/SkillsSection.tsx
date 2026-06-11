@@ -16,7 +16,7 @@ export default function SkillsSection() {
           observer.disconnect();
         }
       },
-      { threshold: 0, rootMargin: "0px 0px 15% 0px" }
+      { threshold: 0, rootMargin: "0px" }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
@@ -26,20 +26,20 @@ export default function SkillsSection() {
     <section
       ref={sectionRef}
       className={`w-full bg-[#fafafa] transition-all duration-300 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
       }`}
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-24 md:py-32">
         <h2
           className={`font-bold text-center mb-4 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 bg-clip-text text-transparent transition-all duration-300 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           } text-4xl md:text-6xl`}
         >
           Tools & Technologies
         </h2>
         <p
           className={`text-gray-500 text-center text-base md:text-lg mb-16 max-w-2xl mx-auto transition-all duration-300 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
           I mostly write tested code in the JavaScript and Python ecosystems,
@@ -51,7 +51,7 @@ export default function SkillsSection() {
             <div
               key={category.name}
               className={`transition-all duration-300 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`}
               style={{
                 transitionDelay: isVisible ? `${Math.min(catIndex * 40, 120)}ms` : "0ms",
@@ -67,7 +67,7 @@ export default function SkillsSection() {
                     className={`transition-all duration-300 ${
                       isVisible
                         ? "opacity-100 translate-y-0"
-                        : "opacity-0 translate-y-2"
+                        : "opacity-0 translate-y-4"
                     }`}
                     style={{
                       transitionDelay: isVisible

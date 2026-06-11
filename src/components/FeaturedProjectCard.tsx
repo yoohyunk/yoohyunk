@@ -54,7 +54,7 @@ export default function FeaturedProjectCard({ project, index }: Props) {
     <article
       ref={ref}
       className={`relative bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden transition-all duration-300 ${
-        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
       }`}
     >
       {/* Gradient accent bar */}

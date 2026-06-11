@@ -13,7 +13,7 @@ export default function ContactSection() {
           observer.disconnect();
         }
       },
-      { threshold: 0, rootMargin: "0px 0px 15% 0px" }
+      { threshold: 0, rootMargin: "0px" }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
@@ -44,20 +44,20 @@ export default function ContactSection() {
     <section
       ref={sectionRef}
       className={`w-full transition-all duration-300 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
       }`}
     >
       <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
         <h2
           className={`font-bold mb-6 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 bg-clip-text text-transparent transition-all duration-300 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           } text-4xl md:text-6xl`}
         >
           Let's Connect
         </h2>
         <p
           className={`text-gray-500 text-lg mb-12 transition-all duration-300 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
           Have a project in mind? Let's talk.
