@@ -11,8 +11,10 @@ export default function ProjectsSection() {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => setIsVisible(entry.isIntersecting),
-      { threshold: 0.05, rootMargin: "-80px" }
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true);
+      },
+      { threshold: 0.05, rootMargin: "0px 0px -10% 0px" }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => {
@@ -23,7 +25,7 @@ export default function ProjectsSection() {
   return (
     <section
       ref={sectionRef}
-      className={`w-full transition-all duration-1000 ${
+      className={`w-full transition-all duration-500 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
@@ -60,9 +62,10 @@ export default function ProjectsSection() {
                 key={project.title}
                 type="button"
                 onClick={() => setSelectedIndex(index)}
-                className="group text-left bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex"
+                className={`group text-left bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col sm:flex-row ${isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-[0.97]"}`}
+                style={{ transitionDelay: isVisible ? `${Math.min(index * 70, 280)}ms` : "0ms" }}
               >
-                <div className="relative overflow-hidden w-1/3 min-h-full">
+                <div className="relative overflow-hidden w-full h-40 sm:w-1/3 sm:h-auto sm:min-h-full">
                   <img
                     src={image}
                     alt={project.title}
@@ -70,7 +73,7 @@ export default function ProjectsSection() {
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
-                <div className="p-4 flex flex-col justify-center w-2/3">
+                <div className="p-4 flex flex-col justify-center w-full sm:w-2/3">
                   <h4 className="font-bold text-[#1a1a2e] mb-1 group-hover:text-violet-600 transition-colors">
                     {project.title}
                   </h4>
