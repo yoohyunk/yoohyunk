@@ -1,17 +1,36 @@
 [
   {
-    "title": "Fullstack Developer",
-    "company": "YYCFoodTrucks (Practicum)",
-    "location": "Calgary, Canada",
-    "start": "2025-01",
+    "title": "Software Engineer (Contract)",
+    "company": "Orbit Sales",
+    "start": "2026-02",
     "end": "Present",
     "bullets": [
-      "Delivered a Next.js scheduling and employee management app for Calgary's largest food truck operator; served as team lead for 5 developers.",
-      "Developed API routes with role-based access control and schema-driven TypeScript types for I/O validation; implemented row-level security in PostgreSQL.",
-      "Designed and implemented constraint-based automated scheduling to replace manual workflows.",
-      "Configured GitHub Actions, Vercel, Jest, and ESLint to support automated deployments and local DX.",
-      "Contributed across product areas: UI implementation, tests, and sprint planning.",
-      "Authored training guides and led weekly demos to gather product feedback."
+      "Built an AI-native development workflow: integrated Figma MCP for design-to-code context and Playwright MCP for visual regression on AI-generated frontend code, reducing rework and catching iOS-specific regressions earlier.",
+      "Built a multi-tenant, role-based access layer for a field-sales CRM.",
+      "Integrated third-party services (Shopify, WooCommerce, Square, Google, Brevo, Mailchimp, ClickShip) through OAuth and webhook sync pipelines.",
+      "Implemented self-healing webhook provisioning.",
+      "Built multi-channel notifications across SMS, email, and WebSockets."
+    ]
+  },
+  {
+    "title": "Freelance Software Engineer",
+    "company": "Meot.ca",
+    "start": "2025-11",
+    "end": "Present",
+    "bullets": [
+      "Built an automated lead-generation pipeline using Gemini via OpenRouter to score and source leads by likelihood to convert.",
+      "Delivered Next.js branding sites and built a gym member-retention system with fob-access data ingestion, churn detection, and monthly reporting."
+    ]
+  },
+  {
+    "title": "Software Engineer",
+    "company": "YYCFoodTrucks",
+    "location": "Calgary, Canada",
+    "start": "2025-01",
+    "end": "2025-10",
+    "bullets": [
+      "Delivered a Next.js scheduling and employee management app for Calgary's largest food truck operator; team lead of 5 developers.",
+      "Built API routes with role-based access control, schema-driven TypeScript validation, and PostgreSQL row-level security, and configured CI/CD with GitHub Actions and Vercel."
     ]
   },
   {
@@ -24,16 +43,6 @@
       "Delivered a Next.js storefront for a local cookie shop; led a team of 3 developers.",
       "Built end-to-end auth, inventory management, and payments using Firebase and Square API.",
       "Implemented a persistent cart using browser storage and Firestore to sync carts across devices and sessions."
-    ]
-  },
-  {
-    "title": "Pilates Studio Manager and Barista",
-    "company": "The On Pilates and Crown Resort",
-    "location": "Korea, Australia",
-    "start": "2021-01",
-    "end": "2022-12",
-    "bullets": [
-      "Worked in customer-facing roles while studying English and self-learning programming."
     ]
   }
 ]

@@ -70,8 +70,8 @@ export default function NavBar({
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 bg-[#0a0a0c]/80 backdrop-blur-xs z-50 transition-all duration-300 ${
-        isScrolled ? "border-b border-purple-900/20" : ""
+      className={`fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 transition-all duration-300 ${
+        isScrolled ? "border-b border-gray-200 shadow-sm" : ""
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -82,7 +82,7 @@ export default function NavBar({
               alt="logo"
               className="w-8 h-8"
             />
-            <div className="flex-shrink-0 font-bold text-purple-300 tracking-wider text-2xl">
+            <div className="flex-shrink-0 font-bold text-[#1a1a2e] tracking-wider text-2xl">
               Erica Kim
             </div>
           </div>
@@ -91,7 +91,7 @@ export default function NavBar({
           <div className="md:hidden">
             <button
               onClick={toggleMobileMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-purple-300 hover:text-white hover:bg-purple-900/20 focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-violet-600 hover:bg-violet-50 focus:outline-none"
               aria-expanded={isMobileMenuOpen}
             >
               <span className="sr-only">Open main menu</span>
@@ -141,14 +141,14 @@ export default function NavBar({
                     transition-all duration-300 ease-out uppercase
                     ${
                       activeSection === id
-                        ? "text-purple-300 drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]"
-                        : "text-gray-400 hover:text-purple-200"
+                        ? "text-violet-600 font-medium"
+                        : "text-gray-500 hover:text-violet-600"
                     }
                     `}
                 >
                   {label}
                   {activeSection === id && (
-                    <span className="absolute -bottom-1 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-purple-500 to-transparent" />
+                    <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 rounded-full" />
                   )}
                 </button>
               </li>
@@ -159,7 +159,7 @@ export default function NavBar({
 
       {/* Mobile menu, show/hide based on menu state */}
       <div className={`${isMobileMenuOpen ? "block" : "hidden"} md:hidden`}>
-        <div className="bg-[#0a0a0c]/95 backdrop-blur-md border-t border-purple-900/10 pb-3 pt-2">
+        <div className="bg-white/95 backdrop-blur-md border-t border-gray-200 pb-3 pt-2">
           <ul className="px-4 space-y-2">
             {NAV_ITEMS.map(({ id, label }) => (
               <li key={id}>
@@ -170,8 +170,8 @@ export default function NavBar({
                     transition-all duration-300 ease-out
                     ${
                       activeSection === id
-                        ? "text-purple-300 bg-purple-900/20"
-                        : "text-gray-300 hover:bg-purple-900/10 hover:text-white"
+                        ? "text-violet-600 bg-violet-50"
+                        : "text-gray-600 hover:bg-violet-50 hover:text-violet-600"
                     }
                     `}
                 >

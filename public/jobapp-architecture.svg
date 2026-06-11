@@ -1,0 +1,222 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1480" height="1080" viewBox="0 0 1480 1080" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#475569"/>
+    </marker>
+    <marker id="arrG" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#0e7490"/>
+    </marker>
+    <style>
+      .lbl{fill:#0f172a;font-size:14px;font-weight:600}
+      .sub{fill:#475569;font-size:12px}
+      .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;fill:#334155;font-size:11px}
+      .edge{stroke:#475569;stroke-width:1.6;fill:none}
+      .edgeG{stroke:#0e7490;stroke-width:1.6;fill:none;stroke-dasharray:5 4}
+      .zone{fill:none;stroke-width:1.4;rx:14}
+      .zlbl{font-size:13px;font-weight:700;letter-spacing:.04em}
+      .node{rx:10;stroke-width:1.4}
+      .edgelbl{fill:#475569;font-size:11px;font-style:italic}
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1480" height="1080" fill="#f8fafc"/>
+  <text x="40" y="46" font-size="24" font-weight="800" fill="#0f172a">Jobs Desktop — End-to-End Architecture</text>
+  <text x="40" y="70" class="sub">Local Electrobun app. Web view (React) ↔ Bun backend over typed RPC. All data in local SQLite; only search/extraction calls leave the machine.</text>
+
+  <!-- ===================== WEB VIEW ZONE ===================== -->
+  <rect class="zone" x="40" y="92" width="1400" height="118" stroke="#6366f1" fill="#eef2ff"/>
+  <text x="58" y="114" class="zlbl" fill="#4338ca">WEB VIEW · React 18 + Vite + Tailwind + Radix</text>
+
+  <rect class="node" x="64" y="128" width="200" height="64" fill="#fff" stroke="#818cf8"/>
+  <text x="80" y="154" class="lbl">Jobs / CV</text>
+  <text x="80" y="174" class="sub">Applications / Settings</text>
+
+  <rect class="node" x="284" y="128" width="200" height="64" fill="#fff" stroke="#818cf8"/>
+  <text x="300" y="154" class="lbl">React Query</text>
+  <text x="300" y="174" class="sub">reads + cache, focus refetch</text>
+
+  <rect class="node" x="504" y="128" width="230" height="64" fill="#fff" stroke="#818cf8"/>
+  <text x="520" y="154" class="lbl">ScrapeTracker</text>
+  <text x="520" y="174" class="sub">live progress (streamed RPC)</text>
+
+  <!-- RPC boundary -->
+  <line class="edge" x1="384" y1="210" x2="384" y2="248" marker-end="url(#arr)"/>
+  <text x="396" y="232" class="edgelbl">typed RPC: request + streaming messages</text>
+  <line class="edge" x1="620" y1="248" x2="620" y2="210" marker-end="url(#arr)"/>
+  <text x="636" y="232" class="edgelbl">searchProgress / results stream up</text>
+
+  <!-- ===================== BUN BACKEND ZONE ===================== -->
+  <rect class="zone" x="40" y="250" width="1010" height="600" stroke="#0ea5e9" fill="#f0f9ff"/>
+  <text x="58" y="272" class="zlbl" fill="#0369a1">BUN BACKEND PROCESS · src/bun/index.ts (RPC handlers)</text>
+
+  <!-- triggers -->
+  <rect class="node" x="64" y="288" width="200" height="56" fill="#fff" stroke="#38bdf8"/>
+  <text x="80" y="312" class="lbl">runSearch (RPC)</text>
+  <text x="80" y="330" class="sub">user clicks run</text>
+
+  <rect class="node" x="64" y="356" width="200" height="56" fill="#fff" stroke="#38bdf8"/>
+  <text x="80" y="380" class="lbl">15-min scheduler</text>
+  <text x="80" y="398" class="sub">runs due search configs</text>
+
+  <rect class="node" x="300" y="320" width="190" height="64" fill="#e0f2fe" stroke="#0ea5e9"/>
+  <text x="316" y="346" class="lbl">runAllPipelines</text>
+  <text x="316" y="366" class="sub">per-platform tasks,</text>
+  <text x="316" y="382" class="sub">run concurrently</text>
+
+  <line class="edge" x1="264" y1="316" x2="300" y2="346" marker-end="url(#arr)"/>
+  <line class="edge" x1="264" y1="384" x2="300" y2="360" marker-end="url(#arr)"/>
+
+  <!-- PIPELINE STAGES (vertical) -->
+  <text x="316" y="424" class="zlbl" fill="#0369a1">PER-PLATFORM PIPELINE — 4 stages</text>
+
+  <!-- stage 1 discover -->
+  <rect class="node" x="300" y="436" width="330" height="70" fill="#fff" stroke="#0ea5e9"/>
+  <text x="316" y="460" class="lbl">1 · discovering</text>
+  <text x="316" y="479" class="mono">Serper Google search  site:greenhouse.io …</text>
+  <text x="316" y="496" class="sub">paginate up to 100  ·  LinkedIn via Apify actor</text>
+
+  <line class="edge" x1="465" y1="506" x2="465" y2="528" marker-end="url(#arr)"/>
+  <text x="478" y="522" class="edgelbl">dedup by (source, externalId) · blocklist filter</text>
+
+  <!-- stage 2 fetch -->
+  <rect class="node" x="300" y="530" width="330" height="86" fill="#fff" stroke="#0ea5e9"/>
+  <text x="316" y="554" class="lbl">2 · extracting  (through throttle queue)</text>
+  <text x="316" y="573" class="sub">Layer 1: Cheerio HTTP (fast)</text>
+  <text x="316" y="591" class="sub">Layer 2: Playwright headless (JS-rendered fallback)</text>
+  <text x="316" y="608" class="mono">AbortSignal.timeout(10000) + parent cancel = 10s cap</text>
+
+  <line class="edge" x1="465" y1="616" x2="465" y2="638" marker-end="url(#arr)"/>
+  <text x="478" y="632" class="edgelbl">on fail → status = stale | bot_detection</text>
+
+  <!-- stage 3 llm extract -->
+  <rect class="node" x="300" y="640" width="330" height="86" fill="#fff" stroke="#0ea5e9"/>
+  <text x="316" y="664" class="lbl">3 · transforming  (LLM)</text>
+  <text x="316" y="683" class="mono">extractJobData → json_schema (strict)</text>
+  <text x="316" y="700" class="sub">title, company, salary→yearly, locations,</text>
+  <text x="316" y="717" class="sub">workMode, level(5), notes  ·  notAJob filters junk</text>
+
+  <line class="edge" x1="465" y1="726" x2="465" y2="748" marker-end="url(#arr)"/>
+  <text x="478" y="742" class="edgelbl">computeCheapScore (0-100, heuristic)</text>
+
+  <!-- stage 4 store -->
+  <rect class="node" x="300" y="750" width="330" height="64" fill="#fff" stroke="#0ea5e9"/>
+  <text x="316" y="774" class="lbl">4 · storing → done</text>
+  <text x="316" y="794" class="sub">insert job, status = labeled  ·  tally results</text>
+
+  <!-- SCORING detail box -->
+  <rect class="node" x="664" y="640" width="362" height="174" fill="#fefce8" stroke="#ca8a04"/>
+  <text x="680" y="664" class="lbl">cheap-score · pure heuristic (no LLM)</text>
+  <text x="680" y="686" class="sub">Skill overlap (max 60): primary title +12 / body +6,</text>
+  <text x="680" y="703" class="sub">secondary +4 / +2, secondary-in-title −5 penalty</text>
+  <text x="680" y="725" class="sub">Title word overlap (max 25): matched / job-title words</text>
+  <text x="680" y="747" class="sub">Level alignment (max 15): infer from years of exp,</text>
+  <text x="680" y="764" class="sub">distance 0→15 / 1→10 / 2→5 / 3+→0</text>
+  <text x="680" y="792" class="mono">sum → clamp 0..100 → jobs.cheapScore</text>
+  <line class="edge" x1="630" y1="690" x2="664" y2="700" marker-end="url(#arr)"/>
+
+  <!-- CONCURRENCY / CANCEL detail box -->
+  <rect class="node" x="664" y="436" width="362" height="186" fill="#fff" stroke="#94a3b8"/>
+  <text x="680" y="460" class="lbl">Concurrency &amp; cancel control</text>
+  <text x="680" y="483" class="sub">Two bottlenecks → two queues:</text>
+  <text x="680" y="503" class="mono">per-platform fetch: delayMs 1500, concurrent 2</text>
+  <text x="680" y="521" class="sub">  (conservative — protects scraped sites)</text>
+  <text x="680" y="541" class="mono">global LLM queue: delayMs 0, concurrent 10</text>
+  <text x="680" y="559" class="sub">  (shared by all pipelines — throughput)</text>
+  <text x="680" y="581" class="sub">AbortController per run in activeControllers set;</text>
+  <text x="680" y="598" class="sub">cancel aborts in-flight fetches, not just queued.</text>
+  <line class="edge" x1="630" y1="565" x2="664" y2="540" marker-end="url(#arr)"/>
+
+  <!-- ===================== EXTERNAL APIS ZONE ===================== -->
+  <rect class="zone" x="1070" y="250" width="370" height="320" stroke="#10b981" fill="#ecfdf5"/>
+  <text x="1088" y="272" class="zlbl" fill="#047857">EXTERNAL APIS (only data leaving machine)</text>
+
+  <rect class="node" x="1092" y="290" width="326" height="62" fill="#fff" stroke="#34d399"/>
+  <text x="1108" y="314" class="lbl">Serper</text>
+  <text x="1108" y="334" class="sub">Google search w/ site: operator (7 ATS)</text>
+
+  <rect class="node" x="1092" y="364" width="326" height="62" fill="#fff" stroke="#34d399"/>
+  <text x="1108" y="388" class="lbl">Apify actor</text>
+  <text x="1108" y="408" class="sub">LinkedIn job listings</text>
+
+  <rect class="node" x="1092" y="438" width="326" height="110" fill="#fff" stroke="#34d399"/>
+  <text x="1108" y="462" class="lbl">OpenRouter</text>
+  <text x="1108" y="482" class="mono">google/gemini-3.1-flash-lite-preview</text>
+  <text x="1108" y="503" class="sub">job extract · CV parse · resume tailor</text>
+  <text x="1108" y="523" class="sub">small fast model: high-volume, low-latency</text>
+  <text x="1108" y="540" class="sub">extraction with constrained output</text>
+
+  <line class="edge" x1="630" y1="471" x2="1092" y2="321" marker-end="url(#arr)"/>
+  <line class="edge" x1="630" y1="488" x2="1092" y2="395" marker-end="url(#arr)"/>
+  <line class="edgeG" x1="630" y1="683" x2="1090" y2="492" marker-end="url(#arrG)"/>
+
+  <!-- ===================== RESUME / TAILORING ZONE ===================== -->
+  <rect class="zone" x="1070" y="586" width="370" height="264" stroke="#a855f7" fill="#faf5ff"/>
+  <text x="1088" y="608" class="zlbl" fill="#7e22ce">RESUME PARSE &amp; TAILOR (separate LLM jobs)</text>
+
+  <rect class="node" x="1092" y="624" width="326" height="58" fill="#fff" stroke="#c084fc"/>
+  <text x="1108" y="648" class="lbl">extractCvData</text>
+  <text x="1108" y="668" class="sub">PDF/text → StructuredCV, faithful (no embellish)</text>
+
+  <rect class="node" x="1092" y="692" width="326" height="58" fill="#fff" stroke="#c084fc"/>
+  <text x="1108" y="716" class="lbl">snapshot → resumeVersions</text>
+  <text x="1108" y="736" class="sub">original preserved before tailoring</text>
+
+  <rect class="node" x="1092" y="760" width="326" height="72" fill="#fff" stroke="#c084fc"/>
+  <text x="1108" y="784" class="lbl">tailorResume</text>
+  <text x="1108" y="804" class="sub">CV + JD → { cv, reasoning }</text>
+  <text x="1108" y="822" class="sub">no claiming unheld experience · no filler</text>
+
+  <line class="edge" x1="1255" y1="682" x2="1255" y2="692" marker-end="url(#arr)"/>
+  <line class="edge" x1="1255" y1="750" x2="1255" y2="760" marker-end="url(#arr)"/>
+  <line class="edgeG" x1="1255" y1="624" x2="1255" y2="548" marker-end="url(#arrG)"/>
+  <text x="1264" y="600" class="edgelbl">via OpenRouter</text>
+
+  <!-- ===================== SQLITE ZONE ===================== -->
+  <rect class="zone" x="40" y="868" width="1400" height="186" stroke="#f59e0b" fill="#fffbeb"/>
+  <text x="58" y="890" class="zlbl" fill="#b45309">LOCAL SQLITE · Drizzle ORM (no server, no accounts — 'remove-clerk')</text>
+
+  <rect class="node" x="64" y="906" width="150" height="120" fill="#fff" stroke="#fbbf24"/>
+  <text x="80" y="930" class="lbl">jobs</text>
+  <text x="80" y="950" class="sub">status,</text>
+  <text x="80" y="967" class="sub">structuredData,</text>
+  <text x="80" y="984" class="sub">cheapScore</text>
+
+  <rect class="node" x="230" y="906" width="150" height="120" fill="#fff" stroke="#fbbf24"/>
+  <text x="246" y="930" class="lbl">resumes</text>
+  <text x="246" y="950" class="sub">StructuredCV</text>
+  <text x="246" y="967" class="sub">JSON</text>
+
+  <rect class="node" x="396" y="906" width="160" height="120" fill="#fff" stroke="#fbbf24"/>
+  <text x="412" y="930" class="lbl">resumeVersions</text>
+  <text x="412" y="950" class="sub">snapshots</text>
+
+  <rect class="node" x="572" y="906" width="160" height="120" fill="#fff" stroke="#fbbf24"/>
+  <text x="588" y="930" class="lbl">jobResumes</text>
+  <text x="588" y="950" class="sub">tailoredContent,</text>
+  <text x="588" y="967" class="sub">reasoning</text>
+
+  <rect class="node" x="748" y="906" width="160" height="120" fill="#fff" stroke="#fbbf24"/>
+  <text x="764" y="930" class="lbl">searchConfigs</text>
+  <text x="764" y="950" class="sub">Serper/LinkedIn</text>
+
+  <rect class="node" x="924" y="906" width="170" height="120" fill="#fff" stroke="#fbbf24"/>
+  <text x="940" y="930" class="lbl">applications</text>
+  <text x="940" y="950" class="sub">+ interviewSteps</text>
+
+  <rect class="node" x="1110" y="906" width="150" height="120" fill="#fff" stroke="#fbbf24"/>
+  <text x="1126" y="930" class="lbl">blocklist</text>
+  <text x="1126" y="950" class="sub">job/company/</text>
+  <text x="1126" y="967" class="sub">level/location</text>
+
+  <rect class="node" x="1276" y="906" width="148" height="120" fill="#fff" stroke="#fbbf24"/>
+  <text x="1292" y="930" class="lbl">settings</text>
+  <text x="1292" y="950" class="sub">API keys</text>
+
+  <!-- store arrows into db -->
+  <line class="edge" x1="465" y1="814" x2="150" y2="906" marker-end="url(#arr)"/>
+  <line class="edge" x1="1255" y1="832" x2="650" y2="906" marker-end="url(#arr)"/>
+  <line class="edge" x1="1170" y1="750" x2="320" y2="906" marker-end="url(#arr)"/>
+
+  <!-- legend -->
+  <text x="40" y="1072" class="sub">Solid arrow = data/control flow.  Dashed teal = LLM call (OpenRouter).  Verified from code; model string and stage names match the repo.</text>
+</svg>

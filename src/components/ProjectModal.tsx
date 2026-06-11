@@ -58,12 +58,12 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
       }`}
     >
       <div
-        className="fixed inset-0 bg-black/80 backdrop-blur-sm"
+        className="fixed inset-0 bg-black/40 backdrop-blur-sm"
         onClick={onClose}
       />
 
       <div
-        className={`relative bg-[#121316] text-white overflow-hidden shadow-2xl ${
+        className={`relative bg-white text-[#1a1a2e] overflow-hidden shadow-2xl ${
           isMobile
             ? "w-full h-full rounded-none"
             : "max-w-2xl w-full max-h-[80vh] rounded-xl"
@@ -84,12 +84,12 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             />
             {/* Gradient overlay for mobile */}
             {isMobile && (
-              <div className="absolute inset-0 bg-gradient-to-t from-[#121316] via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
             )}
             <button
               onClick={onClose}
-              className={`absolute top-4 right-4 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center active:bg-black transition text-white ${
-                isMobile ? "w-11 h-11" : "w-8 h-8 hover:bg-black"
+              className={`absolute top-4 right-4 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center active:bg-gray-100 transition text-gray-600 shadow-sm ${
+                isMobile ? "w-11 h-11" : "w-8 h-8 hover:bg-gray-100"
               }`}
               aria-label="Close modal"
             >
@@ -105,14 +105,14 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
           >
             <h2
               id="modal-title"
-              className={`font-bold mb-2 text-purple-400 ${
+              className={`font-bold mb-2 bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent ${
                 isMobile ? "text-2xl" : "text-xl"
               }`}
             >
               {project.title}
             </h2>
             <p
-              className={`text-gray-300 mb-4 font-medium ${
+              className={`text-gray-600 mb-4 font-medium ${
                 isMobile ? "text-base" : "text-lg"
               }`}
             >
@@ -121,7 +121,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             {project.description.map((desc, index) => (
               <p
                 key={index}
-                className={`text-gray-400 mb-4 ${
+                className={`text-gray-500 mb-4 ${
                   isMobile ? "text-base leading-relaxed" : "text-sm"
                 }`}
               >
@@ -131,7 +131,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
 
             <div className="mb-5">
               <h3
-                className={`font-semibold mb-3 text-purple-300 ${
+                className={`font-semibold mb-3 text-violet-600 ${
                   isMobile ? "text-lg" : "text-md"
                 }`}
               >
@@ -141,7 +141,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                 {technologies.map((tech, index) => (
                   <span
                     key={index}
-                    className={`bg-purple-900/30 text-purple-300 rounded-md flex items-center justify-center whitespace-nowrap ${
+                    className={`bg-violet-100 text-violet-700 rounded-md flex items-center justify-center whitespace-nowrap ${
                       isMobile
                         ? "px-3 py-1.5 text-sm"
                         : "px-2 py-1 text-xs"
@@ -156,14 +156,14 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             {features.length > 0 && (
               <div className="mb-5">
                 <h3
-                  className={`font-semibold mb-3 text-purple-300 ${
+                  className={`font-semibold mb-3 text-violet-600 ${
                     isMobile ? "text-lg" : "text-md"
                   }`}
                 >
                   Key Features
                 </h3>
                 <ul
-                  className={`list-disc list-inside space-y-2 text-gray-300 ${
+                  className={`list-disc list-inside space-y-2 text-gray-600 ${
                     isMobile ? "text-base" : "text-sm"
                   }`}
                 >
@@ -181,10 +181,10 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                   href={liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`flex items-center justify-center bg-purple-600 active:bg-purple-700 rounded-full text-white transition ${
+                  className={`flex items-center justify-center bg-violet-600 active:bg-violet-700 rounded-full text-white transition ${
                     isMobile
-                      ? "w-12 h-12 hover:bg-purple-600"
-                      : "w-10 h-10 hover:bg-purple-700"
+                      ? "w-12 h-12 hover:bg-violet-600"
+                      : "w-10 h-10 hover:bg-violet-700"
                   }`}
                   title="View Live Site"
                 >
@@ -196,10 +196,10 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                   href={repoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`flex items-center justify-center border border-purple-600 active:border-purple-700 rounded-full text-purple-400 active:text-purple-300 transition ${
+                  className={`flex items-center justify-center border border-violet-600 active:border-violet-700 rounded-full text-violet-600 active:text-violet-500 transition ${
                     isMobile
-                      ? "w-12 h-12 hover:border-purple-600"
-                      : "w-10 h-10 hover:border-purple-700 hover:text-purple-300"
+                      ? "w-12 h-12 hover:border-violet-600"
+                      : "w-10 h-10 hover:border-violet-700 hover:text-violet-500"
                   }`}
                   title="View Source Code"
                 >

@@ -57,18 +57,15 @@ export default function SkillCard({ skill }: SkillCardProps) {
   const IconComponent = iconComponents[skill.icon];
 
   return (
-    <div className="relative group">
-      <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg blur opacity-0 group-hover:opacity-20 group-active:opacity-20 transition duration-500" />
-      <div className="relative bg-[#0a0a0c] rounded-lg p-3 sm:p-4 flex items-center space-x-3 sm:space-x-4 border border-purple-900/10 hover:border-purple-500/20 active:border-purple-500/20 transition duration-300 min-h-[52px]">
-        <div className="w-9 h-9 sm:w-10 sm:h-10 flex-shrink-0 flex items-center justify-center bg-purple-500/5 rounded-lg group-hover:bg-purple-500/10 group-active:bg-purple-500/10 transition duration-300">
-          {IconComponent && (
-            <IconComponent className="w-4 h-4 sm:w-5 sm:h-5 text-purple-300/70 group-hover:text-purple-200 group-active:text-purple-200 transition-colors" />
-          )}
-        </div>
-        <h3 className="text-sm sm:text-base font-light text-gray-300 group-hover:text-purple-200 group-active:text-purple-200 tracking-wide transition-colors">
-          {skill.name}
-        </h3>
+    <div className="group flex flex-col items-center p-4 bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md hover:scale-105 hover:border-purple-200 active:scale-100 transition-all duration-300 cursor-default">
+      <div className="w-10 h-10 flex items-center justify-center mb-2">
+        {IconComponent && (
+          <IconComponent className="w-6 h-6 text-gray-600 group-hover:text-purple-500 transition-colors duration-300" />
+        )}
       </div>
+      <span className="text-xs font-medium text-gray-600 group-hover:text-purple-600 transition-colors text-center">
+        {skill.name}
+      </span>
     </div>
   );
 }
