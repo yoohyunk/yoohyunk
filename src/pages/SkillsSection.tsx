@@ -16,7 +16,7 @@ export default function SkillsSection() {
           observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: "0px 0px -10% 0px" }
+      { threshold: 0, rootMargin: "0px 0px 15% 0px" }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
@@ -25,21 +25,21 @@ export default function SkillsSection() {
   return (
     <section
       ref={sectionRef}
-      className={`w-full bg-[#fafafa] transition-all duration-500 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      className={`w-full bg-[#fafafa] transition-all duration-300 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
       }`}
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-24 md:py-32">
         <h2
-          className={`font-bold text-center mb-4 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 bg-clip-text text-transparent transition-all duration-500 delay-100 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          className={`font-bold text-center mb-4 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 bg-clip-text text-transparent transition-all duration-300 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
           } text-4xl md:text-6xl`}
         >
           Tools & Technologies
         </h2>
         <p
-          className={`text-gray-500 text-center text-base md:text-lg mb-16 max-w-2xl mx-auto transition-all duration-500 delay-150 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          className={`text-gray-500 text-center text-base md:text-lg mb-16 max-w-2xl mx-auto transition-all duration-300 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
           }`}
         >
           I mostly write tested code in the JavaScript and Python ecosystems,
@@ -50,11 +50,11 @@ export default function SkillsSection() {
           {categories.map((category, catIndex) => (
             <div
               key={category.name}
-              className={`transition-all duration-500 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              className={`transition-all duration-300 ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
               }`}
               style={{
-                transitionDelay: isVisible ? `${Math.min(catIndex * 80, 240)}ms` : "0ms",
+                transitionDelay: isVisible ? `${Math.min(catIndex * 40, 120)}ms` : "0ms",
               }}
             >
               <h3 className="text-lg font-semibold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent mb-6 text-center">
@@ -64,14 +64,14 @@ export default function SkillsSection() {
                 {category.skills.map((skill, skillIndex) => (
                   <div
                     key={skill.name}
-                    className={`transition-all duration-500 ${
+                    className={`transition-all duration-300 ${
                       isVisible
                         ? "opacity-100 translate-y-0"
-                        : "opacity-0 translate-y-6"
+                        : "opacity-0 translate-y-2"
                     }`}
                     style={{
                       transitionDelay: isVisible
-                        ? `${Math.min(catIndex * 80 + skillIndex * 40, 300)}ms`
+                        ? `${Math.min(catIndex * 40 + skillIndex * 20, 140)}ms`
                         : "0ms",
                     }}
                   >

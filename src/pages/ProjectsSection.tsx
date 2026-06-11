@@ -17,7 +17,7 @@ export default function ProjectsSection() {
           observer.disconnect();
         }
       },
-      { threshold: 0.05, rootMargin: "0px 0px -10% 0px" }
+      { threshold: 0, rootMargin: "0px 0px 15% 0px" }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
@@ -26,8 +26,8 @@ export default function ProjectsSection() {
   return (
     <section
       ref={sectionRef}
-      className={`w-full transition-all duration-500 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      className={`w-full transition-all duration-300 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
       }`}
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
@@ -63,8 +63,8 @@ export default function ProjectsSection() {
                 key={project.title}
                 type="button"
                 onClick={() => setSelectedIndex(index)}
-                className={`group text-left bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col sm:flex-row ${isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-[0.97]"}`}
-                style={{ transitionDelay: isVisible ? `${Math.min(index * 70, 280)}ms` : "0ms" }}
+                className={`group text-left bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex flex-col sm:flex-row ${isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-2 scale-[0.97]"}`}
+                style={{ transitionDelay: isVisible ? `${Math.min(index * 40, 160)}ms` : "0ms" }}
               >
                 <div className="relative overflow-hidden w-full h-40 sm:w-1/3 sm:h-auto sm:min-h-full">
                   <img

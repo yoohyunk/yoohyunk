@@ -34,7 +34,7 @@ export default function ExperienceSection() {
           observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: "-100px" }
+      { threshold: 0, rootMargin: "0px 0px 15% 0px" }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
@@ -67,7 +67,7 @@ export default function ExperienceSection() {
           });
           obs.unobserve(el);
         },
-        { threshold: 0.2, rootMargin: "0px 0px -10% 0px" }
+        { threshold: 0, rootMargin: "0px 0px 10% 0px" }
       );
       obs.observe(el);
       observers.push(obs);
@@ -78,14 +78,14 @@ export default function ExperienceSection() {
   return (
     <section
       ref={sectionRef}
-      className={`w-full transition-all duration-500 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+      className={`w-full transition-all duration-300 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
       }`}
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <h2
-          className={`font-bold text-center mb-16 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 bg-clip-text text-transparent transition-all duration-500 delay-100 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          className={`font-bold text-center mb-16 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 bg-clip-text text-transparent transition-all duration-300 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
           } text-4xl md:text-6xl`}
         >
           Experience
@@ -105,10 +105,10 @@ export default function ExperienceSection() {
                 ref={(el) => {
                   itemRefs.current[index] = el;
                 }}
-                className={`relative pl-6 md:pl-0 flex flex-col md:flex-row items-center gap-8 transition-all duration-500 ${
+                className={`relative pl-6 md:pl-0 flex flex-col md:flex-row items-center gap-8 transition-all duration-300 ${
                   revealed[index]
                     ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
+                    : "opacity-0 translate-y-2"
                 }`}
               >
                 <span className="absolute left-0 top-2 w-3.5 h-3.5 rounded-full bg-white border-2 border-purple-400 md:hidden" />

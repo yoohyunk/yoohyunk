@@ -13,7 +13,7 @@ export default function HeroSection() {
           observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: "0px 0px -10% 0px" }
+      { threshold: 0, rootMargin: "0px 0px 15% 0px" }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
@@ -42,22 +42,22 @@ export default function HeroSection() {
       {/* Content */}
       <div className="relative h-full flex flex-col items-center justify-center px-4 sm:px-6 text-center">
         <p
-          className={`text-gray-500 font-medium mb-4 tracking-wide uppercase text-sm transition-all duration-700 delay-200 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          className={`text-gray-500 font-medium mb-4 tracking-wide uppercase text-sm transition-all duration-300 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
           }`}
         >
           AI Builder · Full-stack
         </p>
         <h1
-          className={`font-bold bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 bg-clip-text text-transparent leading-tight mb-6 transition-all duration-700 delay-300 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          className={`font-bold bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 bg-clip-text text-transparent leading-tight mb-6 transition-all duration-300 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
           } text-5xl md:text-7xl lg:text-8xl`}
         >
           Erica Kim
         </h1>
         <p
-          className={`text-gray-600 max-w-xl leading-relaxed mb-8 transition-all duration-700 delay-500 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          className={`text-gray-600 max-w-xl leading-relaxed mb-8 transition-all duration-300 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
           } text-base px-4 md:text-lg md:px-0`}
         >
           I design agentic AI systems: tool-use extraction, LLM pipelines, and
@@ -66,8 +66,8 @@ export default function HeroSection() {
 
         {/* Primary actions */}
         <div
-          className={`flex flex-wrap items-center justify-center gap-4 transition-all duration-700 delay-[600ms] ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          className={`flex flex-wrap items-center justify-center gap-4 transition-all duration-300 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
           }`}
         >
           <button
@@ -89,8 +89,8 @@ export default function HeroSection() {
 
         {/* Recruiter shortcuts */}
         <div
-          className={`flex items-center justify-center gap-5 mt-8 transition-all duration-700 delay-[750ms] ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          className={`flex items-center justify-center gap-5 mt-8 transition-all duration-300 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
           }`}
         >
           <a
