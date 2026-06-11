@@ -31,14 +31,13 @@ export default function ExperienceSection() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+          observer.disconnect();
         }
       },
       { threshold: 0.1, rootMargin: "-100px" }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => {
-      if (sectionRef.current) observer.unobserve(sectionRef.current);
-    };
+    return () => observer.disconnect();
   }, []);
 
   const items: ExperienceItem[] = [...(experience as ExperienceItem[])].sort(

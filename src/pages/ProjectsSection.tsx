@@ -12,14 +12,15 @@ export default function ProjectsSection() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true);
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
       },
       { threshold: 0.05, rootMargin: "0px 0px -10% 0px" }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => {
-      if (sectionRef.current) observer.unobserve(sectionRef.current);
-    };
+    return () => observer.disconnect();
   }, []);
 
   return (
