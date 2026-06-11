@@ -1,5 +1,20 @@
 [
   {
+    "title": "ClearNext",
+    "summary": "AI decision-engine Slack bot that surfaces what to work on now and next. Built with a team of 4 at a UofC hackathon.",
+    "description": [
+      "• Built with a team of 4 at a University of Calgary hackathon. A prototype, not a finished product.",
+      "• A Slack bot (Bolt, Socket Mode): the /now command gathers your recent Slack messages and a meeting transcript, an LLM extracts the tasks, then a second step ranks them into a 'do this now / up next' list with a reason and a time estimate for each, returned as an interactive Slack message with Done and Skip buttons.",
+      "• /later adds a task by hand and /recap summarizes what is done and what is left. Tasks persist to Supabase, with in-memory and mock-data fallbacks when keys are missing.",
+      "• A Node.js/Express API runs alongside the Slack app, with a React web client and Slack OAuth login. The LLM calls run on Groq (Llama 3.3 70B)."
+    ],
+    "link": "https://github.com/JGenereux/clearnext",
+    "tech": ["Slack Bolt", "TypeScript", "Groq / Llama 3.3", "Supabase", "Node.js", "React"],
+    "technologies": ["Slack Bolt", "TypeScript", "Groq / Llama 3.3", "Supabase", "Node.js", "Express", "React"],
+    "repoUrl": "https://github.com/JGenereux/clearnext",
+    "image": "https://placehold.co/600x400/ede9fe/7c3aed?text=ClearNext"
+  },
+  {
     "title": "FairSplit",
     "summary": "Group Expense Management App with Receipt Scanning",
     "description": [
