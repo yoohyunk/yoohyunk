@@ -15,16 +15,10 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
   isOpen,
 }) => {
   const [mounted, setMounted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     // Verify mounting on client side only
     setMounted(true);
-
-    // Check mobile
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
 
     if (isOpen) {
       // Prevent scrolling when modal is open
@@ -34,7 +28,6 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
     // Cleanup function
     return () => {
       document.body.style.overflow = "auto";
-      window.removeEventListener("resize", checkMobile);
     };
   }, [isOpen]);
 
@@ -53,9 +46,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
   // Modal content
   const modalContent = (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center overflow-hidden ${
-        isMobile ? "p-0" : "p-4"
-      }`}
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden p-0 md:p-4"
     >
       <div
         className="fixed inset-0 bg-black/40 backdrop-blur-sm"
@@ -63,11 +54,7 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
       />
 
       <div
-        className={`relative bg-white text-[#1a1a2e] overflow-hidden shadow-2xl ${
-          isMobile
-            ? "w-full h-full rounded-none"
-            : "max-w-2xl w-full max-h-[80vh] rounded-xl"
-        }`}
+        className="relative bg-white text-[#1a1a2e] overflow-hidden shadow-2xl w-full h-full rounded-none md:w-full md:max-w-2xl md:h-auto md:max-h-[80vh] md:rounded-xl"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
@@ -78,52 +65,38 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             <img
               src={image}
               alt={project.title}
-              className={`w-full object-cover object-center ${
-                isMobile ? "h-52" : "h-48"
-              }`}
+              className="w-full object-cover object-center h-52 md:h-48"
             />
             {/* Gradient overlay for mobile */}
-            {isMobile && (
-              <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
-            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent md:hidden" />
             <button
               onClick={onClose}
-              className={`absolute top-4 right-4 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center active:bg-gray-100 transition text-gray-600 shadow-sm ${
-                isMobile ? "w-11 h-11" : "w-8 h-8 hover:bg-gray-100"
-              }`}
+              className="absolute top-4 right-4 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center active:bg-gray-100 transition text-gray-600 shadow-sm w-11 h-11 md:w-8 md:h-8 hover:bg-gray-100"
               aria-label="Close modal"
             >
-              <FaTimes size={isMobile ? 20 : 16} />
+              <FaTimes className="w-5 h-5 md:w-4 md:h-4" />
             </button>
           </div>
 
           {/* Content */}
           <div
-            className={`overflow-y-auto flex-grow ${
-              isMobile ? "p-5 pb-8" : "p-5"
-            }`}
+            className="overflow-y-auto flex-grow p-5 pb-8 md:pb-5"
           >
             <h2
               id="modal-title"
-              className={`font-bold mb-2 bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent ${
-                isMobile ? "text-2xl" : "text-xl"
-              }`}
+              className="font-bold mb-2 bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent text-2xl md:text-xl"
             >
               {project.title}
             </h2>
             <p
-              className={`text-gray-600 mb-4 font-medium ${
-                isMobile ? "text-base" : "text-lg"
-              }`}
+              className="text-gray-600 mb-4 font-medium text-base md:text-lg"
             >
               {project.summary}
             </p>
             {project.description.map((desc, index) => (
               <p
                 key={index}
-                className={`text-gray-500 mb-4 ${
-                  isMobile ? "text-base leading-relaxed" : "text-sm"
-                }`}
+                className="text-gray-500 mb-4 text-base leading-relaxed md:text-sm"
               >
                 {desc}
               </p>
@@ -131,21 +104,15 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
 
             <div className="mb-5">
               <h3
-                className={`font-semibold mb-3 text-violet-600 ${
-                  isMobile ? "text-lg" : "text-md"
-                }`}
+                className="font-semibold mb-3 text-violet-600 text-lg md:text-md"
               >
                 Technologies
               </h3>
-              <div className={`flex flex-wrap ${isMobile ? "gap-2" : "gap-1.5"}`}>
+              <div className="flex flex-wrap gap-2 md:gap-1.5">
                 {technologies.map((tech, index) => (
                   <span
                     key={index}
-                    className={`bg-violet-100 text-violet-700 rounded-md flex items-center justify-center whitespace-nowrap ${
-                      isMobile
-                        ? "px-3 py-1.5 text-sm"
-                        : "px-2 py-1 text-xs"
-                    }`}
+                    className="bg-violet-100 text-violet-700 rounded-md flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm md:px-2 md:py-1 md:text-xs"
                   >
                     {tech}
                   </span>
@@ -156,16 +123,12 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             {features.length > 0 && (
               <div className="mb-5">
                 <h3
-                  className={`font-semibold mb-3 text-violet-600 ${
-                    isMobile ? "text-lg" : "text-md"
-                  }`}
+                  className="font-semibold mb-3 text-violet-600 text-lg md:text-md"
                 >
                   Key Features
                 </h3>
                 <ul
-                  className={`list-disc list-inside space-y-2 text-gray-600 ${
-                    isMobile ? "text-base" : "text-sm"
-                  }`}
+                  className="list-disc list-inside space-y-2 text-gray-600 text-base md:text-sm"
                 >
                   {features.map((feature, index) => (
                     <li key={index}>{feature}</li>
@@ -175,20 +138,16 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
             )}
 
             {/* Action buttons */}
-            <div className={`flex gap-3 ${isMobile ? "mt-6" : "mt-3"}`}>
+            <div className="flex gap-3 mt-6 md:mt-3">
               {liveUrl && (
                 <a
                   href={liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`flex items-center justify-center bg-violet-600 active:bg-violet-700 rounded-full text-white transition ${
-                    isMobile
-                      ? "w-12 h-12 hover:bg-violet-600"
-                      : "w-10 h-10 hover:bg-violet-700"
-                  }`}
+                  className="flex items-center justify-center bg-violet-600 active:bg-violet-700 rounded-full text-white transition w-12 h-12 md:w-10 md:h-10 hover:bg-violet-700"
                   title="View Live Site"
                 >
-                  <FaGlobe size={isMobile ? 20 : 18} />
+                  <FaGlobe className="w-5 h-5 md:w-[18px] md:h-[18px]" />
                 </a>
               )}
               {repoUrl && (
@@ -196,14 +155,10 @@ const ProjectModal: React.FC<ProjectModalProps> = ({
                   href={repoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`flex items-center justify-center border border-violet-600 active:border-violet-700 rounded-full text-violet-600 active:text-violet-500 transition ${
-                    isMobile
-                      ? "w-12 h-12 hover:border-violet-600"
-                      : "w-10 h-10 hover:border-violet-700 hover:text-violet-500"
-                  }`}
+                  className="flex items-center justify-center border border-violet-600 active:border-violet-700 rounded-full text-violet-600 active:text-violet-500 transition w-12 h-12 md:w-10 md:h-10 hover:border-violet-700 hover:text-violet-500"
                   title="View Source Code"
                 >
-                  <FaGithub size={isMobile ? 20 : 18} />
+                  <FaGithub className="w-5 h-5 md:w-[18px] md:h-[18px]" />
                 </a>
               )}
             </div>
