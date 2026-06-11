@@ -11,6 +11,9 @@ Two workstreams on the existing portfolio (Vite + React 18 + Tailwind v4):
    layout flash caused by JS `isMobile` detection.
 2. **Animation**: fill the gaps left after PR #8 and add tasteful liveliness,
    with the **More work** grid as the focus (it is the most static part now).
+3. **Animation timing**: animations are currently too slow on fast scroll, so
+   content stays invisible as the user scrolls past. Make reveals faster, cap
+   the stagger, trigger slightly earlier, and latch them so they never re-hide.
 
 Hard constraints (from the original brief, still in force):
 - Fast and clean: CSS `transform`/`transition` only. No animation libraries,
@@ -34,6 +37,13 @@ Hard constraints (from the original brief, still in force):
     they appear with the section.
   - `ProjectsSection` "More work" grid: no per-card stagger (the pre-PR version
     had it; the rewrite dropped it). This is the part that reads as too plain.
+- Timing problems (cause of the fast-scroll complaint):
+  - Durations are long: sections use `duration-1000`, items `duration-700`.
+  - Stagger delays are large and cumulative, e.g. `SkillsSection` cards use
+    `800 + catIndex*200 + skillIndex*80` ms, so the last card can start ~2s in.
+  - Reveals are two-way: the observers call `setIsVisible(entry.isIntersecting)`
+    (and `useInView` returns raw `isIntersecting`), so scrolling a section out of
+    view re-hides it. On a fast scroll the content can be mid-fade or hidden.
 - `isMobile` via `window.innerWidth` + resize listener (state starts `false`,
   so a wrong-layout frame flashes on load) lives in:
   - `HeroSection.tsx` — drives section height and heading text size.
@@ -113,10 +123,61 @@ Mechanism: reuse `useInView` + Tailwind transition classes. No new deps.
 - Durations/easing consistent with the site (`duration-500`–`700`, ease-out,
   `translate-y` 6–10px).
 
+## D. Animation timing (fast-scroll fix)
+
+Applies to the existing animated sections as well as the new ones, since the
+complaint is general.
+
+- **Shorter durations**: section fades `duration-1000 → duration-500`; item
+  reveals `duration-700 → duration-400`.
+- **Capped stagger**: replace large cumulative delays with a small step that is
+  capped so the last item is not far behind the first. Target: step ~50–70ms,
+  total reveal window <= ~300ms. Concretely, `SkillsSection`'s
+  `800 + catIndex*200 + skillIndex*80` becomes a capped formula such as
+  `Math.min(index * 50, 300)` over the flattened card index, and the big base
+  offsets (600/800ms) are dropped. The More work grid uses the same capped step.
+- **Latch (never re-hide)**: once an element has revealed, keep it revealed.
+  - `useInView`: add a `once` behavior — after the first intersection, set true,
+    stop observing, and never set back to false.
+  - Inline-observer sections (`AboutSection`, `SkillsSection`, `ContactSection`,
+    `ExperienceSection`, `ProjectsSection`): change
+    `setIsVisible(entry.isIntersecting)` so it only sets true and then unobserves,
+    instead of toggling with intersection.
+- **Trigger slightly earlier**: keep/observe a bottom `rootMargin` (e.g.
+  `0px 0px -10% 0px`) so the reveal starts as the element approaches the
+  viewport, so content is already visible by the time a fast scroll stops.
+
+Net effect: animations still play, but finish quickly and stay put, so fast
+scrolling never leaves content stuck faded out.
+
+## E. Featured cards: compact by default, expand for full detail
+
+The two `FeaturedProjectCard`s are too tall. Show only the essentials by
+default and put the deep content behind a single card-level expander.
+
+- **Always visible (default):** header (title, Prototype badge, tagline, honest
+  status line), the demo video, and the "What it does" paragraph. This is the
+  recruiter hook and stays short.
+- **Behind a card-level expander** ("Show full breakdown", same `<details>` +
+  rotating chevron pattern used elsewhere, closed by default): the Architecture
+  section (glance diagram + the existing collapsible dense detail), the Key
+  design decisions list, and the Stack.
+- Nesting: the per-decision `<details>` and the dense-diagram `<details>` remain
+  inside the expanded region. Nested `<details>` is fine.
+- The entrance reveal (section C) applies to the compact card; expanding is a
+  separate user action.
+
 ## Components touched
 
-`HeroSection.tsx`, `ScrollArrow.tsx`, `ProjectModal.tsx`, `ProjectsSection.tsx`,
-`FeaturedProjectCard.tsx`, `ExperienceSection.tsx`. Reuse `hooks/useInView.ts`.
+- De-flash refactor: `HeroSection.tsx`, `ScrollArrow.tsx`, `ProjectModal.tsx`.
+- Mobile layout: `ProjectsSection.tsx`, `ExperienceSection.tsx`,
+  `FeaturedProjectCard.tsx`.
+- Animation reveal + timing: `FeaturedProjectCard.tsx`, `ProjectsSection.tsx`,
+  and the timing/latch pass across `AboutSection.tsx`, `SkillsSection.tsx`,
+  `ContactSection.tsx`, `ExperienceSection.tsx`, plus `hooks/useInView.ts`
+  (add `once` latch).
+- Compact featured card: `FeaturedProjectCard.tsx`.
+
 No data or copy changes except the Experience date separator. No new
 dependencies.
 
