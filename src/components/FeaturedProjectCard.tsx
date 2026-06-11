@@ -1,5 +1,6 @@
 import { FaPlay, FaChevronDown } from "react-icons/fa";
 import type { FeaturedProject } from "../data/featuredProjects";
+import useInView from "../hooks/useInView";
 
 interface Props {
   project: FeaturedProject;
@@ -47,8 +48,15 @@ function DemoVideo({ url, title }: { url: string; title: string }) {
 }
 
 export default function FeaturedProjectCard({ project, index }: Props) {
+  const [ref, inView] = useInView(0.12);
+
   return (
-    <article className="relative bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+    <article
+      ref={ref}
+      className={`relative bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden transition-all duration-500 ${
+        inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+      }`}
+    >
       {/* Gradient accent bar */}
       <div className="h-1.5 w-full bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500" />
 
@@ -90,80 +98,95 @@ export default function FeaturedProjectCard({ project, index }: Props) {
           </p>
         </section>
 
-        {/* Architecture diagram */}
-        {project.diagram && (
-          <section className="mb-8">
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-violet-600 mb-3">
-              Architecture
-            </h4>
-            <div className="rounded-xl border border-gray-200 bg-white p-3 sm:p-4 overflow-x-auto">
-              <img
-                src={project.diagram.src}
-                alt={project.diagram.alt}
-                className="w-full h-auto max-w-3xl mx-auto"
-                loading="lazy"
-              />
-            </div>
+        {/* Full breakdown expander */}
+        <details className="group/breakdown">
+          <summary className="flex items-center justify-between gap-4 cursor-pointer list-none rounded-xl border border-gray-200 px-4 py-3 hover:bg-gray-50 transition-colors">
+            <span className="font-semibold text-violet-600 text-sm uppercase tracking-wider">
+              Show full breakdown
+            </span>
+            <FaChevronDown
+              className="w-3.5 h-3.5 text-gray-400 flex-shrink-0 transition-transform duration-200 group-open/breakdown:rotate-180"
+              aria-hidden="true"
+            />
+          </summary>
 
-            {project.detailDiagram && (
-              <details className="group mt-3 border border-gray-100 rounded-xl">
-                <summary className="flex items-center justify-between gap-4 cursor-pointer list-none px-4 py-3.5 hover:bg-gray-50 rounded-xl transition-colors">
-                  <span className="font-medium text-[#1a1a2e]">
-                    Full architecture (detail)
-                  </span>
-                  <FaChevronDown
-                    className="w-3.5 h-3.5 text-gray-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180"
-                    aria-hidden="true"
-                  />
-                </summary>
-                <div className="px-4 pb-4 overflow-x-auto">
+          <div className="mt-6">
+            {/* Architecture diagram */}
+            {project.diagram && (
+              <section className="mb-8">
+                <h4 className="text-sm font-semibold uppercase tracking-wider text-violet-600 mb-3">
+                  Architecture
+                </h4>
+                <div className="rounded-xl border border-gray-200 bg-white p-3 sm:p-4 overflow-x-auto">
                   <img
-                    src={project.detailDiagram.src}
-                    alt={project.detailDiagram.alt}
-                    className="w-full h-auto mx-auto"
+                    src={project.diagram.src}
+                    alt={project.diagram.alt}
+                    className="w-full h-auto max-w-3xl mx-auto"
                     loading="lazy"
                   />
                 </div>
-              </details>
+
+                {project.detailDiagram && (
+                  <details className="group mt-3 border border-gray-100 rounded-xl">
+                    <summary className="flex items-center justify-between gap-4 cursor-pointer list-none px-4 py-3.5 hover:bg-gray-50 rounded-xl transition-colors">
+                      <span className="font-medium text-[#1a1a2e]">
+                        Full architecture (detail)
+                      </span>
+                      <FaChevronDown
+                        className="w-3.5 h-3.5 text-gray-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180"
+                        aria-hidden="true"
+                      />
+                    </summary>
+                    <div className="px-4 pb-4 overflow-x-auto">
+                      <img
+                        src={project.detailDiagram.src}
+                        alt={project.detailDiagram.alt}
+                        className="h-auto mx-auto min-w-[760px] sm:min-w-0 sm:w-full"
+                        loading="lazy"
+                      />
+                    </div>
+                  </details>
+                )}
+              </section>
             )}
-          </section>
-        )}
 
-        {/* Key design decisions — the reasoning */}
-        <section className="mb-8">
-          <h4 className="text-sm font-semibold uppercase tracking-wider text-violet-600 mb-1">
-            Key design decisions
-          </h4>
-          <p className="text-gray-400 text-sm mb-4">
-            The reasoning behind each piece. Click to expand.
-          </p>
-          <div className="divide-y divide-gray-100 border border-gray-100 rounded-xl">
-            {project.designDecisions.map((d) => (
-              <details key={d.title} className="group">
-                <summary className="flex items-center justify-between gap-4 cursor-pointer list-none px-4 py-3.5 hover:bg-gray-50 rounded-xl transition-colors">
-                  <span className="font-medium text-[#1a1a2e]">{d.title}</span>
-                  <FaChevronDown
-                    className="w-3.5 h-3.5 text-gray-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180"
-                    aria-hidden="true"
-                  />
-                </summary>
-                <p className="px-4 pb-4 -mt-1 text-gray-600 text-sm leading-relaxed">
-                  {d.body}
-                </p>
-              </details>
-            ))}
+            {/* Key design decisions — the reasoning */}
+            <section className="mb-8">
+              <h4 className="text-sm font-semibold uppercase tracking-wider text-violet-600 mb-1">
+                Key design decisions
+              </h4>
+              <p className="text-gray-400 text-sm mb-4">
+                The reasoning behind each piece. Click to expand.
+              </p>
+              <div className="divide-y divide-gray-100 border border-gray-100 rounded-xl">
+                {project.designDecisions.map((d) => (
+                  <details key={d.title} className="group">
+                    <summary className="flex items-center justify-between gap-4 cursor-pointer list-none px-4 py-3.5 hover:bg-gray-50 rounded-xl transition-colors">
+                      <span className="font-medium text-[#1a1a2e]">{d.title}</span>
+                      <FaChevronDown
+                        className="w-3.5 h-3.5 text-gray-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180"
+                        aria-hidden="true"
+                      />
+                    </summary>
+                    <p className="px-4 pb-4 -mt-1 text-gray-600 text-sm leading-relaxed">
+                      {d.body}
+                    </p>
+                  </details>
+                ))}
+              </div>
+            </section>
+
+            {/* Stack */}
+            <section>
+              <h4 className="text-sm font-semibold uppercase tracking-wider text-violet-600 mb-3">
+                Stack
+              </h4>
+              <p className="text-gray-600 text-sm leading-relaxed max-w-3xl">
+                {project.stack}
+              </p>
+            </section>
           </div>
-        </section>
-
-        {/* Stack */}
-        <section>
-          <h4 className="text-sm font-semibold uppercase tracking-wider text-violet-600 mb-3">
-            Stack
-          </h4>
-          <p className="text-gray-600 text-sm leading-relaxed max-w-3xl">
-            {project.stack}
-          </p>
-        </section>
+        </details>
       </div>
     </article>
   );
