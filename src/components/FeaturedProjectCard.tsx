@@ -104,6 +104,28 @@ export default function FeaturedProjectCard({ project, index }: Props) {
                 loading="lazy"
               />
             </div>
+
+            {project.detailDiagram && (
+              <details className="group mt-3 border border-gray-100 rounded-xl">
+                <summary className="flex items-center justify-between gap-4 cursor-pointer list-none px-4 py-3.5 hover:bg-gray-50 rounded-xl transition-colors">
+                  <span className="font-medium text-[#1a1a2e]">
+                    Full architecture (detail)
+                  </span>
+                  <FaChevronDown
+                    className="w-3.5 h-3.5 text-gray-400 flex-shrink-0 transition-transform duration-200 group-open:rotate-180"
+                    aria-hidden="true"
+                  />
+                </summary>
+                <div className="px-4 pb-4 overflow-x-auto">
+                  <img
+                    src={project.detailDiagram.src}
+                    alt={project.detailDiagram.alt}
+                    className="w-full h-auto mx-auto"
+                    loading="lazy"
+                  />
+                </div>
+              </details>
+            )}
           </section>
         )}
 

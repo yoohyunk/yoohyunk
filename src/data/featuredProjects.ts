@@ -25,8 +25,10 @@ export interface FeaturedProject {
    */
   demoVideoUrl: string;
   whatItDoes: string;
-  /** Optional inline architecture diagram. */
+  /** Optional inline architecture diagram (the prominent "glance"). */
   diagram?: { src: string; alt: string };
+  /** Optional dense diagram shown below, collapsed under a "Full architecture (detail)" expander. */
+  detailDiagram?: { src: string; alt: string };
   designDecisions: DesignDecision[];
   stack: string;
 }
@@ -93,6 +95,14 @@ export const featuredProjects: FeaturedProject[] = [
     demoVideoUrl: "", // <-- DROP JOBS DESKTOP DEMO LINK HERE
     whatItDoes:
       "Job postings live on a dozen ATS platforms (Greenhouse, Lever, Ashby, Workday, iCIMS, Workable, SmartRecruiters) plus LinkedIn, each with its own page structure. The app discovers the listings, fetches pages that may be client-rendered or already dead, extracts a consistent schema out of inconsistent markup, ranks everything against a single resume, and drafts a tailored version of my resume per job. The interesting problem is extraction reliability and cost/latency control on the LLM and scraping layers, not the act of applying.",
+    diagram: {
+      src: "/jobapp-glance.svg",
+      alt: "Jobs Desktop at a glance, a five-step local pipeline: 1) discover postings across 7 ATS platforms and LinkedIn via a Google site: operator, 2) fetch each page with Cheerio then a Playwright fallback, 3) extract messy HTML into clean structured JSON with an LLM, 4) score each job against my resume from 0 to 100 on skill, title, and level, and 5) store everything locally in SQLite with no server or accounts. Noted design calls: a 10 second fetch cap, a right-sized gemini-flash-lite model with schema-forced JSON and a notAJob flag, and a readable heuristic score rather than an embedding.",
+    },
+    detailDiagram: {
+      src: "/jobapp-architecture.svg",
+      alt: "Detailed Jobs Desktop architecture: a React web view talks to a Bun backend over typed RPC, with all data in local SQLite and only search and extraction calls leaving the machine. A per-platform pipeline runs four stages: discover via Serper and an Apify LinkedIn actor, fetch with a Cheerio then Playwright two-layer under a 10 second cap, transform with an LLM using a strict JSON schema and a notAJob filter, then store. It includes a transparent 0 to 100 cheap-score heuristic over skill, title, and level, two throttled queues separating page fetch from LLM calls, AbortController-based cancellation, and a separate resume parse and tailor flow through OpenRouter serving google/gemini-3.1-flash-lite-preview.",
+    },
     designDecisions: [
       {
         title: "Search by Google operator, not per-platform scrapers",
