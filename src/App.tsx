@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
 import HeroSection from "./pages/HeroSection";
-import ShowcaseSection from "./pages/ShowcaseSection";
 import AboutSection from "./pages/AboutSection";
 import ExperienceSection from "./pages/ExperienceSection";
 import ProjectsSection from "./pages/ProjectsSection";
@@ -13,7 +12,6 @@ import ScrollArrow from "./components/ScrollArrow";
 
 const SECTIONS = [
   { id: "hero", Component: HeroSection },
-  { id: "showcase", Component: ShowcaseSection },
   { id: "about", Component: AboutSection },
   { id: "experience", Component: ExperienceSection },
   { id: "projects", Component: ProjectsSection },
@@ -81,11 +79,7 @@ export default function App() {
                 data-section={id}
                 id={id}
                 className={
-                  id === "hero"
-                    ? "relative"
-                    : id === "showcase"
-                    ? "relative"
-                    : "relative py-24 md:py-32"
+                  id === "hero" ? "relative" : "relative py-24 md:py-32"
                 }
               >
                 <Component />
