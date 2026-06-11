@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="840" viewBox="0 0 1000 840" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="g_arr" markerWidth="11" markerHeight="11" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#64748b"/>
+    </marker>
+    <style>
+      .spineLbl{fill:#0f172a;font-size:19px;font-weight:700}
+      .spineSub{fill:#64748b;font-size:14px}
+      .spineNote{fill:#94a3b8;font-size:12.5px}
+      .num{fill:#ffffff;font-size:15px;font-weight:700}
+      .calHead{fill:#c2410c;font-size:13px;font-weight:800;letter-spacing:.05em}
+      .calBody{fill:#7c2d12;font-size:14px}
+      .spine{stroke:#64748b;stroke-width:2;fill:none}
+      .conn{stroke:#f59e0b;stroke-width:2;fill:none;stroke-dasharray:5 4}
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="840" fill="#f8fafc"/>
+
+  <!-- header -->
+  <text x="60" y="56" font-size="28" font-weight="800" fill="#0f172a">Jobs Desktop</text>
+  <text x="60" y="86" font-size="15" fill="#475569">Finds jobs across ATS platforms, turns each posting into structured data with an LLM,</text>
+  <text x="60" y="106" font-size="15" fill="#475569">and scores it against my résumé. Local desktop app.</text>
+
+  <!-- ============ SPINE ============ -->
+  <!-- vertical connectors -->
+  <line class="spine" x1="270" y1="226" x2="270" y2="256" marker-end="url(#g_arr)"/>
+  <line class="spine" x1="270" y1="352" x2="270" y2="382" marker-end="url(#g_arr)"/>
+  <line class="spine" x1="270" y1="486" x2="270" y2="516" marker-end="url(#g_arr)"/>
+  <line class="spine" x1="270" y1="606" x2="270" y2="636" marker-end="url(#g_arr)"/>
+
+  <!-- node 1 Discover -->
+  <rect x="90" y="130" width="360" height="96" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <circle cx="120" cy="160" r="16" fill="#334155"/>
+  <text x="120" y="165" text-anchor="middle" class="num">1</text>
+  <text x="150" y="160" class="spineLbl">Discover</text>
+  <text x="150" y="184" class="spineSub">7 ATS + LinkedIn</text>
+  <text x="150" y="206" class="spineNote">via Google site: operator — one code path per platform</text>
+
+  <!-- node 2 Fetch -->
+  <rect x="90" y="256" width="360" height="96" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <circle cx="120" cy="286" r="16" fill="#334155"/>
+  <text x="120" y="291" text-anchor="middle" class="num">2</text>
+  <text x="150" y="286" class="spineLbl">Fetch page</text>
+  <text x="150" y="310" class="spineSub">Cheerio (fast HTTP) → Playwright fallback</text>
+  <text x="150" y="332" class="spineNote">handles static and JS-rendered ATS pages</text>
+
+  <!-- node 3 Extract -->
+  <rect x="90" y="382" width="360" height="104" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <circle cx="120" cy="416" r="16" fill="#334155"/>
+  <text x="120" y="421" text-anchor="middle" class="num">3</text>
+  <text x="150" y="416" class="spineLbl">Extract with an LLM</text>
+  <text x="150" y="440" class="spineSub">messy HTML → clean structured JSON</text>
+  <text x="150" y="462" class="spineNote">title, company, salary, location, level, work mode</text>
+
+  <!-- node 4 Score -->
+  <rect x="90" y="516" width="360" height="90" rx="12" fill="#fff" stroke="#cbd5e1" stroke-width="1.5"/>
+  <circle cx="120" cy="552" r="16" fill="#334155"/>
+  <text x="120" y="557" text-anchor="middle" class="num">4</text>
+  <text x="150" y="550" class="spineLbl">Score against my résumé</text>
+  <text x="150" y="574" class="spineSub">0–100  ·  skill + title + level</text>
+
+  <!-- node 5 Store -->
+  <rect x="90" y="636" width="360" height="84" rx="12" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+  <circle cx="120" cy="672" r="16" fill="#64748b"/>
+  <text x="120" y="677" text-anchor="middle" class="num">5</text>
+  <text x="150" y="668" class="spineLbl" fill="#334155">Store locally (SQLite)</text>
+  <text x="150" y="692" class="spineSub">no server, no accounts</text>
+
+  <!-- ============ DESIGN-CALL RAIL (★) ============ -->
+  <!-- connectors -->
+  <line class="conn" x1="450" y1="304" x2="540" y2="304"/>
+  <line class="conn" x1="450" y1="434" x2="540" y2="434"/>
+  <line class="conn" x1="450" y1="561" x2="540" y2="561"/>
+
+  <!-- ★1 next to Fetch -->
+  <rect x="540" y="262" width="400" height="84" rx="12" fill="#fff7ed" stroke="#f59e0b" stroke-width="2"/>
+  <text x="560" y="288" class="calHead">★ DESIGN CALL — cost / latency control</text>
+  <text x="560" y="312" class="calBody">10s hard cap + cancel propagation, and a</text>
+  <text x="560" y="332" class="calBody">browser only when the page actually needs JS.</text>
+
+  <!-- ★2 next to Extract -->
+  <rect x="540" y="386" width="400" height="96" rx="12" fill="#fff7ed" stroke="#f59e0b" stroke-width="2"/>
+  <text x="560" y="412" class="calHead">★ DESIGN CALL — right-sized model</text>
+  <text x="560" y="436" class="calBody">gemini-flash-lite, not a frontier model.</text>
+  <text x="560" y="456" class="calBody">Schema-forced JSON + a notAJob flag the</text>
+  <text x="560" y="476" class="calBody">model raises to drop junk pages itself.</text>
+
+  <!-- ★3 next to Score -->
+  <rect x="540" y="519" width="400" height="86" rx="12" fill="#fff7ed" stroke="#f59e0b" stroke-width="2"/>
+  <text x="560" y="545" class="calHead">★ DESIGN CALL — heuristic, not embedding</text>
+  <text x="560" y="569" class="calBody">A readable, tunable function — so the score</text>
+  <text x="560" y="589" class="calBody">is explainable and debuggable, not a black box.</text>
+
+  <!-- footer -->
+  <text x="60" y="788" font-size="13" fill="#94a3b8">Every claim verified from the code.  The LLM does the hard part (messy HTML → clean fields); ranking stays simple on purpose.</text>
+  <text x="60" y="808" font-size="13" fill="#94a3b8">Full architecture, concurrency model, and résumé-tailoring flow: see the detailed appendix.</text>
+</svg>
