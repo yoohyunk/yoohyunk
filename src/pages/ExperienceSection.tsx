@@ -28,7 +28,11 @@ export default function ExperienceSection() {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => setIsVisible(entry.isIntersecting),
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
       { threshold: 0.1, rootMargin: "-100px" }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
@@ -55,14 +59,14 @@ export default function ExperienceSection() {
       if (!el) return;
       const obs = new IntersectionObserver(
         ([entry]) => {
+          if (!entry.isIntersecting) return;
           setRevealed((state) => {
             const next =
-              state.length === items.length
-                ? [...state]
-                : Array(items.length).fill(false);
-            next[idx] = entry.isIntersecting;
+              state.length === items.length ? [...state] : Array(items.length).fill(false);
+            next[idx] = true;
             return next;
           });
+          obs.unobserve(el);
         },
         { threshold: 0.2, rootMargin: "0px 0px -10% 0px" }
       );
@@ -75,21 +79,23 @@ export default function ExperienceSection() {
   return (
     <section
       ref={sectionRef}
-      className={`w-full transition-all duration-1000 ${
+      className={`w-full transition-all duration-500 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <h2
-          className={`font-bold text-center mb-16 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 bg-clip-text text-transparent transition-all duration-700 delay-200 ${
+          className={`font-bold text-center mb-16 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 bg-clip-text text-transparent transition-all duration-500 delay-100 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           } text-4xl md:text-6xl`}
         >
           Experience
         </h2>
 
-        <div className="relative space-y-16">
-          {/* Decorative center line */}
+        <div className="relative space-y-8 md:space-y-16">
+          {/* Mobile left rail */}
+          <div className="absolute left-[7px] top-2 bottom-2 w-px bg-gradient-to-b from-purple-300 via-pink-300 to-transparent md:hidden" />
+          {/* Desktop center line */}
           <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-purple-300 via-pink-300 to-transparent hidden md:block" />
 
           {items.map((item, index) => {
@@ -100,12 +106,13 @@ export default function ExperienceSection() {
                 ref={(el) => {
                   itemRefs.current[index] = el;
                 }}
-                className={`flex flex-col md:flex-row items-center gap-8 transition-all duration-700 ${
+                className={`relative pl-6 md:pl-0 flex flex-col md:flex-row items-center gap-8 transition-all duration-500 ${
                   revealed[index]
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-8"
                 }`}
               >
+                <span className="absolute left-0 top-2 w-3.5 h-3.5 rounded-full bg-white border-2 border-purple-400 md:hidden" />
                 {/* Spacer for alternating layout */}
                 {!isLeft && <div className="hidden md:block md:w-1/2" />}
 
@@ -117,7 +124,7 @@ export default function ExperienceSection() {
                         {item.title}
                       </h3>
                       <span className="px-3 py-1 text-xs font-medium bg-purple-100 text-purple-700 rounded-full whitespace-nowrap">
-                        {item.start} — {item.end}
+                        {item.start} to {item.end}
                       </span>
                     </div>
                     <p className="text-gray-500 text-sm mb-4">
