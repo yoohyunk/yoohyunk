@@ -1,4 +1,4 @@
-import { FaPlay, FaChevronDown } from "react-icons/fa";
+import { FaPlay, FaChevronDown, FaGithub } from "react-icons/fa";
 import type { FeaturedProject } from "../data/featuredProjects";
 import useInView from "../hooks/useInView";
 
@@ -81,6 +81,17 @@ export default function FeaturedProjectCard({ project, index }: Props) {
           <p className="text-gray-500 text-sm leading-relaxed mt-3 max-w-2xl">
             {project.status}
           </p>
+          {project.repoUrl && (
+            <a
+              href={project.repoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-4 text-sm font-medium text-violet-600 hover:text-violet-700 active:scale-95 transition"
+            >
+              <FaGithub className="w-4 h-4" aria-hidden="true" />
+              View code on GitHub
+            </a>
+          )}
         </div>
 
         {/* Demo video */}

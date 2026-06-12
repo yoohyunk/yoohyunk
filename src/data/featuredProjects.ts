@@ -20,6 +20,8 @@ export interface FeaturedProject {
   status: string;
   /** Short honest badge shown on the card (e.g. "Personal · not deployed"). */
   badge: string;
+  /** Public source repo. Omit when the repo is private. */
+  repoUrl?: string;
   /**
    * Demo video. Paste a Loom share/embed link or a direct .mp4/.webm URL.
    * Leave "" to show the placeholder. Loom /share/ links are auto-converted
@@ -44,6 +46,7 @@ export const featuredProjects: FeaturedProject[] = [
     status:
       "A personal project. Runs on synthetic data and is not deployed. I built it solo to test the idea.",
     badge: "Personal · not deployed",
+    repoUrl: "https://github.com/yoohyunk/ai-task-pipeline",
     demoVideoUrl: "", // <-- DROP AI TASK PIPELINE DEMO LINK HERE
     whatItDoes:
       "It reads team conversations (Slack threads, a meeting transcript, a calendar event), extracts the action items with an LLM, and turns the approved ones into deduplicated Jira tickets with a generated PRD. A person approves at each step. For the simple tickets, an agent makes the code change, opens a pull request, and revises it from review feedback. I wanted to see whether an LLM could watch those surfaces, propose the work it found, and let a person approve before anything became a ticket.",
