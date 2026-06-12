@@ -1,4 +1,4 @@
-import { FaPlay, FaChevronDown } from "react-icons/fa";
+import { FaPlay, FaChevronDown, FaGithub } from "react-icons/fa";
 import type { FeaturedProject } from "../data/featuredProjects";
 import useInView from "../hooks/useInView";
 
@@ -67,10 +67,6 @@ export default function FeaturedProjectCard({ project, index }: Props) {
             <span className="text-xs font-semibold uppercase tracking-wider text-violet-600">
               Featured · {String(index + 1).padStart(2, "0")}
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 border border-amber-200 px-2.5 py-0.5 text-xs font-medium text-amber-700">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-500" aria-hidden="true" />
-              {project.badge}
-            </span>
           </div>
           <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent mb-3">
             {project.title}
@@ -81,12 +77,39 @@ export default function FeaturedProjectCard({ project, index }: Props) {
           <p className="text-gray-500 text-sm leading-relaxed mt-3 max-w-2xl">
             {project.status}
           </p>
+          {project.repoUrl ? (
+            <a
+              href={project.repoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-4 text-sm font-medium text-violet-600 hover:text-violet-700 active:scale-95 transition"
+            >
+              <FaGithub className="w-4 h-4" aria-hidden="true" />
+              View code on GitHub
+            </a>
+          ) : project.repoNote ? (
+            <p className="inline-flex items-center gap-2 mt-4 text-sm text-gray-500">
+              <FaGithub className="w-4 h-4 text-gray-400" aria-hidden="true" />
+              {project.repoNote}
+            </p>
+          ) : null}
         </div>
 
-        {/* Demo video */}
-        <div className="mb-8">
-          <DemoVideo url={project.demoVideoUrl} title={project.title} />
-        </div>
+        {/* Primary visual: demo video, or the glance diagram when video is hidden */}
+        {project.hideVideo && project.diagram ? (
+          <div className="mb-8 rounded-xl border border-gray-200 bg-white p-3 sm:p-4 overflow-x-auto">
+            <img
+              src={project.diagram.src}
+              alt={project.diagram.alt}
+              className="w-full h-auto max-w-3xl mx-auto"
+              loading="lazy"
+            />
+          </div>
+        ) : (
+          <div className="mb-8">
+            <DemoVideo url={project.demoVideoUrl} title={project.title} />
+          </div>
+        )}
 
         {/* What it does */}
         <section className="mb-8">
@@ -112,19 +135,21 @@ export default function FeaturedProjectCard({ project, index }: Props) {
 
           <div className="mt-6">
             {/* Architecture diagram */}
-            {project.diagram && (
+            {(project.diagram || project.detailDiagram) && (
               <section className="mb-8">
                 <h4 className="text-sm font-semibold uppercase tracking-wider text-violet-600 mb-3">
                   Architecture
                 </h4>
-                <div className="rounded-xl border border-gray-200 bg-white p-3 sm:p-4 overflow-x-auto">
-                  <img
-                    src={project.diagram.src}
-                    alt={project.diagram.alt}
-                    className="w-full h-auto max-w-3xl mx-auto"
-                    loading="lazy"
-                  />
-                </div>
+                {project.diagram && !project.hideVideo && (
+                  <div className="rounded-xl border border-gray-200 bg-white p-3 sm:p-4 overflow-x-auto">
+                    <img
+                      src={project.diagram.src}
+                      alt={project.diagram.alt}
+                      className="w-full h-auto max-w-3xl mx-auto"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
 
                 {project.detailDiagram && (
                   <details className="group mt-3 border border-gray-100 rounded-xl">

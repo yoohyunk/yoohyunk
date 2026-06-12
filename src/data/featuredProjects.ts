@@ -1,8 +1,7 @@
 // Featured AI projects. Copy is pulled from the canonical write-ups:
-//   AI Task Pipeline -> ai-task-manager/portfolio.md
+//   Noise to PRD to PR Agent -> ai-task-manager/portfolio.md
 //   Jobs Desktop     -> jobs-desktop/jobapp-portfolio.md
-// Honesty labels (synthetic data / not deployed / local-only) are
-// kept as written. Do not generalize claims beyond what these files state.
+// Keep claims accurate to what these files state; do not generalize beyond them.
 
 export interface DesignDecision {
   /** The reasoning headline (always visible, the skimmable part). */
@@ -18,8 +17,12 @@ export interface FeaturedProject {
   tagline: string;
   /** Honest status line, kept verbatim in spirit from the write-up. */
   status: string;
-  /** Short honest badge shown on the card (e.g. "Personal · not deployed"). */
-  badge: string;
+  /** Public source repo. Omit when the repo is private. */
+  repoUrl?: string;
+  /** Shown instead of a repo link when the source is private. */
+  repoNote?: string;
+  /** When true, show the glance diagram at the top instead of a demo video. */
+  hideVideo?: boolean;
   /**
    * Demo video. Paste a Loom share/embed link or a direct .mp4/.webm URL.
    * Leave "" to show the placeholder. Loom /share/ links are auto-converted
@@ -38,18 +41,18 @@ export interface FeaturedProject {
 export const featuredProjects: FeaturedProject[] = [
   {
     id: "ai-task-pipeline",
-    title: "AI Task Pipeline",
+    title: "Noise to PRD to PR Agent",
     tagline:
       "Reads team conversations, extracts the action items with an LLM, and turns the approved ones into Jira tickets and pull requests, with a person approving each step.",
     status:
-      "A personal project. Runs on synthetic data and is not deployed. I built it solo to test the idea.",
-    badge: "Personal · not deployed",
-    demoVideoUrl: "", // <-- DROP AI TASK PIPELINE DEMO LINK HERE
+      "A personal project I built to explore the idea. Runs on synthetic data.",
+    repoUrl: "https://github.com/yoohyunk/ai-task-pipeline",
+    demoVideoUrl: "/ai-task-pipeline-demo.mp4",
     whatItDoes:
       "It reads team conversations (Slack threads, a meeting transcript, a calendar event), extracts the action items with an LLM, and turns the approved ones into deduplicated Jira tickets with a generated PRD. A person approves at each step. For the simple tickets, an agent makes the code change, opens a pull request, and revises it from review feedback. I wanted to see whether an LLM could watch those surfaces, propose the work it found, and let a person approve before anything became a ticket.",
     diagram: {
       src: "/ai-pipeline-architecture.svg",
-      alt: "Architecture of the AI Task Pipeline: ingest Slack, meeting, and calendar sources; extract action items with an LLM; human approval Gate 1; two-layer keyword-then-embedding dedup; create Jira tickets with a generated PRD; Gate 2; rule-based assignment; Gate 3; agent code edit in an isolated worktree opening a pull request; Gate 4 review with a rework loop and merge. A three-layer agent memory feeds the agent stage.",
+      alt: "Architecture of Noise to PRD to PR Agent: ingest Slack, meeting, and calendar sources; extract action items with an LLM; human approval Gate 1; two-layer keyword-then-embedding dedup; create Jira tickets with a generated PRD; Gate 2; rule-based assignment; Gate 3; agent code edit in an isolated worktree opening a pull request; Gate 4 review with a rework loop and merge. A three-layer agent memory feeds the agent stage.",
     },
     designDecisions: [
       {
@@ -94,9 +97,10 @@ export const featuredProjects: FeaturedProject[] = [
     tagline:
       "A local desktop app that finds job postings across applicant tracking systems, turns each raw posting into structured data with an LLM, and scores it against my resume.",
     status:
-      "Built solo, run locally from source. A working app, not a shipped one: no release pipeline, code signing, notarization, auto-update, or CI. It needs three API keys (Serper, OpenRouter, Apify) supplied at runtime.",
-    badge: "Solo · runs locally",
-    demoVideoUrl: "", // <-- DROP JOBS DESKTOP DEMO LINK HERE
+      "A working desktop app. It needs three API keys (Serper, OpenRouter, Apify) at runtime.",
+    repoNote: "Private repo, available on request.",
+    hideVideo: true,
+    demoVideoUrl: "", // video hidden for this project; glance diagram shown at top
     whatItDoes:
       "Job postings live on a dozen ATS platforms (Greenhouse, Lever, Ashby, Workday, iCIMS, Workable, SmartRecruiters) plus LinkedIn, each with its own page structure. The app discovers the listings, fetches pages that may be client-rendered or already dead, extracts a consistent schema out of inconsistent markup, ranks everything against a single resume, and drafts a tailored version of my resume per job. The interesting problem is extraction reliability and cost/latency control on the LLM and scraping layers, not the act of applying.",
     diagram: {
