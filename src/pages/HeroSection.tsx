@@ -46,7 +46,7 @@ export default function HeroSection() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
-          AI Builder · Full-stack
+          Software Engineer · Agentic AI & Full-Stack
         </p>
         <h1
           className={`font-bold bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 bg-clip-text text-transparent leading-tight mb-6 transition-all duration-300 ${
@@ -78,6 +78,7 @@ export default function HeroSection() {
           </button>
           <a
             href="/resume.pdf"
+            download="Erica-Kim-Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 py-3 border border-gray-300 text-gray-700 rounded-full hover:border-purple-400 hover:text-purple-600 active:scale-95 transition-all text-sm font-medium flex items-center gap-2"
