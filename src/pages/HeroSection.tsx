@@ -78,6 +78,7 @@ export default function HeroSection() {
           </button>
           <a
             href="/resume.pdf"
+            download="Erica-Kim-Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 py-3 border border-gray-300 text-gray-700 rounded-full hover:border-purple-400 hover:text-purple-600 active:scale-95 transition-all text-sm font-medium flex items-center gap-2"
