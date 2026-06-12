@@ -1,5 +1,5 @@
 // Featured AI projects. Copy is pulled from the canonical write-ups:
-//   AI Task Pipeline -> ai-task-manager/portfolio.md
+//   Noise to PRD to PR Agent -> ai-task-manager/portfolio.md
 //   Jobs Desktop     -> jobs-desktop/jobapp-portfolio.md
 // Keep claims accurate to what these files state; do not generalize beyond them.
 
@@ -41,7 +41,7 @@ export interface FeaturedProject {
 export const featuredProjects: FeaturedProject[] = [
   {
     id: "ai-task-pipeline",
-    title: "AI Task Pipeline",
+    title: "Noise to PRD to PR Agent",
     tagline:
       "Reads team conversations, extracts the action items with an LLM, and turns the approved ones into Jira tickets and pull requests, with a person approving each step.",
     status:
@@ -52,7 +52,7 @@ export const featuredProjects: FeaturedProject[] = [
       "It reads team conversations (Slack threads, a meeting transcript, a calendar event), extracts the action items with an LLM, and turns the approved ones into deduplicated Jira tickets with a generated PRD. A person approves at each step. For the simple tickets, an agent makes the code change, opens a pull request, and revises it from review feedback. I wanted to see whether an LLM could watch those surfaces, propose the work it found, and let a person approve before anything became a ticket.",
     diagram: {
       src: "/ai-pipeline-architecture.svg",
-      alt: "Architecture of the AI Task Pipeline: ingest Slack, meeting, and calendar sources; extract action items with an LLM; human approval Gate 1; two-layer keyword-then-embedding dedup; create Jira tickets with a generated PRD; Gate 2; rule-based assignment; Gate 3; agent code edit in an isolated worktree opening a pull request; Gate 4 review with a rework loop and merge. A three-layer agent memory feeds the agent stage.",
+      alt: "Architecture of Noise to PRD to PR Agent: ingest Slack, meeting, and calendar sources; extract action items with an LLM; human approval Gate 1; two-layer keyword-then-embedding dedup; create Jira tickets with a generated PRD; Gate 2; rule-based assignment; Gate 3; agent code edit in an isolated worktree opening a pull request; Gate 4 review with a rework loop and merge. A three-layer agent memory feeds the agent stage.",
     },
     designDecisions: [
       {
