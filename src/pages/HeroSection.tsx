@@ -46,7 +46,7 @@ export default function HeroSection() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
-          AI Builder · Full-stack
+          Software Engineer · Agentic AI & Full-Stack
         </p>
         <h1
           className={`font-bold bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 bg-clip-text text-transparent leading-tight mb-6 transition-all duration-300 ${
