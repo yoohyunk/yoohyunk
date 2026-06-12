@@ -22,6 +22,10 @@ export interface FeaturedProject {
   badge: string;
   /** Public source repo. Omit when the repo is private. */
   repoUrl?: string;
+  /** Shown instead of a repo link when the source is private. */
+  repoNote?: string;
+  /** When true, show the glance diagram at the top instead of a demo video. */
+  hideVideo?: boolean;
   /**
    * Demo video. Paste a Loom share/embed link or a direct .mp4/.webm URL.
    * Leave "" to show the placeholder. Loom /share/ links are auto-converted
@@ -47,7 +51,7 @@ export const featuredProjects: FeaturedProject[] = [
       "A personal project. Runs on synthetic data and is not deployed. I built it solo to test the idea.",
     badge: "Personal · not deployed",
     repoUrl: "https://github.com/yoohyunk/ai-task-pipeline",
-    demoVideoUrl: "", // <-- DROP AI TASK PIPELINE DEMO LINK HERE
+    demoVideoUrl: "/ai-task-pipeline-demo.mp4",
     whatItDoes:
       "It reads team conversations (Slack threads, a meeting transcript, a calendar event), extracts the action items with an LLM, and turns the approved ones into deduplicated Jira tickets with a generated PRD. A person approves at each step. For the simple tickets, an agent makes the code change, opens a pull request, and revises it from review feedback. I wanted to see whether an LLM could watch those surfaces, propose the work it found, and let a person approve before anything became a ticket.",
     diagram: {
@@ -99,7 +103,9 @@ export const featuredProjects: FeaturedProject[] = [
     status:
       "Built solo, run locally from source. A working app, not a shipped one: no release pipeline, code signing, notarization, auto-update, or CI. It needs three API keys (Serper, OpenRouter, Apify) supplied at runtime.",
     badge: "Solo · runs locally",
-    demoVideoUrl: "", // <-- DROP JOBS DESKTOP DEMO LINK HERE
+    repoNote: "Private repo, available on request.",
+    hideVideo: true,
+    demoVideoUrl: "", // video hidden for this project; glance diagram shown at top
     whatItDoes:
       "Job postings live on a dozen ATS platforms (Greenhouse, Lever, Ashby, Workday, iCIMS, Workable, SmartRecruiters) plus LinkedIn, each with its own page structure. The app discovers the listings, fetches pages that may be client-rendered or already dead, extracts a consistent schema out of inconsistent markup, ranks everything against a single resume, and drafts a tailored version of my resume per job. The interesting problem is extraction reliability and cost/latency control on the LLM and scraping layers, not the act of applying.",
     diagram: {

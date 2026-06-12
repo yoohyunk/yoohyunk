@@ -81,7 +81,7 @@ export default function FeaturedProjectCard({ project, index }: Props) {
           <p className="text-gray-500 text-sm leading-relaxed mt-3 max-w-2xl">
             {project.status}
           </p>
-          {project.repoUrl && (
+          {project.repoUrl ? (
             <a
               href={project.repoUrl}
               target="_blank"
@@ -91,13 +91,29 @@ export default function FeaturedProjectCard({ project, index }: Props) {
               <FaGithub className="w-4 h-4" aria-hidden="true" />
               View code on GitHub
             </a>
-          )}
+          ) : project.repoNote ? (
+            <p className="inline-flex items-center gap-2 mt-4 text-sm text-gray-500">
+              <FaGithub className="w-4 h-4 text-gray-400" aria-hidden="true" />
+              {project.repoNote}
+            </p>
+          ) : null}
         </div>
 
-        {/* Demo video */}
-        <div className="mb-8">
-          <DemoVideo url={project.demoVideoUrl} title={project.title} />
-        </div>
+        {/* Primary visual: demo video, or the glance diagram when video is hidden */}
+        {project.hideVideo && project.diagram ? (
+          <div className="mb-8 rounded-xl border border-gray-200 bg-white p-3 sm:p-4 overflow-x-auto">
+            <img
+              src={project.diagram.src}
+              alt={project.diagram.alt}
+              className="w-full h-auto max-w-3xl mx-auto"
+              loading="lazy"
+            />
+          </div>
+        ) : (
+          <div className="mb-8">
+            <DemoVideo url={project.demoVideoUrl} title={project.title} />
+          </div>
+        )}
 
         {/* What it does */}
         <section className="mb-8">
@@ -123,19 +139,21 @@ export default function FeaturedProjectCard({ project, index }: Props) {
 
           <div className="mt-6">
             {/* Architecture diagram */}
-            {project.diagram && (
+            {(project.diagram || project.detailDiagram) && (
               <section className="mb-8">
                 <h4 className="text-sm font-semibold uppercase tracking-wider text-violet-600 mb-3">
                   Architecture
                 </h4>
-                <div className="rounded-xl border border-gray-200 bg-white p-3 sm:p-4 overflow-x-auto">
-                  <img
-                    src={project.diagram.src}
-                    alt={project.diagram.alt}
-                    className="w-full h-auto max-w-3xl mx-auto"
-                    loading="lazy"
-                  />
-                </div>
+                {project.diagram && !project.hideVideo && (
+                  <div className="rounded-xl border border-gray-200 bg-white p-3 sm:p-4 overflow-x-auto">
+                    <img
+                      src={project.diagram.src}
+                      alt={project.diagram.alt}
+                      className="w-full h-auto max-w-3xl mx-auto"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
 
                 {project.detailDiagram && (
                   <details className="group mt-3 border border-gray-100 rounded-xl">
