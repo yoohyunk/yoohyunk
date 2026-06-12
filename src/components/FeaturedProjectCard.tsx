@@ -67,10 +67,6 @@ export default function FeaturedProjectCard({ project, index }: Props) {
             <span className="text-xs font-semibold uppercase tracking-wider text-violet-600">
               Featured · {String(index + 1).padStart(2, "0")}
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 border border-amber-200 px-2.5 py-0.5 text-xs font-medium text-amber-700">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-500" aria-hidden="true" />
-              {project.badge}
-            </span>
           </div>
           <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent mb-3">
             {project.title}

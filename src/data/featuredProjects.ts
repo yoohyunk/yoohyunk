@@ -1,8 +1,7 @@
 // Featured AI projects. Copy is pulled from the canonical write-ups:
 //   AI Task Pipeline -> ai-task-manager/portfolio.md
 //   Jobs Desktop     -> jobs-desktop/jobapp-portfolio.md
-// Honesty labels (synthetic data / not deployed / local-only) are
-// kept as written. Do not generalize claims beyond what these files state.
+// Keep claims accurate to what these files state; do not generalize beyond them.
 
 export interface DesignDecision {
   /** The reasoning headline (always visible, the skimmable part). */
@@ -18,8 +17,6 @@ export interface FeaturedProject {
   tagline: string;
   /** Honest status line, kept verbatim in spirit from the write-up. */
   status: string;
-  /** Short honest badge shown on the card (e.g. "Personal · not deployed"). */
-  badge: string;
   /** Public source repo. Omit when the repo is private. */
   repoUrl?: string;
   /** Shown instead of a repo link when the source is private. */
@@ -48,8 +45,7 @@ export const featuredProjects: FeaturedProject[] = [
     tagline:
       "Reads team conversations, extracts the action items with an LLM, and turns the approved ones into Jira tickets and pull requests, with a person approving each step.",
     status:
-      "A personal project. Runs on synthetic data and is not deployed. I built it solo to test the idea.",
-    badge: "Personal · not deployed",
+      "A personal project I built to explore the idea. Runs on synthetic data.",
     repoUrl: "https://github.com/yoohyunk/ai-task-pipeline",
     demoVideoUrl: "/ai-task-pipeline-demo.mp4",
     whatItDoes:
@@ -101,8 +97,7 @@ export const featuredProjects: FeaturedProject[] = [
     tagline:
       "A local desktop app that finds job postings across applicant tracking systems, turns each raw posting into structured data with an LLM, and scores it against my resume.",
     status:
-      "Built solo, run locally from source. A working app, not a shipped one: no release pipeline, code signing, notarization, auto-update, or CI. It needs three API keys (Serper, OpenRouter, Apify) supplied at runtime.",
-    badge: "Solo · runs locally",
+      "A working desktop app. It needs three API keys (Serper, OpenRouter, Apify) at runtime.",
     repoNote: "Private repo, available on request.",
     hideVideo: true,
     demoVideoUrl: "", // video hidden for this project; glance diagram shown at top
